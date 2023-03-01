@@ -60,15 +60,13 @@ public class EditView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by college");
+        filterText.setPlaceholder("Filter by course");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
         Button addContactButton = new Button("Add Course");
-
-        MultiFileMemoryBuffer multiFileMemoryBuffer = new MultiFileMemoryBuffer();
-        Upload multiFileUpload = new Upload(multiFileMemoryBuffer);
+        ;
 
         Button redirect1 = new Button("Go to Import");
         redirect1.addClickListener(e ->
@@ -80,10 +78,9 @@ public class EditView extends VerticalLayout {
                 redirect2.getUI().ifPresent(ui ->
                         ui.navigate("export")));
 
-        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,multiFileUpload);
-
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton,h1);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton,redirect1,redirect2);
+        toolbar.setWidth("100%");
+        toolbar.setJustifyContentMode(JustifyContentMode.CENTER);
         toolbar.addClassName("toolbar");
         return toolbar;
     }

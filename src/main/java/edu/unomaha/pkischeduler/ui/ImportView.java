@@ -52,12 +52,11 @@ public class ImportView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by college");
+        filterText.setPlaceholder("Filter by course");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addContactButton = new Button("Add Course");
 
         MultiFileMemoryBuffer multiFileMemoryBuffer = new MultiFileMemoryBuffer();
         Upload multiFileUpload = new Upload(multiFileMemoryBuffer);
@@ -73,10 +72,13 @@ public class ImportView extends VerticalLayout {
                         ui.navigate("export")));
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,multiFileUpload);
+        h1.setAlignItems(Alignment.BASELINE);
 
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton,h1);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText,h1);
         toolbar.addClassName("toolbar");
+        toolbar.setAlignItems(Alignment.BASELINE);
+        toolbar.setWidth("100%");
+        toolbar.setJustifyContentMode(JustifyContentMode.CENTER);
         return toolbar;
     }
 
