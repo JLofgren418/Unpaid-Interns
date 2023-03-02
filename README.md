@@ -50,4 +50,5 @@ Once the JAR file is built, you can run it using
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
 ## Additional Branches 
-* Describe Additional Branch
+* The alternative branch for this project is called Preliminary Which for now is only slightly
+behind main but is for testing as well as other odds and ends.
