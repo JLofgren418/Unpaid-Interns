@@ -3,6 +3,7 @@
 * Explain application
 # Release Notes
 Release 0.0
+
 This release is more developed than what was originally planned in the original project plan. Our original goal was to simply have a basic test function running, but have managed to gain ground on the database and UI sections of the application.
 ## UI 
 * Preliminary UI design utilizing vaadin
