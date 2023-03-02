@@ -1,6 +1,12 @@
 # PKI Scheduler
+PKI schedule is an application designed to simplify building schedules. It will include options to import data, edit data, edit rules for building schedules, and exporting of the final schedule. 
 
-* Explain application
+Application is accessible through the web interface. 
+
+Main screen of the application allows you to import data.
+Edit screen allows you to make changed to the imported data.
+Additional GUI features will be added as we implement them.
+
 # Release Notes
 Release 0.0
 
