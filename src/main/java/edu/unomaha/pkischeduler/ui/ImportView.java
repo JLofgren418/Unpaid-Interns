@@ -49,7 +49,6 @@ public class ImportView extends VerticalLayout {
         grid.addClassNames("schedule-grid");
         grid.setSizeFull();
         grid.setColumns("courseCode", "courseTitle", "meetingDays", "meetingTime");
-        grid.addColumn(course -> course.getStatus().getName()).setHeader("Status");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
@@ -74,7 +73,9 @@ public class ImportView extends VerticalLayout {
                 redirect2.getUI().ifPresent(ui ->
                         ui.navigate("export")));
 
-        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,multiFileUpload);
+        Button process = new Button("Process Schedule");
+
+        HorizontalLayout h1 = new HorizontalLayout(process,redirect1,redirect2,multiFileUpload);
         h1.setAlignItems(Alignment.BASELINE);
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText,h1);

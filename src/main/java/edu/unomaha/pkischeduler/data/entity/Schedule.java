@@ -23,15 +23,13 @@ public class Schedule extends AbstractEntity {
     @JsonIgnoreProperties({"courses"})
     private Room room;
 
-    private int roomNumber;
-    @NotNull
-    @ManyToOne
-    private Status status;
-
     @NotEmpty
     private String meetingDays = "";
     @NotEmpty
     private String meetingTime = "";
+
+    @NotEmpty
+    private String instructor = "";
 
     @Override
     public String toString() {
@@ -54,20 +52,16 @@ public class Schedule extends AbstractEntity {
         return courseTitle;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
     public String getMeetingDays() {
         return meetingDays;
     }
 
     public String getMeetingTime() {
         return meetingTime;
+    }
+
+    public String getInstructor() {
+        return instructor;
     }
 
     public void setCourseCode(String courseCode) {
@@ -78,20 +72,16 @@ public class Schedule extends AbstractEntity {
         this.courseTitle = courseTitle;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public void setMeetingDays(String meetingDays) {
         this.meetingDays = meetingDays;
     }
 
     public void setMeetingTime(String meetingTime) {
         this.meetingTime = meetingTime;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
     }
 
 }

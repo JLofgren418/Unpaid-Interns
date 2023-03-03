@@ -3,7 +3,6 @@ package edu.unomaha.pkischeduler.data.service;
 
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.entity.Status;
 import edu.unomaha.pkischeduler.data.repository.*;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,11 @@ import java.util.List;
 
         private final CourseRepository courseRepository;
         private final RoomRepository roomRepository;
-        private final StatusRepository statusRepository;
 
         public CourseService(CourseRepository courseRepository,
-                             RoomRepository roomRepository,
-                             StatusRepository statusRepository) {
+                             RoomRepository roomRepository) {
             this.courseRepository = courseRepository;
             this.roomRepository = roomRepository;
-            this.statusRepository = statusRepository;
         }
 
         public List<Course> findAllCourses(String stringFilter) {
@@ -52,8 +48,5 @@ import java.util.List;
             return roomRepository.findAll();
         }
 
-        public List<Status> findAllStatuses(){
-            return statusRepository.findAll();
-        }
     }
 

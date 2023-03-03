@@ -24,12 +24,12 @@ public class Instructor extends AbstractEntity {
         this.name = name;
     }
 
-    public String getPreferences()
+    public String getAvailability()
     {
         return availability;
     }
 
-    public void setPreferences(String preferences)
+    public void setAvailability(String availability)
     {
         this.availability = availability;
     }

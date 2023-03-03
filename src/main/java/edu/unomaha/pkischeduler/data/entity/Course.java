@@ -32,14 +32,13 @@ public class Course extends AbstractEntity {
 
     private int expectedEnrollment;
 
+    private String sectionNumber;
+
     @ManyToOne
     @JoinColumn(name = "room_id")
     @NotNull
     @JsonIgnoreProperties({"courses"})
     private Room room;
-    @NotNull
-    @ManyToOne
-    private Status status;
 
     @Override
     public String toString() {
@@ -52,6 +51,10 @@ public class Course extends AbstractEntity {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public void setSectionNumber(String sectionNumber) {
+        this.sectionNumber = sectionNumber;
     }
 
     public String getCourseTitle() {
@@ -86,10 +89,6 @@ public class Course extends AbstractEntity {
         return expectedEnrollment;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }
@@ -122,7 +121,9 @@ public class Course extends AbstractEntity {
         this.expectedEnrollment = expectedEnrollment;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+
+    public String getSectionNumber() {
+        return sectionNumber;
     }
+
 }

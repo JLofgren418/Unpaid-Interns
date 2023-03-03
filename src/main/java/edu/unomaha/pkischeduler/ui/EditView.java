@@ -46,7 +46,7 @@ public class EditView extends VerticalLayout {
     }
 
     private void configureForm() {
-        form = new CourseForm(service.findAllRooms(), service.findAllStatuses());
+        form = new CourseForm(service.findAllRooms());
         form.setWidth("25em");
     }
 
@@ -54,7 +54,6 @@ public class EditView extends VerticalLayout {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("courseTitle", "meetingDays", "meetingTime");
-        grid.addColumn(course -> course.getStatus().getName()).setHeader("Status");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
