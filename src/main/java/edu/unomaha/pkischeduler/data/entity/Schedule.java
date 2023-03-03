@@ -12,28 +12,22 @@ import javax.validation.constraints.NotNull;
 public class Schedule extends AbstractEntity {
 
     @NotEmpty
-    private String courseCode = "";
-
-    @NotEmpty
-    private String courseTitle = "";
+    @ManyToOne
+    private Course course;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
     @NotNull
-    @JsonIgnoreProperties({"courses"})
+    @JsonIgnoreProperties({"schedules"})
     private Room room;
 
-    @NotEmpty
-    private String meetingDays = "";
-    @NotEmpty
-    private String meetingTime = "";
 
-    @NotEmpty
-    private String instructor = "";
+    public Course getCourse() {
+        return course;
+    }
 
-    @Override
-    public String toString() {
-        return courseTitle + " " + meetingDays;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Room getRoom() {
@@ -44,44 +38,5 @@ public class Schedule extends AbstractEntity {
         this.room = room;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public String getCourseTitle() {
-        return courseTitle;
-    }
-
-    public String getMeetingDays() {
-        return meetingDays;
-    }
-
-    public String getMeetingTime() {
-        return meetingTime;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
-
-    public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle;
-    }
-
-    public void setMeetingDays(String meetingDays) {
-        this.meetingDays = meetingDays;
-    }
-
-    public void setMeetingTime(String meetingTime) {
-        this.meetingTime = meetingTime;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
 
 }

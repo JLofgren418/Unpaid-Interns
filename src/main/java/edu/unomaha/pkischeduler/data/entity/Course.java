@@ -26,36 +26,28 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String meetingTime = "";
 
-    private String instructor = "";
-
     private String crossListings = "";
 
     private int expectedEnrollment;
 
+
     private String sectionNumber;
 
-    @ManyToOne
+  /*  @ManyToOne
     @JoinColumn(name = "room_id")
     @NotNull
     @JsonIgnoreProperties({"courses"})
-    private Room room;
+    private Room room;*/
+
+    @ManyToOne
+    @NotNull
+    private Instructor instructor;
 
     @Override
     public String toString() {
         return courseTitle + " " + meetingDays;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public void setSectionNumber(String sectionNumber) {
-        this.sectionNumber = sectionNumber;
-    }
 
     public String getCourseTitle() {
         return courseTitle;
@@ -77,16 +69,16 @@ public class Course extends AbstractEntity {
         return meetingTime;
     }
 
-    public String getInstructor() {
-        return instructor;
-    }
-
     public String getCrossListings() {
         return crossListings;
     }
 
     public int getExpectedEnrollment() {
         return expectedEnrollment;
+    }
+
+    public String getSectionNumber() {
+        return sectionNumber;
     }
 
     public void setCourseTitle(String courseTitle) {
@@ -109,10 +101,6 @@ public class Course extends AbstractEntity {
         this.meetingTime = meetingTime;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
     public void setCrossListings(String crossListings) {
         this.crossListings = crossListings;
     }
@@ -121,9 +109,16 @@ public class Course extends AbstractEntity {
         this.expectedEnrollment = expectedEnrollment;
     }
 
+    public void setSectionNumber(String sectionNumber) {
+        this.sectionNumber = sectionNumber;
+    }
 
-    public String getSectionNumber() {
-        return sectionNumber;
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
 }

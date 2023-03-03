@@ -54,7 +54,7 @@ public class EditView extends VerticalLayout {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("courseTitle", "meetingDays", "meetingTime");
-        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        //grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 

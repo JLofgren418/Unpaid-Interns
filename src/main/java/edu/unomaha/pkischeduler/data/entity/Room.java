@@ -18,7 +18,7 @@ public class Room extends AbstractEntity {
 
     @OneToMany(mappedBy = "room")
     @Nullable
-    private List<Course> courses = new LinkedList<>();
+    private List<Schedule> schedules = new LinkedList<>();
 
     private String roomType = "";
 
@@ -27,11 +27,11 @@ public class Room extends AbstractEntity {
 
     }
 
-    public Room(int number, int capacity, List<Course> courses, String roomType)
+    public Room(int number, int capacity, List<Schedule> schedules, String roomType)
     {
         this.number = number;
         this.capacity = capacity;
-        this.courses = courses;
+        this.schedules = schedules;
         this.roomType = roomType;
     }
 
@@ -43,12 +43,12 @@ public class Room extends AbstractEntity {
         this.number = number;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Schedule> getSchedules() {
+        return schedules;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCourses(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     public String toString() {

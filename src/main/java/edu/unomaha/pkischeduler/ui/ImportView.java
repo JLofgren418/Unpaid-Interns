@@ -48,8 +48,13 @@ public class ImportView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("schedule-grid");
         grid.setSizeFull();
-        grid.setColumns("courseCode", "courseTitle", "meetingDays", "meetingTime");
-        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.setColumns();//remove to check db item
+        grid.addColumn(course -> course.getCourse().getCourseCode()).setHeader("Course Code");
+        grid.addColumn(course -> course.getCourse().getCourseTitle()).setHeader("Course Title");
+        grid.addColumn(course -> course.getCourse().getMeetingTime()).setHeader("Meeting time");
+        grid.addColumn(course -> course.getCourse().getMeetingDays()).setHeader("Meeting Days");
+        grid.addColumn(course -> course.getCourse().getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(room -> room.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
