@@ -29,7 +29,7 @@ public class CourseForm extends FormLayout {
         addClassName("contact-form");
 
         room.setItems(rooms);
-        room.setItemLabelGenerator(Room::getNumber);
+        room.setItemLabelGenerator(Room::toString);
         status.setItems(statuses);
         status.setItemLabelGenerator(Status::getName);
 

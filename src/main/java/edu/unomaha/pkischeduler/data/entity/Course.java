@@ -11,11 +11,26 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Course extends AbstractEntity {
 
+
     @NotEmpty
     private String courseTitle = "";
 
     @NotEmpty
+    private String courseCode = "";
+
+    private String sectionType = "";
+
+    @NotEmpty
     private String meetingDays = "";
+
+    @NotEmpty
+    private String meetingTime = "";
+
+    private String instructor = "";
+
+    private String crossListings = "";
+
+    private int expectedEnrollment;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
@@ -26,24 +41,9 @@ public class Course extends AbstractEntity {
     @ManyToOne
     private Status status;
 
-    @NotEmpty
-    private String meetingTime = "";
-
     @Override
     public String toString() {
         return courseTitle + " " + meetingDays;
-    }
-    public String getCourseTitle() {
-        return courseTitle;
-    }
-    public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle;
-    }
-    public String getMeetingDays() {
-        return meetingDays;
-    }
-    public void setMeetingDays(String meetingDays) {
-        this.meetingDays = meetingDays;
     }
 
     public Room getRoom() {
@@ -54,18 +54,75 @@ public class Course extends AbstractEntity {
         this.room = room;
     }
 
-    public Status getStatus() {
-        return status;
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public String getCourseCode() {
+        return courseCode;
     }
+
+    public String getSectionType() {
+        return sectionType;
+    }
+
+    public String getMeetingDays() {
+        return meetingDays;
+    }
+
     public String getMeetingTime() {
         return meetingTime;
     }
 
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public String getCrossListings() {
+        return crossListings;
+    }
+
+    public int getExpectedEnrollment() {
+        return expectedEnrollment;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public void setSectionType(String sectionType) {
+        this.sectionType = sectionType;
+    }
+
+    public void setMeetingDays(String meetingDays) {
+        this.meetingDays = meetingDays;
+    }
+
     public void setMeetingTime(String meetingTime) {
         this.meetingTime = meetingTime;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public void setCrossListings(String crossListings) {
+        this.crossListings = crossListings;
+    }
+
+    public void setExpectedEnrollment(int expectedEnrollment) {
+        this.expectedEnrollment = expectedEnrollment;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
