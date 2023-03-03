@@ -9,19 +9,21 @@ Main screen of the application allows you to import data. Edit screen allows you
 ## Release Notes
 
 Release 0.0
+
 This release is more developed than what was originally planned in the original project plan. Our original goal was to simply have a basic test function running, but have managed to gain ground on the database and UI sections of the application.
 
 UI
-Preliminary UI design utilizing vaadin
-Added ability to upload local files into the application
-Added page for importing schedule
-Added page for exporting working schedule
-Added page for editing working schedule
-Created ability to sort course list by title, day, time, status (room assigned/room not assigned), and current room
-Added ability to search for course
-Database
-Created prelimary database for testing
-Created MYSQL server for use with public application
+
+* Preliminary UI design utilizing vaadin
+* Added ability to upload local files into the application
+* Added page for importing schedule
+* Added page for exporting working schedule
+* Added page for editing working schedule
+* Created ability to sort course list by title, day, time, status (room assigned/room not assigned), and current room
+* Added ability to search for course
+* Database
+* Created prelimary database for testing
+* Created MYSQL server for use with public application
 
 ## Running the application
 
