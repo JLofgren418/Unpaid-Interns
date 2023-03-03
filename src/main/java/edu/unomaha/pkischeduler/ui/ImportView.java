@@ -3,9 +3,7 @@ package edu.unomaha.pkischeduler.ui;
 
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
-import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Schedule;
-import edu.unomaha.pkischeduler.data.service.CourseService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -19,7 +17,6 @@ import edu.unomaha.pkischeduler.data.service.ScheduleService;
 
 
 import java.util.Collections;
-import java.util.stream.Stream;
 
 @Route(value = "")
 @PageTitle("Import")
