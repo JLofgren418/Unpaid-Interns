@@ -5,6 +5,7 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.entity.Schedule;
 import edu.unomaha.pkischeduler.data.service.CourseService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -15,6 +16,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import edu.unomaha.pkischeduler.data.service.ScheduleService;
 
 
 import java.util.Collections;
@@ -22,15 +24,15 @@ import java.util.Collections;
 @Route(value = "export")
 @PageTitle("Export")
 public class ExportView extends VerticalLayout {
-    Grid<Course> grid = new Grid<>(Course.class);
+    Grid<Schedule> grid = new Grid<>(Schedule.class);
     TextField filterText = new TextField();
-    CourseService service;
+    ScheduleService service;
 
     Button exportCSV = new Button("Export CSV");
 
-    public ExportView(CourseService service) {
+    public ExportView(ScheduleService service) {
         this.service = service;
-        addClassName("list-view");
+        addClassName("export-view");
         setSizeFull();
         configureGrid();
         add(getToolbar(), getContent());
@@ -48,7 +50,7 @@ public class ExportView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("courseTitle", "meetingDays", "meetingTime");
+        //grid.setColumns("courseTitle", "meetingDays", "meetingTime");
         //grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
@@ -77,7 +79,7 @@ public class ExportView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllCourses(filterText.getValue()));
+        grid.setItems(service.findAllSchedules(filterText.getValue()));
     }
 
 

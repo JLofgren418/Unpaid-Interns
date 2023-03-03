@@ -30,7 +30,7 @@ public class ImportView extends VerticalLayout {
 
     public ImportView(ScheduleService service) {
         this.service = service;
-        addClassName("list-view");
+        addClassName("import-view");
         setSizeFull();
         configureGrid();
         add(getToolbar(), getContent());
