@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 public class Course extends AbstractEntity {
 
@@ -30,12 +31,11 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String crossListings = "";
 
-    @NotEmpty
-    private int expectedEnrollment;
+    @NotNull
+    private int expectedEnrollment = 0;
 
-
     @NotEmpty
-    private String sectionNumber;
+    private String sectionNumber = "";
 
     @ManyToOne
     @JoinColumn(name = "room_id")
@@ -47,6 +47,19 @@ public class Course extends AbstractEntity {
     @NotNull
     private Instructor instructor;
 
+    public Course()
+    {
+
+    }
+
+    public Course(String courseTitle, String courseCode, String sectionType, String meetingTime, String meetingDays)
+    {
+        this.courseTitle = courseTitle;
+        this.courseCode = courseCode;
+        this.sectionType = sectionType;
+        this.meetingTime = meetingTime;
+        this.meetingDays = meetingDays;
+    }
     @Override
     public String toString() {
         return courseCode + " " + courseTitle;

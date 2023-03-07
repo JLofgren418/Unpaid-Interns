@@ -7,11 +7,13 @@ import edu.unomaha.pkischeduler.data.repository.CourseRepository;
 import edu.unomaha.pkischeduler.data.repository.InstructorRepository;
 import edu.unomaha.pkischeduler.data.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.vaadin.crudui.crud.CrudListener;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class CourseService {
+public class CourseService implements CrudListener<Course> {
 
     private final CourseRepository courseRepository;
     private final RoomRepository roomRepository;
@@ -25,6 +27,7 @@ public class CourseService {
         this.roomRepository = roomRepository;
         this.instructorRepository = instructorRepository;
     }
+
 
     public List<Course> findAllCourses(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
@@ -43,4 +46,25 @@ public class CourseService {
     }
 
 
+    @Override
+    public Collection<Course> findAll() {
+
+        return courseRepository.findAll();
+    }
+
+    @Override
+    public Course add(Course course) {
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public Course update(Course course) {
+
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public void delete(Course course) {
+        courseRepository.delete(course);
+    }
 }
