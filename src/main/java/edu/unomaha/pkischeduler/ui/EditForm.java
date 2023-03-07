@@ -2,42 +2,43 @@ package edu.unomaha.pkischeduler.ui;
 
 
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.entity.Status;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.util.List;
 
-public class CourseForm extends FormLayout {
+public class EditForm extends FormLayout {
+
+
+    TextField courseCode = new TextField("Course Code");
     TextField courseTitle = new TextField("Course Name");
     TextField meetingDays = new TextField("Meeting Days");
     TextField meetingTime = new TextField("Meeting Time");
-    ComboBox<Status> status = new ComboBox<>("Status");
+    TextField instructor = new TextField("Instructor");
     ComboBox<Room> room = new ComboBox<>("Room");
+
 
     Button save = new Button("Save");
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
-    public CourseForm(List<Room> rooms, List<Status> statuses) {
-        addClassName("contact-form");
+    public EditForm(List<Room> rooms) {
+        addClassName("edit-form");
 
         room.setItems(rooms);
-        room.setItemLabelGenerator(Room::getNumber);
-        status.setItems(statuses);
-        status.setItemLabelGenerator(Status::getName);
+        room.setItemLabelGenerator(Room::toString);
 
-        add(courseTitle,
+        add(courseCode,
+                courseTitle,
                 meetingDays,
                 meetingTime,
+                instructor,
                 room,
-                status,
                 createButtonsLayout());
     }
 

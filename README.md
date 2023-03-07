@@ -1,17 +1,19 @@
 # PKI Scheduler
-PKI schedule is an application designed to simplify building schedules. It will include options to import data, edit data, edit rules for building schedules, and exporting of the final schedule. 
 
-Application is accessible through the web interface. 
+PKI schedule is an application designed to simplify building schedules. It will include options to import data, edit data, edit rules for building schedules, and exporting of the final schedule.
 
-Main screen of the application allows you to import data.
-Edit screen allows you to make changed to the imported data.
-Additional GUI features will be added as we implement them.
+Application is accessible through the web interface.
 
-# Release Notes
+Main screen of the application allows you to import data. Edit screen allows you to make changed to the imported data. Additional GUI features will be added as we implement them.
+
+## Release Notes
+
 Release 0.0
 
 This release is more developed than what was originally planned in the original project plan. Our original goal was to simply have a basic test function running, but have managed to gain ground on the database and UI sections of the application.
-## UI 
+
+UI
+
 * Preliminary UI design utilizing vaadin
 * Added ability to upload local files into the application
 * Added page for importing schedule
@@ -19,9 +21,10 @@ This release is more developed than what was originally planned in the original 
 * Added page for editing working schedule
 * Created ability to sort course list by title, day, time, status (room assigned/room not assigned), and current room
 * Added ability to search for course
-## Database
+* Database
 * Created prelimary database for testing
 * Created MYSQL server for use with public application
+
 ## Running the application
 
 The project is a standard Maven project. To run it from the command line,
@@ -50,5 +53,4 @@ Once the JAR file is built, you can run it using
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
 ## Additional Branches 
-* The alternative branch for this project is called Preliminary Which for now is only slightly
-behind main but is for testing as well as other odds and ends.
+The alternative branch for this project is called Preliminary Which for now is only slightly behind main but is for testing as well as other odds and ends.

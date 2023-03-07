@@ -3,8 +3,7 @@ package edu.unomaha.pkischeduler.ui;
 
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
-import edu.unomaha.pkischeduler.data.entity.Course;
-import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.data.entity.Schedule;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -14,6 +13,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import edu.unomaha.pkischeduler.data.service.ScheduleService;
 
 
 import java.util.Collections;
@@ -21,13 +21,13 @@ import java.util.Collections;
 @Route(value = "")
 @PageTitle("Import")
 public class ImportView extends VerticalLayout {
-    Grid<Course> grid = new Grid<>(Course.class);
+    Grid<Schedule> grid = new Grid<>(Schedule.class);
     TextField filterText = new TextField();
-    CourseService service;
+    ScheduleService service;
 
-    public ImportView(CourseService service) {
+    public ImportView(ScheduleService service) {
         this.service = service;
-        addClassName("list-view");
+        addClassName("import-view");
         setSizeFull();
         configureGrid();
         add(getToolbar(), getContent());
@@ -43,11 +43,15 @@ public class ImportView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        grid.addClassNames("contact-grid");
+        grid.addClassNames("schedule-grid");
         grid.setSizeFull();
-        grid.setColumns("courseTitle", "meetingDays", "meetingTime");
-        grid.addColumn(course -> course.getStatus().getName()).setHeader("Status");
-        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.setColumns();//remove to check db item
+        grid.addColumn(course -> course.getCourse().getCourseCode()).setHeader("Course Code");
+        grid.addColumn(course -> course.getCourse().getCourseTitle()).setHeader("Course Title");
+        grid.addColumn(course -> course.getCourse().getMeetingTime()).setHeader("Meeting time");
+        grid.addColumn(course -> course.getCourse().getMeetingDays()).setHeader("Meeting Days");
+        grid.addColumn(course -> course.getCourse().getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(room -> room.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -71,7 +75,9 @@ public class ImportView extends VerticalLayout {
                 redirect2.getUI().ifPresent(ui ->
                         ui.navigate("export")));
 
-        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,multiFileUpload);
+        Button process = new Button("Process Schedule");
+
+        HorizontalLayout h1 = new HorizontalLayout(process,redirect1,redirect2,multiFileUpload);
         h1.setAlignItems(Alignment.BASELINE);
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText,h1);
@@ -83,6 +89,7 @@ public class ImportView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllCourses(filterText.getValue()));
+
+       grid.setItems(service.findAllSchedules(filterText.getValue()));
     }
 }
