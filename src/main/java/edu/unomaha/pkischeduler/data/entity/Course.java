@@ -1,9 +1,13 @@
 package edu.unomaha.pkischeduler.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Course extends AbstractEntity {
@@ -15,6 +19,7 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String courseCode = "";
 
+    @NotEmpty
     private String sectionType = "";
 
     @NotEmpty
@@ -23,26 +28,41 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String meetingTime = "";
 
+    @NotEmpty
     private String crossListings = "";
 
-    private int expectedEnrollment;
+    @NotNull
+    private int expectedEnrollment = 0;
 
+    @NotEmpty
+    private String sectionNumber = "";
 
-    private String sectionNumber;
-
-  /*  @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
     @NotNull
     @JsonIgnoreProperties({"courses"})
-    private Room room;*/
+    private Room room;
 
     @ManyToOne
     @NotNull
     private Instructor instructor;
 
+    public Course()
+    {
+
+    }
+
+    public Course(String courseTitle, String courseCode, String sectionType, String meetingTime, String meetingDays)
+    {
+        this.courseTitle = courseTitle;
+        this.courseCode = courseCode;
+        this.sectionType = sectionType;
+        this.meetingTime = meetingTime;
+        this.meetingDays = meetingDays;
+    }
     @Override
     public String toString() {
-        return courseTitle + " " + meetingDays;
+        return courseCode + " " + courseTitle;
     }
 
 
@@ -116,6 +136,14 @@ public class Course extends AbstractEntity {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
 }
