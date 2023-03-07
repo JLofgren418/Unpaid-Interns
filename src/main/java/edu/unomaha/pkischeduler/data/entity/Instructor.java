@@ -8,9 +8,11 @@ public class Instructor extends AbstractEntity {
 
     private String availability;
 
-    public Instructor() {
+    public Instructor()
+    {
 
     }
+
     public Instructor(String name, String availability) {
         this.name = name;
         this.availability = availability;

@@ -1,6 +1,9 @@
 package edu.unomaha.pkischeduler.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +18,7 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String courseCode = "";
 
+    @NotEmpty
     private String sectionType = "";
 
     @NotEmpty
@@ -23,18 +27,21 @@ public class Course extends AbstractEntity {
     @NotEmpty
     private String meetingTime = "";
 
+    @NotEmpty
     private String crossListings = "";
 
+    @NotEmpty
     private int expectedEnrollment;
 
 
+    @NotEmpty
     private String sectionNumber;
 
-  /*  @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
     @NotNull
     @JsonIgnoreProperties({"courses"})
-    private Room room;*/
+    private Room room;
 
     @ManyToOne
     @NotNull
@@ -42,7 +49,7 @@ public class Course extends AbstractEntity {
 
     @Override
     public String toString() {
-        return courseTitle + " " + meetingDays;
+        return courseCode + " " + courseTitle;
     }
 
 

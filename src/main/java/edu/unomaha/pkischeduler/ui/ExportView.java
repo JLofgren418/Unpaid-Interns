@@ -1,7 +1,6 @@
 package edu.unomaha.pkischeduler.ui;
 
 
-import edu.unomaha.pkischeduler.data.entity.Schedule;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,21 +10,19 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import edu.unomaha.pkischeduler.data.service.ScheduleService;
-
-
-import java.util.Collections;
+import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.service.CourseService;
 
 @Route(value = "export")
 @PageTitle("Export")
 public class ExportView extends VerticalLayout {
-    Grid<Schedule> grid = new Grid<>(Schedule.class);
+    Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
-    ScheduleService service;
+    CourseService service;
 
     Button exportCSV = new Button("Export CSV");
 
-    public ExportView(ScheduleService service) {
+    public ExportView(CourseService service) {
         this.service = service;
         addClassName("export-view");
         setSizeFull();
@@ -45,8 +42,13 @@ public class ExportView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        //grid.setColumns("courseTitle", "meetingDays", "meetingTime");
-        //grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.setColumns();
+        grid.addColumn(Course::getCourseCode).setHeader("Course Code");
+        grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
+        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
+        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Course Code");
+        //grid.addColumn(room -> room.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -74,7 +76,7 @@ public class ExportView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllSchedules(filterText.getValue()));
+        grid.setItems(service.findAllCourses(filterText.getValue()));
     }
 
 

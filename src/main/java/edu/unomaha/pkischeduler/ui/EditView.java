@@ -1,7 +1,6 @@
 package edu.unomaha.pkischeduler.ui;
 
 
-import edu.unomaha.pkischeduler.data.entity.Schedule;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,20 +10,19 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import edu.unomaha.pkischeduler.data.service.ScheduleService;
-
-
-import java.util.Collections;
+import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.service.CourseService;
 
 @Route(value = "edit")
 @PageTitle("Edit")
 public class EditView extends VerticalLayout {
-    Grid<Schedule> grid = new Grid<>(Schedule.class);
+    Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
     EditForm form;
-    ScheduleService service;
+    CourseService service;
 
-    public EditView(ScheduleService service) {
+
+    public EditView(CourseService service) {
         this.service = service;
         addClassName("edit-view");
         setSizeFull();
@@ -51,9 +49,15 @@ public class EditView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        //grid.setColumns("courseTitle", "meetingDays", "meetingTime");
-        //grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.setColumns();
+        grid.addColumn(Course::getCourseCode).setHeader("Course Code");
+        grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
+        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
+        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Course Code");
+        //grid.addColumn(room -> room.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
     }
 
     private HorizontalLayout getToolbar() {
@@ -63,7 +67,6 @@ public class EditView extends VerticalLayout {
         filterText.addValueChangeListener(e -> updateList());
 
         Button addContactButton = new Button("Add Course");
-        ;
 
         Button redirect1 = new Button("Go to Import");
         redirect1.addClickListener(e ->
@@ -83,6 +86,6 @@ public class EditView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllSchedules(filterText.getValue()));
+        grid.setItems(service.findAllCourses(filterText.getValue()));
     }
 }

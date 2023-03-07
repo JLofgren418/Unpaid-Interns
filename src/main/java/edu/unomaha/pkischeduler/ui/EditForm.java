@@ -10,10 +10,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 
+
 import java.util.List;
 
 public class EditForm extends FormLayout {
-
 
     TextField courseCode = new TextField("Course Code");
     TextField courseTitle = new TextField("Course Name");
@@ -21,8 +21,6 @@ public class EditForm extends FormLayout {
     TextField meetingTime = new TextField("Meeting Time");
     TextField instructor = new TextField("Instructor");
     ComboBox<Room> room = new ComboBox<>("Room");
-
-
     Button save = new Button("Save");
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
