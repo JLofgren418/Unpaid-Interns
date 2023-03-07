@@ -47,8 +47,8 @@ public class ExportView extends VerticalLayout {
         grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
         grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
         grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
-        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Course Code");
-        //grid.addColumn(room -> room.getRoom().getNumber()).setHeader("Room");
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 

@@ -17,17 +17,25 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 public class EditView extends VerticalLayout {
     Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
-    EditForm form;
     CourseService service;
 
 
     public EditView(CourseService service) {
         this.service = service;
         var crud = new GridCrud<>(Course.class, service);
+        Grid<Course> grid = crud.getGrid();
+        grid.setColumns();
+        grid.addColumn(Course::getCourseCode).setHeader("Course Code");
+        grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
+        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
+        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         setSizeFull();
+        crud.setSizeFull();
+        //crud.getCrudFormFactory().setVisibleProperties("courseCode", "courseTitle");
         add(getToolbar(), crud);
     }
-
     private HorizontalLayout getToolbar() {
 
         Button redirect1 = new Button("Go to Import");
