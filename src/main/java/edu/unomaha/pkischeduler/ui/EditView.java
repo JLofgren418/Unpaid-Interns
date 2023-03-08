@@ -27,17 +27,18 @@ public class EditView extends VerticalLayout {
     CourseService service;
     Crud<Course>  crud;
 
-    Course course;
-
     public EditView(CourseService service) {
         this.service = service;
         grid.setItems(service.getCourses());
         crud = new Crud<>(Course.class, grid, createEditor());
+        crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
+        crud.addSaveListener(click -> grid.setItems(service.getCourses()));
+        crud.addDeleteListener(click -> service.delete(crud.getEditor().getItem()));
+        crud.addDeleteListener(click -> grid.setItems(service.getCourses()));
         setupGrid();
         crud.setSizeFull();
         add(getToolbar(), crud);
-        crud.getDeleteButton().addClickListener(click -> service.delete(crud.getEditor().getItem()));
-        //crud.getSaveButton().addClickListener(click -> service.add(crud.getEditor().getItem()));
+
     }
     private HorizontalLayout getToolbar() {
 
@@ -112,6 +113,8 @@ public class EditView extends VerticalLayout {
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         Crud.addEditColumn(grid);
+
     }
+
 
 }
