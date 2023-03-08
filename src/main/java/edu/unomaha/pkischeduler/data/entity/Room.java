@@ -3,14 +3,13 @@ package edu.unomaha.pkischeduler.data.entity;
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 public class Room extends AbstractEntity {
-    @NotBlank
+    @NotEmpty
     private int number;
 
     @NotEmpty
@@ -71,6 +70,7 @@ public class Room extends AbstractEntity {
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
+
 
 
 

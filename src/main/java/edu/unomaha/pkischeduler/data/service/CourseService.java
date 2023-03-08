@@ -17,7 +17,6 @@ public class CourseService implements CrudListener<Course> {
 
     private final CourseRepository courseRepository;
     private final RoomRepository roomRepository;
-
     private final InstructorRepository instructorRepository;
 
     public CourseService(CourseRepository courseRepository,
@@ -28,7 +27,7 @@ public class CourseService implements CrudListener<Course> {
         this.instructorRepository = instructorRepository;
     }
 
-
+    //finds all repositories with a filter
     public List<Course> findAllCourses(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return courseRepository.findAll();
@@ -37,14 +36,18 @@ public class CourseService implements CrudListener<Course> {
         }
     }
 
-    public List<Room> findAllRooms() {
+    public Collection<Room> findAllRooms() {
         return roomRepository.findAll();
     }
 
-    public List<Instructor> findAllInstructors() {
+    public Collection<Instructor> findAllInstructors() {
         return instructorRepository.findAll();
     }
 
+    public List<Course> getCourses() {
+
+        return courseRepository.findAll();
+    }
 
     @Override
     public Collection<Course> findAll() {

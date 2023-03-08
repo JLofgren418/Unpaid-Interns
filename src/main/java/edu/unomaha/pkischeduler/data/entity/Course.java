@@ -32,7 +32,7 @@ public class Course extends AbstractEntity {
     private String crossListings = "";
 
     @NotNull
-    private int expectedEnrollment = 0;
+    private double expectedEnrollment = 0;
 
     @NotEmpty
     private String sectionNumber = "";
@@ -90,7 +90,7 @@ public class Course extends AbstractEntity {
         return crossListings;
     }
 
-    public int getExpectedEnrollment() {
+    public double getExpectedEnrollment() {
         return expectedEnrollment;
     }
 
@@ -122,7 +122,7 @@ public class Course extends AbstractEntity {
         this.crossListings = crossListings;
     }
 
-    public void setExpectedEnrollment(int expectedEnrollment) {
+    public void setExpectedEnrollment(double expectedEnrollment) {
         this.expectedEnrollment = expectedEnrollment;
     }
 
@@ -145,5 +145,6 @@ public class Course extends AbstractEntity {
     public void setRoom(Room room) {
         this.room = room;
     }
+
 
 }
