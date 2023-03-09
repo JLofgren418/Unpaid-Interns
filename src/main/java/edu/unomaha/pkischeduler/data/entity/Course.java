@@ -14,10 +14,10 @@ public class Course extends AbstractEntity {
 
 
     @NotEmpty
-    private String courseTitle = "";
+    private String courseCode = "";
 
     @NotEmpty
-    private String courseCode = "";
+    private String courseTitle = "";
 
     @NotEmpty
     private String sectionType = "";
@@ -52,13 +52,21 @@ public class Course extends AbstractEntity {
 
     }
 
-    public Course(String courseTitle, String courseCode, String sectionType, String meetingTime, String meetingDays)
+    public Course(String courseCode, String courseTitle, String sectionType, String meetingDays,
+                  String meetingTime, String crossListings, double expectedEnrollment,
+                  String sectionNumber, Instructor instructor, Room room)
     {
-        this.courseTitle = courseTitle;
         this.courseCode = courseCode;
+        this.courseTitle = courseTitle;
         this.sectionType = sectionType;
-        this.meetingTime = meetingTime;
         this.meetingDays = meetingDays;
+        this.meetingTime = meetingTime;
+        this.crossListings = crossListings;
+        this.expectedEnrollment = expectedEnrollment;
+        this.sectionNumber = sectionNumber;
+        this.instructor = instructor;
+        this.room = room;
+
     }
     @Override
     public String toString() {

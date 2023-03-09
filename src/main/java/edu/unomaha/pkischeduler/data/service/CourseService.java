@@ -70,4 +70,22 @@ public class CourseService implements CrudListener<Course> {
     public void delete(Course course) {
         courseRepository.delete(course);
     }
+
+
+    public Room addRoom(Room room)
+    {
+        return roomRepository.save(room);
+    }
+
+    public Instructor addInstructor(Instructor instructor)
+    {
+        return instructorRepository.save(instructor);
+    }
+
+    public Room getDefaultRoom()
+    {
+        Long id = 67L;
+        return roomRepository.getReferenceById(id);
+    }
+
 }
