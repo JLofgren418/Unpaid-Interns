@@ -72,8 +72,8 @@ public class EditView extends VerticalLayout {
         ComboBox<Room> room = new ComboBox<>("Room");
         ComboBox<Instructor> instructor = new ComboBox<>("Instructor");
 
-        instructor.setItems(service.findAllInstructors());
         room.setItems(service.findAllRooms());
+        instructor.setItems(service.findAllInstructors());
 
         FormLayout form = new FormLayout(courseTitle, courseCode, sectionType,
                 meetingDays, meetingTime, crossListings, expectedEnrollment,

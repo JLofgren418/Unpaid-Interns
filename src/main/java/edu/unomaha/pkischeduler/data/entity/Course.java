@@ -44,7 +44,9 @@ public class Course extends AbstractEntity {
     private Room room;
 
     @ManyToOne
+    @JoinColumn(name = "instructor_id")
     @NotNull
+    @JsonIgnoreProperties({"courses"})
     private Instructor instructor;
 
     public Course()

@@ -36,11 +36,13 @@ public class CourseService implements CrudListener<Course> {
         }
     }
 
-    public Collection<Room> findAllRooms() {
+    public List<Room> findAllRooms() {
+
         return roomRepository.findAll();
     }
 
-    public Collection<Instructor> findAllInstructors() {
+    public List<Instructor> findAllInstructors() {
+
         return instructorRepository.findAll();
     }
 

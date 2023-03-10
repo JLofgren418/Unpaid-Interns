@@ -158,7 +158,6 @@ public class ImportView extends VerticalLayout {
                     {
                         //Process variables before adding them to a new object;
                         if(crossListings.equals("")) {crossListings = "None";}
-                        if(sectionNumber.equals("1")){sectionNumber = "001"; }
                         double expectedEnrollment = Double.parseDouble(maxEnrollment);
                         instructorName = instructorName.replaceAll("[^.,a-zA-Z]", " ");
                         instructorName = instructorName.trim();

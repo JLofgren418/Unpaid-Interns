@@ -14,7 +14,7 @@ public class Instructor extends AbstractEntity {
     @NotEmpty
     private String availability;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "instructor")
     @Nullable
     private List<Course> courses = new LinkedList<>();
 
@@ -45,4 +45,8 @@ public class Instructor extends AbstractEntity {
         this.availability = availability;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
