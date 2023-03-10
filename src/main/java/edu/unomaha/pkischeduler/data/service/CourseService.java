@@ -88,4 +88,14 @@ public class CourseService implements CrudListener<Course> {
         return roomRepository.getReferenceById(id);
     }
 
+    public Instructor exstingInstructor(String name)
+    {
+            if (instructorRepository.existsByName(name))
+            {
+                return instructorRepository.findByName(name);
+            }
+
+       return null;
+    }
+
 }

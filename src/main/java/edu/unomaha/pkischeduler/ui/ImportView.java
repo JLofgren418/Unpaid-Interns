@@ -25,7 +25,6 @@ import edu.unomaha.pkischeduler.data.service.CourseService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 @Route(value = "")
@@ -64,10 +63,12 @@ public class ImportView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns();
         grid.addColumn(Course::getCourseCode).setHeader("Course Code");
+        grid.addColumn(Course::getSectionNumber).setHeader("Section");
         grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
         grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
         grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -116,7 +117,6 @@ public class ImportView extends VerticalLayout {
                     .getInputStream(fileName);
             long contentLength = event.getContentLength();
             String mimeType = event.getMIMEType();
-
             // Do something with the file data
             processCSV(fileData, fileName, contentLength, mimeType);
         });
@@ -129,9 +129,6 @@ public class ImportView extends VerticalLayout {
     {
         CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
         CSVReader reader = new CSVReaderBuilder(new InputStreamReader(fileData)).withCSVParser(parser).build();
-        ArrayList<Course> courses = new ArrayList<Course>();
-        ArrayList<Instructor> instructors = new ArrayList<Instructor>();
-        int processedRows = 0;
 
         try{
             List<String[]> entries  = reader.readAll();
@@ -185,15 +182,22 @@ public class ImportView extends VerticalLayout {
 
                         //Make new objects from csv line
                         Room defaultRoom = service.getDefaultRoom();
-                        Instructor instructor = new Instructor(instructorName, "Any");
+
+                        Instructor instructor = service.exstingInstructor(instructorName);
+
+                        if(instructor == null)
+                        {
+                            instructor = new Instructor(instructorName, "Any");
+                            //instructors.add(instructor);
+                            service.addInstructor(instructor);
+                        }
+
                         Course course = new Course(courseCode, courseTitle, sectionType,
                                 meetingDays, meetingTime, crossListings, expectedEnrollment,
                                 sectionNumber, instructor, defaultRoom);
 
-                        //add objects to array to check for null or duplicate
-                        courses.add(processedRows, course);
-                        instructors.add(processedRows, instructor);
-                        processedRows++;
+                        service.add(course);
+
                     }
 
                 }
@@ -204,32 +208,7 @@ public class ImportView extends VerticalLayout {
         {
             e.printStackTrace();
         }
-            //send arrays to commit data function for null and duplicate verification
-           commitData(courses, instructors);
-    }
-
-    //this method will provide null and duplicate verification before committing objects to DB
-    private void commitData(ArrayList<Course> courses, ArrayList<Instructor> instructors)
-    {
-        for(int i = 0; i < instructors.size(); i++)
-        {
-            if(instructors.get(i) != null)
-            {
-                service.addInstructor(instructors.get(i));
-            }
-            else
-            {
-                System.out.println("foundNull");
-            }
-        }
-        for(int i = 0; i < courses.size(); i++)
-        {
-            if(courses.get(i) != null)
-            {
-                service.add(courses.get(i));
-            }
-        }
-
+        grid.setItems(service.getCourses());
     }
 
 }
