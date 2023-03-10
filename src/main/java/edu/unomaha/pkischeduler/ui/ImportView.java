@@ -166,17 +166,17 @@ public class ImportView extends VerticalLayout {
                         String meetingTime;//set meeting time and days from meeting pattern
                         if(meetingPattern.charAt(2) != 'h') {
                             meetingDays = meetingPattern.substring(0, 2);
-                            meetingTime = meetingPattern.substring(2, meetingPattern.length());
+                            meetingTime = meetingPattern.substring(2);
                             if (meetingTime.charAt(0) == ' ') {
-                                meetingTime = meetingTime.substring(1, meetingTime.length());
+                                meetingTime = meetingTime.substring(1);
                             }
                         }
                         else
                         {
                             meetingDays = meetingPattern.substring(0, 3);
-                            meetingTime = meetingPattern.substring(3, meetingPattern.length());
+                            meetingTime = meetingPattern.substring(3);
                             if (meetingTime.charAt(0) == ' ') {
-                                meetingTime = meetingTime.substring(1, meetingTime.length());
+                                meetingTime = meetingTime.substring(1);
                             }
                         }
 
