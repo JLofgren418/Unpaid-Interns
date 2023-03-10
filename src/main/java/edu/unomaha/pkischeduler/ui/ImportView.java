@@ -161,7 +161,7 @@ public class ImportView extends VerticalLayout {
                         if(sectionNumber.equals("1")){sectionNumber = "001"; }
                         double expectedEnrollment = Double.parseDouble(maxEnrollment);
                         instructorName = instructorName.replaceAll("[^.,a-zA-Z]", " ");
-                        instructorName.trim();
+                        instructorName = instructorName.trim();
                         String meetingDays;
                         String meetingTime;//set meeting time and days from meeting pattern
                         if(meetingPattern.charAt(2) != 'h') {
