@@ -41,11 +41,11 @@ public class Room extends AbstractEntity {
         this.number = number;
     }
 
-    public List<Course> getSchedules() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setSchedules(List<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

@@ -76,7 +76,7 @@ public class ExportView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllCourses(filterText.getValue()));
+        grid.setItems(service.filterCourses(filterText.getValue()));
     }
 
 

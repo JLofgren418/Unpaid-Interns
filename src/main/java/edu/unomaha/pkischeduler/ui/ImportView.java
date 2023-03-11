@@ -47,7 +47,7 @@ public class ImportView extends VerticalLayout {
         importCSV();
         add(getToolbar(), getContent());
         updateList();
-        process.addClickListener(click -> grid.setItems(service.getCourses()));
+        process.addClickListener(click -> grid.setItems(service.getAllCourses()));
     }
 
     private Component getContent() {
@@ -101,7 +101,7 @@ public class ImportView extends VerticalLayout {
 
     private void updateList() {
 
-       grid.setItems(service.findAllCourses(filterText.getValue()));
+       grid.setItems(service.filterCourses(filterText.getValue()));
     }
 
     private void importCSV()
@@ -207,7 +207,7 @@ public class ImportView extends VerticalLayout {
         {
             e.printStackTrace();
         }
-        grid.setItems(service.getCourses());
+        grid.setItems(service.getAllCourses());
     }
 
 }

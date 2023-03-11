@@ -29,12 +29,12 @@ public class EditView extends VerticalLayout {
 
     public EditView(CourseService service) {
         this.service = service;
-        grid.setItems(service.getCourses());
+        grid.setItems(service.getAllCourses());
         crud = new Crud<>(Course.class, grid, createEditor());
         crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
-        crud.addSaveListener(click -> grid.setItems(service.getCourses()));
+        crud.addSaveListener(click -> grid.setItems(service.getAllCourses()));
         crud.addDeleteListener(click -> service.delete(crud.getEditor().getItem()));
-        crud.addDeleteListener(click -> grid.setItems(service.getCourses()));
+        crud.addDeleteListener(click -> grid.setItems(service.getAllCourses()));
         setupGrid();
         crud.setSizeFull();
         add(getToolbar(), crud);
@@ -72,8 +72,8 @@ public class EditView extends VerticalLayout {
         ComboBox<Room> room = new ComboBox<>("Room");
         ComboBox<Instructor> instructor = new ComboBox<>("Instructor");
 
-        room.setItems(service.findAllRooms());
-        instructor.setItems(service.findAllInstructors());
+        room.setItems(service.getAllRooms());
+        instructor.setItems(service.getAllInstructors());
 
         FormLayout form = new FormLayout(courseTitle, courseCode, sectionType,
                 meetingDays, meetingTime, crossListings, expectedEnrollment,
