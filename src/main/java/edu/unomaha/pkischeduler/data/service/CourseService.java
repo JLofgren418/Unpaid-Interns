@@ -96,7 +96,7 @@ public class CourseService implements CrudListener<Course> {
 
     public Room getDefaultRoom()
     {
-        Long id = 67L;
+        Long id = 0L;
         return roomRepository.getReferenceById(id);
     }
 

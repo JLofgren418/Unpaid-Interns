@@ -1,20 +1,22 @@
 package edu.unomaha.pkischeduler.ui;
 
 
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.crud.BinderCrudEditor;
 import com.vaadin.flow.component.crud.Crud;
 import com.vaadin.flow.component.crud.CrudEditor;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
@@ -22,7 +24,7 @@ import edu.unomaha.pkischeduler.data.service.CourseService;
 
 @Route(value = "edit")
 @PageTitle("Edit")
-public class EditView extends VerticalLayout {
+public class EditView extends AppLayout {
     Grid<Course> grid = new Grid<>(Course.class);
     CourseService service;
     Crud<Course>  crud;
@@ -37,26 +39,23 @@ public class EditView extends VerticalLayout {
         crud.addDeleteListener(click -> grid.setItems(service.getAllCourses()));
         setupGrid();
         crud.setSizeFull();
-        add(getToolbar(), crud);
+        addToNavbar(getTabs());
+        setContent(crud);
 
     }
-    private HorizontalLayout getToolbar() {
+    private HorizontalLayout getTabs() {
 
-        Button redirect1 = new Button("Go to Import");
-        redirect1.addClickListener(e ->
-                redirect1.getUI().ifPresent(ui ->
-                        ui.navigate("")));
+        Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
+        redirect1.add(new RouterLink("Upload", ImportView.class));
 
-        Button redirect2 = new Button("Go to Export");
-        redirect2.addClickListener(e ->
-                redirect2.getUI().ifPresent(ui ->
-                        ui.navigate("export")));
+        Tab redirect2 = new Tab(VaadinIcon.DOWNLOAD.create());
+        redirect2.add(new RouterLink("Export", ExportView.class));
 
-        HorizontalLayout toolbar = new HorizontalLayout(redirect1,redirect2);
-        toolbar.setWidth("100%");
-        toolbar.setJustifyContentMode(JustifyContentMode.CENTER);
-        toolbar.addClassName("toolbar");
-        return toolbar;
+        HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2);
+
+        h1.addClassName("toolbar");
+        h1.setWidth("33%");
+        return h1;
     }
 
     private CrudEditor<Course> createEditor() {
@@ -113,6 +112,7 @@ public class EditView extends VerticalLayout {
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         Crud.addEditColumn(grid);
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
     }
 

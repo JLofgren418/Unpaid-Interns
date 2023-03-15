@@ -7,16 +7,21 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
@@ -29,29 +34,27 @@ import java.util.List;
 
 @Route(value = "")
 @PageTitle("Import")
-public class ImportView extends VerticalLayout {
+public class ImportView extends AppLayout {
     Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
     CourseService service;
     MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
     Upload upload = new Upload(buffer);
-
-    Button process = new Button("Process Schedule");
-
+    Button process = new Button("Process Schedule", VaadinIcon.FILE_PROCESS.create());
 
     public ImportView(CourseService service) {
         this.service = service;
         addClassName("import-view");
-        setSizeFull();
         configureGrid();
         importCSV();
-        add(getToolbar(), getContent());
+        setContent(getImportContent());
+        addToNavbar(getTabs());
         updateList();
         process.addClickListener(click -> grid.setItems(service.getAllCourses()));
     }
 
-    private Component getContent() {
-        HorizontalLayout content = new HorizontalLayout(grid);
+    private Component getImportContent() {
+        VerticalLayout content = new VerticalLayout(getToolbar(),grid);
         content.setFlexGrow(2, grid);
         content.addClassNames("content");
         content.setSizeFull();
@@ -72,31 +75,42 @@ public class ImportView extends VerticalLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
-    private HorizontalLayout getToolbar() {
+    private HorizontalLayout getTabs() {
+
+        Tab redirect1 = new Tab(VaadinIcon.PENCIL.create());
+        redirect1.add(new RouterLink("Edit", EditView.class));
+
+        Tab redirect2 = new Tab(VaadinIcon.DOWNLOAD.create());
+        redirect2.add(new RouterLink("Export", ExportView.class));
+
+        HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2);
+
+        h1.addClassName("toolbar");
+        h1.setWidth("33%");
+        return h1;
+    }
+
+    private HorizontalLayout getToolbar()
+    {
         filterText.setPlaceholder("Filter by course code");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
+        HorizontalLayout h1 = new HorizontalLayout(filterText);
+        h1.setWidth("33%");
+        h1.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
+        HorizontalLayout h2 = new HorizontalLayout(process);
+        h2.setWidth("33%");
+        h2.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        HorizontalLayout h3 = new HorizontalLayout(upload);
+        h3.setWidth("33%");
+        h3.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        HorizontalLayout h4 = new HorizontalLayout(h1,h2,h3);
+        h4.setWidth("100%");
+        h4.setAlignItems(FlexComponent.Alignment.CENTER);
+        h4.setFlexGrow(1, h3);
 
-        Button redirect1 = new Button("Go to edit");
-        redirect1.addClickListener(e ->
-                redirect1.getUI().ifPresent(ui ->
-                        ui.navigate("edit")));
-
-        Button redirect2 = new Button("Go to export");
-        redirect2.addClickListener(e ->
-                redirect2.getUI().ifPresent(ui ->
-                        ui.navigate("export")));
-
-        HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2, process, upload);
-        h1.setAlignItems(Alignment.BASELINE);
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText,h1);
-        toolbar.addClassName("toolbar");
-        toolbar.setAlignItems(Alignment.BASELINE);
-        toolbar.setWidth("100%");
-        toolbar.setJustifyContentMode(JustifyContentMode.CENTER);
-        return toolbar;
+        return h4;
     }
 
     private void updateList() {
@@ -124,7 +138,7 @@ public class ImportView extends VerticalLayout {
 
     //This method goes through each line of the csv,
     // creates objects from csv data,
-    // and places objects in an array
+    // and places objects in the database
     private void processCSV(InputStream fileData, String fileName, Long contentLength, String mimeType)
     {
         CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
