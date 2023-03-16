@@ -110,6 +110,13 @@ public class CourseService implements CrudListener<Course> {
        return null;
     }
 
+    //deletes all courses and instructors
+    public void deleteAll()
+    {
+        courseRepository.deleteAll();
+        instructorRepository.deleteAll();
+    }
+
 
 
 

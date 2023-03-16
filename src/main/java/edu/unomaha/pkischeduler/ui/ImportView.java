@@ -84,8 +84,6 @@ public class ImportView extends AppLayout {
         redirect2.add(new RouterLink("Export", ExportView.class));
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2);
-
-        h1.addClassName("toolbar");
         h1.setWidth("33%");
         return h1;
     }
