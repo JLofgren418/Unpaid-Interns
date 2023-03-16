@@ -18,6 +18,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -60,9 +61,11 @@ public class EditView extends AppLayout {
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
         redirect1.add(new RouterLink("Upload", ImportView.class));
+        redirect1.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         Tab redirect2 = new Tab(VaadinIcon.DOWNLOAD.create());
         redirect2.add(new RouterLink("Export", ExportView.class));
+        redirect2.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2);
 
