@@ -4,12 +4,14 @@ package edu.unomaha.pkischeduler.ui;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -56,20 +58,24 @@ public class ExportView extends AppLayout {
     }
 
     private HorizontalLayout getTabs() {
-        filterText.setPlaceholder("Filter by course code");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
-        filterText.addValueChangeListener(e -> updateList());
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
         redirect1.add(new RouterLink("Upload", ImportView.class));
-
+        redirect1.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         Tab redirect2 = new Tab(VaadinIcon.PENCIL.create());
         redirect2.add(new RouterLink("Edit", EditView.class));
+        redirect2.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
+        Tab redirect3 = new Tab(VaadinIcon.EYE.create());
+        redirect3.add(new RouterLink("Room", RoomView.class));
+        redirect3.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
-        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2);
+        Tab redirect4 = new Tab(VaadinIcon.DOWNLOAD.create());
+        redirect4.add(new RouterLink("Export", ExportView.class));
+        redirect4.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
+
+        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,redirect3,redirect4);
         h1.setWidth("20%");
         return h1;
     }
@@ -84,6 +90,7 @@ public class ExportView extends AppLayout {
         h1.setAlignItems(FlexComponent.Alignment.CENTER);
         h1.setWidth("35%");
         Button exportCSV = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
+        exportCSV.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         HorizontalLayout h2 = new HorizontalLayout(exportCSV);
         h2.setAlignItems(FlexComponent.Alignment.CENTER);
         h2.setWidth("65%");

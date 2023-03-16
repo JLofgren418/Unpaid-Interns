@@ -9,12 +9,14 @@ import com.opencsv.exceptions.CsvException;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
@@ -51,6 +53,7 @@ public class ImportView extends AppLayout {
         addToNavbar(getTabs());
         updateList();
         process.addClickListener(click -> grid.setItems(service.getAllCourses()));
+        process.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     }
 
     private Component getImportContent() {
@@ -75,15 +78,25 @@ public class ImportView extends AppLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
-    private HorizontalLayout getTabs() {
+    public HorizontalLayout getTabs() {
 
-        Tab redirect1 = new Tab(VaadinIcon.PENCIL.create());
-        redirect1.add(new RouterLink("Edit", EditView.class));
+        Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
+        redirect1.add(new RouterLink("Upload", ImportView.class));
+        redirect1.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
-        Tab redirect2 = new Tab(VaadinIcon.DOWNLOAD.create());
-        redirect2.add(new RouterLink("Export", ExportView.class));
+        Tab redirect2 = new Tab(VaadinIcon.PENCIL.create());
+        redirect2.add(new RouterLink("Edit", EditView.class));
+        redirect2.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
-        HorizontalLayout h1 = new HorizontalLayout(redirect1, redirect2);
+        Tab redirect3 = new Tab(VaadinIcon.EYE.create());
+        redirect3.add(new RouterLink("Room", RoomView.class));
+        redirect3.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
+
+        Tab redirect4 = new Tab(VaadinIcon.DOWNLOAD.create());
+        redirect4.add(new RouterLink("Export", ExportView.class));
+        redirect4.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
+
+        HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,redirect3,redirect4);
         h1.setWidth("33%");
         return h1;
     }
@@ -130,14 +143,14 @@ public class ImportView extends AppLayout {
             long contentLength = event.getContentLength();
             String mimeType = event.getMIMEType();
             // Do something with the file data
-            processCSV(fileData, fileName, contentLength, mimeType);
+            processCSV(fileData);
         });
     }
 
     //This method goes through each line of the csv,
     // creates objects from csv data,
     // and places objects in the database
-    private void processCSV(InputStream fileData, String fileName, Long contentLength, String mimeType)
+    private void processCSV(InputStream fileData)
     {
         CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
         CSVReader reader = new CSVReaderBuilder(new InputStreamReader(fileData)).withCSVParser(parser).build();
