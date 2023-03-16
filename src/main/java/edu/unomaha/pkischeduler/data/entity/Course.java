@@ -157,4 +157,12 @@ public class Course extends AbstractEntity {
     }
 
 
+    public String getDetails() {
+
+        return meetingDays + " " + meetingTime + " " +
+                courseCode + "-" +sectionNumber + " " +
+                courseTitle;
+
+    }
+
 }

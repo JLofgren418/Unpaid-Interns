@@ -62,9 +62,9 @@ public class RoomView extends AppLayout {
         for (Room room : rooms) {
             List<Course> courseList = new LinkedList<>();
 
-            for (Course c : courses) {
-                if (c.getRoom().equals(room)) {
-                    courseList.add(c);
+            for (Course course : courses) {
+                if (course.getRoom().equals(room)) {
+                    courseList.add(course);
                 }
                 room.setCourses(courseList);
             }
@@ -77,9 +77,9 @@ public class RoomView extends AppLayout {
             VerticalLayout courseLayout = new VerticalLayout();
             String roomNumber = room.toString();
 
-            if (room.getCourses().size() > 1) {
+            if (room.getCourses() != null && room.getCourses().size() > 0) {
                 for (int j = 0; j < room.getCourses().size(); j++) {
-                    Span course = new Span(room.getCourses().get(j).toString());
+                    Span course = new Span(room.getCourses().get(j).getDetails());
                     courseLayout.add(course);
                 }
                 AccordionPanel panel = accordion.add(" " + roomNumber, courseLayout);
@@ -108,9 +108,8 @@ public class RoomView extends AppLayout {
         redirect4.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,redirect3,redirect4);
-        h1.setWidth("20%");
+
         return h1;
     }
-
 
 }

@@ -76,7 +76,7 @@ public class ExportView extends AppLayout {
         redirect4.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,redirect3,redirect4);
-        h1.setWidth("20%");
+
         return h1;
     }
 

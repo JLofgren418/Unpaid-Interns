@@ -76,7 +76,7 @@ public class EditView extends AppLayout {
         redirect4.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
 
         HorizontalLayout h1 = new HorizontalLayout(redirect1,redirect2,redirect3,redirect4);
-        h1.setWidth("33%");
+
         return h1;
     }
 
