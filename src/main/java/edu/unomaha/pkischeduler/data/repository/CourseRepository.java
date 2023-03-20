@@ -10,7 +10,7 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("select c from Course c " +
-            "where lower(c.courseTitle) like lower(concat('%', :searchTerm, '%'))")
+            "where lower(c.courseCode) like lower(concat('%', :searchTerm, '%'))")
     List<Course> search(@Param("searchTerm") String searchTerm);
 
 }

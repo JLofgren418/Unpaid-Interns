@@ -2,20 +2,21 @@ package edu.unomaha.pkischeduler.data.entity;
 
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 public class Room extends AbstractEntity {
-    @NotEmpty
+    @NotNull
     private int number;
 
-    @NotEmpty
+    @NotNull
     private int capacity;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     @Nullable
     private List<Course> courses = new LinkedList<>();
 
@@ -41,11 +42,12 @@ public class Room extends AbstractEntity {
         this.number = number;
     }
 
-    public List<Course> getSchedules() {
+    @Nullable
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setSchedules(List<Course> courses) {
+    public void setCourses(@Nullable List<Course> courses) {
         this.courses = courses;
     }
 
@@ -70,9 +72,6 @@ public class Room extends AbstractEntity {
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
-
-
-
 
 }
 

@@ -27,8 +27,8 @@ public class CourseService implements CrudListener<Course> {
         this.instructorRepository = instructorRepository;
     }
 
-    //finds all repositories with a filter
-    public List<Course> findAllCourses(String stringFilter) {
+
+    public List<Course> filterCourses(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return courseRepository.findAll();
         } else {
@@ -36,15 +36,27 @@ public class CourseService implements CrudListener<Course> {
         }
     }
 
-    public Collection<Room> findAllRooms() {
+    public List<Room> filterRooms(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return roomRepository.findAll();
+        } else {
+            return roomRepository.search(stringFilter);
+        }
+    }
+
+
+
+    public List<Room> getAllRooms() {
+
         return roomRepository.findAll();
     }
 
-    public Collection<Instructor> findAllInstructors() {
+    public List<Instructor> getAllInstructors() {
+
         return instructorRepository.findAll();
     }
 
-    public List<Course> getCourses() {
+    public List<Course> getAllCourses() {
 
         return courseRepository.findAll();
     }
@@ -70,4 +82,42 @@ public class CourseService implements CrudListener<Course> {
     public void delete(Course course) {
         courseRepository.delete(course);
     }
+
+
+    public Room addRoom(Room room)
+    {
+        return roomRepository.save(room);
+    }
+
+    public Instructor addInstructor(Instructor instructor)
+    {
+        return instructorRepository.save(instructor);
+    }
+
+    public Room getDefaultRoom()
+    {
+        Long id = 0L;
+        return roomRepository.getReferenceById(id);
+    }
+
+    public Instructor exstingInstructor(String name)
+    {
+            if (instructorRepository.existsByName(name))
+            {
+                return instructorRepository.findByName(name);
+            }
+
+       return null;
+    }
+
+    //deletes all courses and instructors
+    public void deleteAll()
+    {
+        courseRepository.deleteAll();
+        instructorRepository.deleteAll();
+    }
+
+
+
+
 }
