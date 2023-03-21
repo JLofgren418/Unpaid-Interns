@@ -162,6 +162,21 @@
             <version>3.0.0-M9</version>
             <type>maven-plugin</type>
         </dependency>
+
+
+        <!-- Selenium Library -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+        </dependency>
+        <!-- WebDriver Management Software -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.3.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
