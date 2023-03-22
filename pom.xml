@@ -138,7 +138,7 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.1.1</version>
+            <version>5.3.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -162,21 +162,15 @@
             <version>3.0.0-M9</version>
             <type>maven-plugin</type>
         </dependency>
-
-
-        <!-- Selenium Library -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
         </dependency>
-        <!-- WebDriver Management Software -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
