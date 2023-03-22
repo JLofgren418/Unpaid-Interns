@@ -28,6 +28,7 @@ import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.processing.ScheduleOptimizer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,19 +45,23 @@ public class ImportView extends AppLayout {
     Upload upload = new Upload(buffer);
     Button process = new Button("Process Schedule", VaadinIcon.FILE_PROCESS.create());
 
+    ScheduleOptimizer optimizer;
+
     public ImportView(CourseService service) {
         this.service = service;
+        optimizer = new ScheduleOptimizer(service);
         addClassName("import-view");
         configureGrid();
         importCSV();
         setContent(getImportContent());
         addToNavbar(getTabs());
         updateList();
-        process.addClickListener(click -> grid.setItems(service.getAllCourses()));
         process.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         process.addClickListener(click ->
-                backtracking_search(service.getAllCourses(), service.getAllRooms()));
+                optimizer.backtracking_search());
+        process.addClickListener(click -> grid.setItems(service.getAllCourses()));
     }
+
 
     private Component getImportContent() {
         VerticalLayout content = new VerticalLayout(getToolbar(),grid);
@@ -235,12 +240,6 @@ public class ImportView extends AppLayout {
             e.printStackTrace();
         }
         grid.setItems(service.getAllCourses());
-    }
-
-    public boolean backtracking_search(List<Course> courses, List<Room> rooms)
-    {
-        //add code for backtracking search
-        return false;
     }
 
 }
