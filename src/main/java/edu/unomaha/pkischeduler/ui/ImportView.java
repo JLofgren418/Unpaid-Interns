@@ -54,6 +54,8 @@ public class ImportView extends AppLayout {
         updateList();
         process.addClickListener(click -> grid.setItems(service.getAllCourses()));
         process.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        process.addClickListener(click ->
+                backtracking_search(service.getAllCourses(), service.getAllRooms()));
     }
 
     private Component getImportContent() {
@@ -233,6 +235,12 @@ public class ImportView extends AppLayout {
             e.printStackTrace();
         }
         grid.setItems(service.getAllCourses());
+    }
+
+    public boolean backtracking_search(List<Course> courses, List<Room> rooms)
+    {
+        //add code for backtracking search
+        return false;
     }
 
 }
