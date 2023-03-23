@@ -25,6 +25,12 @@ UI
 * Created prelimary database for testing
 * Created MYSQL server for use with public application
 
+Release 0.2
+
+* Added room by room view
+* Added ability to parse CSV files
+* Updated user interface
+
 ## Running the application
 
 The project is a standard Maven project. To run it from the command line,
