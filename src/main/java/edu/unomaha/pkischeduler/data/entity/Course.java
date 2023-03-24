@@ -7,11 +7,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Entity
-public class Course extends AbstractEntity {
-
+public class Course extends AbstractEntity implements Serializable {
 
     @NotEmpty
     private String courseCode = "";

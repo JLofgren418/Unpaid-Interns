@@ -1,9 +1,7 @@
 package edu.unomaha.pkischeduler.ui;
 
 
-import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import com.vaadin.flow.component.Component;
@@ -159,19 +157,17 @@ public class ImportView extends AppLayout {
     // and places objects in the database
     private void processCSV(InputStream fileData)
     {
-        CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
-        CSVReader reader = new CSVReaderBuilder(new InputStreamReader(fileData)).withCSVParser(parser).build();
-
-        try{
-            List<String[]> entries  = reader.readAll();
+        var parser = new CSVParserBuilder().withSeparator(',').build();
+        try (var reader = new CSVReaderBuilder(new InputStreamReader(fileData)).withCSVParser(parser).build()) {
+            List<String[]> entries = reader.readAll();
 
             int numRows = (int) reader.getRecordsRead();
 
-            for(int i = 4; i < numRows; i++)//for each row starting at 5
+            for (int i = 4; i < numRows; i++)//for each row starting at 5
             {
                 String[] row = entries.get(i);
                 //System.out.println(i);
-                if(row[0] == "")//Find rows to process
+                if (row[0].equals(""))//Find rows to process
                 {
                     //translate to csv column name
                     String meetingPattern = row[13];
@@ -185,25 +181,25 @@ public class ImportView extends AppLayout {
                     String maxEnrollment = row[29];
                     String crossListings = row[34];
 
-                    if(!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
-                    && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
+                    if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
+                            && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
                     {
                         //Process variables before adding them to a new object;
-                        if(crossListings.equals("")) {crossListings = "None";}
+                        if (crossListings.equals("")) {
+                            crossListings = "None";
+                        }
                         double expectedEnrollment = Double.parseDouble(maxEnrollment);
                         instructorName = instructorName.replaceAll("[^.,a-zA-Z]", " ");
                         instructorName = instructorName.trim();
                         String meetingDays;
                         String meetingTime;//set meeting time and days from meeting pattern
-                        if(meetingPattern.charAt(2) != 'h') {
+                        if (meetingPattern.charAt(2) != 'h') {
                             meetingDays = meetingPattern.substring(0, 2);
                             meetingTime = meetingPattern.substring(2);
                             if (meetingTime.charAt(0) == ' ') {
                                 meetingTime = meetingTime.substring(1);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             meetingDays = meetingPattern.substring(0, 3);
                             meetingTime = meetingPattern.substring(3);
                             if (meetingTime.charAt(0) == ' ') {
@@ -216,8 +212,7 @@ public class ImportView extends AppLayout {
 
                         Instructor instructor = service.exstingInstructor(instructorName);
 
-                        if(instructor == null)
-                        {
+                        if (instructor == null) {
                             instructor = new Instructor(instructorName, "Any");
                             //instructors.add(instructor);
                             service.addInstructor(instructor);
@@ -235,8 +230,7 @@ public class ImportView extends AppLayout {
 
             }
 
-        } catch (IOException | CsvException e)
-        {
+        } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
         grid.setItems(service.getAllCourses());
