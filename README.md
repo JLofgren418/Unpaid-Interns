@@ -22,7 +22,7 @@ UI
 * Created ability to sort course list by title, day, time, status (room assigned/room not assigned), and current room
 * Added ability to search for course
 * Database
-* Created prelimary database for testing
+* Created preliminary database for testing
 * Created MYSQL server for use with public application
 
 Release 0.2
@@ -43,10 +43,10 @@ You can also import the project to your IDE of choice as you would with any Mave
 
 To create a production build, call `mvnw clean package -Pproduction` (Windows),
 or `./mvnw clean package -Pproduction` (Mac & Linux).
-This will build a JAR file with all the dependencies and front-end resources,
+This will build a WAR file with all the dependencies and front-end resources,
 ready to be deployed. The file can be found in the `target` folder after the build completes.
 
-Once the JAR file is built, you can run it using
+Once the WAR file is built, you can run it using
 `java -jar target/flowcrmtutorial-1.0-SNAPSHOT.jar`
 
 ## Project structure
