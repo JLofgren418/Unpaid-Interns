@@ -1,10 +1,10 @@
 # PKI Scheduler
 
-PKI schedule is an application designed to simplify building schedules. It will include options to import data, edit data, edit rules for building schedules, and exporting of the final schedule.
+PKI Scheduler is an application designed to simplify building schedules. It includes options to import data, edit data, edit rules for building schedules, and to export the final, optimized schedule.
 
-Application is accessible through the web interface.
+The application is accessible through the web interface.
 
-Main screen of the application allows you to import data. Edit screen allows you to make changed to the imported data. Additional GUI features will be added as we implement them.
+The main screen of the application allows the user to import data and assign rooms to courses. The edit screen allows the user to make changes to the imported data. The room by room view allows the user to view the courses assigned to rooms, and finally the export view allows the user to export the data to a CSV file. 
 
 ## Release Notes
 
@@ -22,8 +22,14 @@ UI
 * Created ability to sort course list by title, day, time, status (room assigned/room not assigned), and current room
 * Added ability to search for course
 * Database
-* Created prelimary database for testing
+* Created preliminary database for testing
 * Created MYSQL server for use with public application
+
+Release 0.2
+
+* Added room by room view
+* Added ability to parse CSV files
+* Updated user interface
 
 ## Running the application
 
@@ -37,10 +43,10 @@ You can also import the project to your IDE of choice as you would with any Mave
 
 To create a production build, call `mvnw clean package -Pproduction` (Windows),
 or `./mvnw clean package -Pproduction` (Mac & Linux).
-This will build a JAR file with all the dependencies and front-end resources,
+This will build a WAR file with all the dependencies and front-end resources,
 ready to be deployed. The file can be found in the `target` folder after the build completes.
 
-Once the JAR file is built, you can run it using
+Once the WAR file is built, you can run it using
 `java -jar target/flowcrmtutorial-1.0-SNAPSHOT.jar`
 
 ## Project structure
