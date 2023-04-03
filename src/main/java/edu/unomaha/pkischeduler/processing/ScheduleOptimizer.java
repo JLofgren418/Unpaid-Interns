@@ -15,21 +15,58 @@ public class ScheduleOptimizer {
         this.service = service;
     }
 
-    public void backtracking_search()
+    /**
+     * Assigns rooms naively without regard for optimal placement.
+     * Only considers the smallest possible room
+     * Does not consider multi-listing.
+     * Does not regard Labs vs lectures.
+     * Does not assign classes from largest to smallest.
+     * Does not concern itself with standard 1:15 classes.
+     * Does not refactor.
+     */
+    public void naive_assignment()
     {
 
         List<Room> rooms = service.getAllRooms();
         List<Course> courses = service.getAllCourses();
-        Random randy = new Random();
         for (Course course : courses)
         {
-            if (course.getRoom().getNumber() == 0)
+            if (course.getRoom().getNumber() == 0) //if unassigned
             {
                 ArrayList<Room> viableRooms = new ArrayList<Room>();
                 for (Room room : rooms)
                 {
-
+                    boolean flag = true; //flag to test if there is a conflict]
+                    List<Course> roomCourses = room.getCourses();
+                    for (Course assigned : roomCourses)
+                    {
+                        if (!this.checkForConflict(course, assigned))
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag && room.getCapacity() >= course.getExpectedEnrollment())
+                    {
+                        viableRooms.add(room);
+                    }
                 }
+                //find smallest viable room
+                Room placement = null;
+                for (Room room : viableRooms)
+                {
+                    if (placement != null)
+                    {
+                        if (room.getCapacity() < placement.getCapacity())
+                        {
+                            placement = room;
+                        }
+                    }
+                    else placement = room;
+                }
+                course.setRoom(placement);
+                placement.addCourse(course);
+                service.update(course);
             }
         }
     }
@@ -142,38 +179,60 @@ public class ScheduleOptimizer {
 
         //find beginning hour
         int i;
+        boolean flag = false;
         String hold = "";
         for (i = 0; work[i] != ':'; i++)
         {
+            if (work[i] == 'a' || work[i] == 'p')
+            {
+                flag = true;
+                break;
+            }
             hold += work[i];
         }
         ret[0] = Integer.parseInt(hold);
 
         //find beginning minute
-        hold = "" + work[++i] + work[++i];
-        ret[1] = Integer.parseInt(hold);
+        if (flag) ret[1] = 0;
+        else
+        {
+            hold = "" + work[++i] + work[++i];
+            ret[1] = Integer.parseInt(hold);
+            i++;
+        }
 
         //find am or pm
-        if (work[++i] == 'a')
+        if (work[i] == 'a')
             ret[2] = 0;
         else
             ret[2] = 1;
         i+=3;
 
         //find ending hour
+        flag = false;
         hold = "";
         for (i = i; work[i] != ':'; i++)
         {
+            if (work[i] == 'a' || work[i] == 'p')
+            {
+                flag = true;
+                break;
+            }
             hold += work[i];
         }
         ret[3] = Integer.parseInt(hold);
 
         //find ending minute
-        hold = "" + work[++i] + work[++i];
-        ret[4] = Integer.parseInt(hold);
+        if (flag) ret[4] = 0;
+        else
+        {
+            hold = "" + work[++i] + work[++i];
+            ret[4] = Integer.parseInt(hold);
+            i++;
+        }
 
         //find ending am or pm
-        if (work[++i] == 'a')
+        if (work[i] == 'a')
             ret[5] = 0;
         else
             ret[5] = 1;
@@ -181,8 +240,10 @@ public class ScheduleOptimizer {
         return ret;
     }
 
-    /*
-    public void backtracking_search()
+    /**
+     * Random room assignments.
+     */
+    public void random_assignment()
     {
         List<Room> rooms = service.getAllRooms();
         List<Course> courses = service.getAllCourses();
@@ -193,5 +254,5 @@ public class ScheduleOptimizer {
             service.update(course);
         }
     }
-    */
+
 }

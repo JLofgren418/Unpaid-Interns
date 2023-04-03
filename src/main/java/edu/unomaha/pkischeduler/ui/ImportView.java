@@ -56,7 +56,7 @@ public class ImportView extends AppLayout {
         updateList();
         process.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         process.addClickListener(click ->
-                optimizer.backtracking_search());
+                optimizer.naive_assignment()); //Assign classrooms
         process.addClickListener(click -> grid.setItems(service.getAllCourses()));
     }
 

@@ -51,6 +51,10 @@ public class Room extends AbstractEntity {
         this.courses = courses;
     }
 
+    public void addCourse(Course course) {
+        this.courses.add(course);
+    }
+
     public String toString() {
         return String.valueOf(number);
     }
