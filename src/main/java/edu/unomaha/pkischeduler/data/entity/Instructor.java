@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-public class Instructor extends AbstractEntity implements Serializable {
+public class Instructor extends AbstractEntity implements Serializable, Cloneable {
     @NotEmpty
     private String name;
     @NotEmpty
@@ -49,5 +49,24 @@ public class Instructor extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public Instructor clone() throws CloneNotSupportedException {
+        return (Instructor) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Instructor)) {
+            return false;
+        }
+
+        Instructor other = (Instructor) obj;
+
+        return this.name.equals(other.name) && this.availability.equals(other.availability);
     }
 }

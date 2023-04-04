@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-public class Room extends AbstractEntity {
+public class Room extends AbstractEntity implements Cloneable {
     @NotNull
     private int number;
 
@@ -75,6 +75,27 @@ public class Room extends AbstractEntity {
 
     public void setRoomType(String roomType) {
         this.roomType = roomType;
+    }
+
+    @Override
+    public Room clone() throws CloneNotSupportedException {
+        return (Room) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Room)) {
+            return false;
+        }
+
+        final Room other = (Room) obj;
+        return
+                this.number == other.number &&
+                this.capacity == other.capacity &&
+                this.roomType.equals(other.roomType);
     }
 
 }

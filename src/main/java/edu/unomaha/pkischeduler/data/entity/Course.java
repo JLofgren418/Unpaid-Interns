@@ -167,7 +167,33 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
 
     @Override
     public Course clone() throws CloneNotSupportedException {
-        return (Course) super.clone();
+        Course cloned =  (Course) super.clone();
+        cloned.instructor = instructor.clone();
+        cloned.room = room.clone();
+        return cloned;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Course)) {
+            return false;
+        }
+
+        Course other = (Course) obj;
+
+        return
+            this.courseCode.equals(other.courseCode) &&
+            this.courseTitle.equals(other.courseTitle) &&
+            this.sectionType.equals(other.sectionType) &&
+            this.meetingDays.equals(other.meetingDays) &&
+            this.meetingTime.equals(other.meetingTime) &&
+            this.crossListings.equals(other.crossListings) &&
+            this.expectedEnrollment == other.expectedEnrollment &&
+            this.sectionNumber.equals(other.sectionNumber) &&
+            this.room.equals(other.room) &&
+            this.instructor.equals(other.instructor);
+    }
 }

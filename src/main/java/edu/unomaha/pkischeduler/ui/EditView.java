@@ -27,17 +27,18 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CourseService;
-
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Route(value = "edit")
 @PageTitle("Edit")
 public class EditView extends AppLayout {
+    private static final Logger LOG = LoggerFactory.getLogger(EditView.class);
     Grid<Course> grid = new Grid<>(Course.class);
     CourseService service;
     Crud<Course>  crud;
@@ -47,12 +48,8 @@ public class EditView extends AppLayout {
     /**
      * Used to track on-edit changes
      */
-   class CourseChanges {
-        LocalDateTime  dateTime;
-        Course preEdit;
-        Course postEdit;
-    }
-    CourseChanges courseChange =  new CourseChanges( ) ;
+
+    CourseChange courseChange =  new CourseChange( ) ;
 
 
 
@@ -203,16 +200,6 @@ public class EditView extends AppLayout {
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         Crud.addEditColumn(grid);
 
-        // to trach changes when editing
-        crud.addEditListener(event -> {
-            Course courseBeforeEdit = event.getItem();
-            try {
-                courseChange.preEdit = courseBeforeEdit.clone();
-            } catch (CloneNotSupportedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
         crud.addSaveListener(click -> grid.setItems(service.getAllCourses()));
@@ -220,19 +207,39 @@ public class EditView extends AppLayout {
         crud.addDeleteListener(click -> service.delete(crud.getEditor().getItem()));
         crud.addDeleteListener(click -> grid.setItems(service.getAllCourses()));
 
-//      add save listeners for tarcking changes
-        crud.addSaveListener( click -> {
-            // post update event
-            Course course = crud.getEditor().getItem();
-            try {
-                courseChange.postEdit = course.clone();
-            } catch (CloneNotSupportedException e) {
-                throw new RuntimeException(e);
-            }
-            courseChange.dateTime = LocalDateTime.now();
-        });
-
+        crud.addEditListener(event -> onEditButtonClick(event)); // before edit
+        crud.addSaveListener( click -> onEditButtonSaveClicked()); // after edit
     }
+
+    /**
+     * This method is called when the user clicks the edit button in the grid.
+     * Before any data is edited
+     */
+    private void onEditButtonClick(  Crud.EditEvent<Course> event){
+            Course courseBeforeEdit = event.getItem();
+        try {
+            courseChange.before = courseBeforeEdit.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * This method is called when the user clicks the save button in the editor.
+     * After any data is edited
+     */
+    private void onEditButtonSaveClicked(){
+        Course course = crud.getEditor().getItem();
+        try {
+            courseChange.after = course.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        courseChange.dateTime = LocalDateTime.now();
+    }
+
+
 
 
     private void setStatus(String value) {
