@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 
 @Entity
-public class Course extends AbstractEntity implements Serializable {
+public class Course extends AbstractEntity implements Serializable, Cloneable {
 
     @NotEmpty
     private String courseCode = "";
@@ -163,6 +163,11 @@ public class Course extends AbstractEntity implements Serializable {
                 courseCode + "-" +sectionNumber + " " +
                 courseTitle;
 
+    }
+
+    @Override
+    public Course clone() throws CloneNotSupportedException {
+        return (Course) super.clone();
     }
 
 }

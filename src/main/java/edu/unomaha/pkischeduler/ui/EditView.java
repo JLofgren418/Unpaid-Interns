@@ -31,6 +31,10 @@ import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CourseService;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
 @Route(value = "edit")
 @PageTitle("Edit")
 public class EditView extends AppLayout {
@@ -39,6 +43,19 @@ public class EditView extends AppLayout {
     Crud<Course>  crud;
     TextField filterText = new TextField();
     private Span status;
+
+    /**
+     * Used to track on-edit changes
+     */
+   class CourseChanges {
+        LocalDateTime  dateTime;
+        Course preEdit;
+        Course postEdit;
+    }
+    CourseChanges courseChange =  new CourseChanges( ) ;
+
+
+
 
     public EditView(CourseService service) {
         this.service = service;
@@ -185,11 +202,35 @@ public class EditView extends AppLayout {
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         Crud.addEditColumn(grid);
+
+        // to trach changes when editing
+        crud.addEditListener(event -> {
+            Course courseBeforeEdit = event.getItem();
+            try {
+                courseChange.preEdit = courseBeforeEdit.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
         crud.addSaveListener(click -> grid.setItems(service.getAllCourses()));
+
         crud.addDeleteListener(click -> service.delete(crud.getEditor().getItem()));
         crud.addDeleteListener(click -> grid.setItems(service.getAllCourses()));
+
+//      add save listeners for tarcking changes
+        crud.addSaveListener( click -> {
+            // post update event
+            Course course = crud.getEditor().getItem();
+            try {
+                courseChange.postEdit = course.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+            courseChange.dateTime = LocalDateTime.now();
+        });
 
     }
 
