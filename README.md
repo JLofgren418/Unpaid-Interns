@@ -27,7 +27,7 @@ Release 0.2
 * Added ability to parse CSV files
 * Updated user interface
 
-Release 0.5 (Latest)
+Release 0.3 (Latest)
 
 In this latest release of the PKI Scheduler our team has worked to improve the algorithm which assigns rooms to courses. We have also implemented features requested by the client, the most important of which is the audit log. This feature records changes that the user makes in the application and writes them to a exportable field. Additionally, the grids in the UI have been updated according to the clients specifications. 
 
