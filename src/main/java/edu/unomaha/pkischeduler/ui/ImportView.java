@@ -79,6 +79,8 @@ public class ImportView extends AppLayout {
         grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
         grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
+        grid.addColumn(Course::getExpectedEnrollment).setHeader("Maximum Enrollment");
+        grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }

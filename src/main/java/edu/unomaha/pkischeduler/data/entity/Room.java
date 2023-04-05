@@ -102,5 +102,10 @@ public class Room extends AbstractEntity implements Cloneable {
                 this.roomType.equals(other.roomType);
     }
 
+    public String numberToString() {
+        return String.valueOf(number);
+    }
+
+
 }
 

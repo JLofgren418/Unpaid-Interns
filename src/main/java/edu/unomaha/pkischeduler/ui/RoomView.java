@@ -75,7 +75,7 @@ public class RoomView extends AppLayout {
     {
         for (Room room : rooms) {
             VerticalLayout courseLayout = new VerticalLayout();
-            String roomNumber = room.toString();
+            String roomNumber = room.numberToString();
 
             if (room.getCourses() != null && room.getCourses().size() > 0) {
                 for (int j = 0; j < room.getCourses().size(); j++) {
