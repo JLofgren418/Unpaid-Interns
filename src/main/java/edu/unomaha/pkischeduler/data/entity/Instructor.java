@@ -48,7 +48,11 @@ public class Instructor extends AbstractEntity implements Serializable, Cloneabl
 
     @Override
     public String toString() {
-        return name;
+       //  return name;
+        return "Instructor{" +
+                "name='" + name + '\'' +
+                ", availability='" + availability + '\'' +
+                '}';
     }
 
     @Override

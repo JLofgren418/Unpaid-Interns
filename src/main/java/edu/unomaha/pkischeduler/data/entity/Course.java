@@ -8,10 +8,12 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 
 @Entity
 public class Course extends AbstractEntity implements Serializable, Cloneable {
+    private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     @NotEmpty
     private String courseCode = "";
@@ -70,11 +72,44 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
         this.room = room;
 
     }
+
     @Override
     public String toString() {
-        return courseCode + " " + courseTitle;
+        //  return courseCode + " " + courseTitle;
+        return "Course{" +
+                "courseCode='" + courseCode + '\'' +
+                ", courseTitle='" + courseTitle + '\'' +
+                ", sectionType='" + sectionType + '\'' +
+                ", meetingDays='" + meetingDays + '\'' +
+                ", meetingTime='" + meetingTime + '\'' +
+                ", crossListings='" + crossListings + '\'' +
+                ", expectedEnrollment=" + expectedEnrollment +
+                ", sectionNumber='" + sectionNumber + '\'' +
+                ", instructor=" + instructor.toString() +
+                ", room=" + room.toString() +
+                '}';
     }
 
+
+    public String getChangesFrom(Course other) {
+        String difference = "";
+            difference +=
+                    "Course{" +
+                            "courseCode='" + courseCode + '\'' +    ( this.courseCode.equals(other.courseCode)  ? "":" [from=" + other.courseCode + "]" )+
+                            ", courseTitle='" + courseTitle + '\'' + (this.courseTitle.equals(other.courseTitle)? "":" [from=" + other.courseTitle + "]" )+
+                            ", sectionType='" + sectionType + '\'' + (this.sectionType.equals(other.sectionType)?"":" [from=" + other.sectionType + "]")+
+                            ", meetingDays='" + meetingDays + '\'' + (this.meetingDays.equals(meetingDays)?"":" [from=" + other.meetingDays + "]")+
+                            ", meetingTime='" + meetingTime + '\'' + (this.meetingTime.equals(other.meetingTime)?"":" [from=" + other.meetingTime + "]")+
+                            ", crossListings='" + crossListings + '\'' + ( this.crossListings.equals(other.crossListings)?"":" [from=" + other.crossListings + "]" )+
+                            ", expectedEnrollment=" + expectedEnrollment + ( this.expectedEnrollment==other.expectedEnrollment?"":" [from=" +  decimalFormat.format(other.expectedEnrollment) + "]")+
+                            ", sectionNumber='" + sectionNumber + '\'' + (this.sectionNumber.equals(other.sectionNumber)?"":" [from=" + other.sectionNumber + "]")+
+                            ", " + //instructor=" +
+                            instructor.toString() +  (this.instructor.equals(other.instructor)?"":"[from="+other.instructor.toString()+"]" )+
+                            ", "+ //room=" +
+                            room.toString() + (this.room.equals(other.room)?"":"[from="+other.room.toString()+"]" )+
+                            '}';
+        return difference;
+    }
 
     public String getCourseTitle() {
         return courseTitle;

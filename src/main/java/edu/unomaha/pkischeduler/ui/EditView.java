@@ -31,14 +31,15 @@ import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import java.time.LocalDateTime;
 
 @Route(value = "edit")
 @PageTitle("Edit")
 public class EditView extends AppLayout {
     private static final Logger LOG = LoggerFactory.getLogger(EditView.class);
+    private CourseChangeService courseChangeService;
     Grid<Course> grid = new Grid<>(Course.class);
     CourseService service;
     Crud<Course>  crud;
@@ -49,13 +50,14 @@ public class EditView extends AppLayout {
      * Used to track on-edit changes
      */
 
-    CourseChange courseChange =  new CourseChange( ) ;
+    CourseChange courseChange =null;
 
 
 
 
-    public EditView(CourseService service) {
+    public EditView(CourseService service, CourseChangeService courseChangeService) {
         this.service = service;
+        this.courseChangeService = courseChangeService;
         grid.setItems(service.getAllCourses());
         crud = new Crud<>(Course.class, grid, createEditorForm());
         setupGrid();
@@ -216,9 +218,10 @@ public class EditView extends AppLayout {
      * Before any data is edited
      */
     private void onEditButtonClick(  Crud.EditEvent<Course> event){
+            courseChange = new CourseChange();
             Course courseBeforeEdit = event.getItem();
         try {
-            courseChange.before = courseBeforeEdit.clone();
+            courseChange.setBefore(  courseBeforeEdit.clone()  );
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -232,11 +235,12 @@ public class EditView extends AppLayout {
     private void onEditButtonSaveClicked(){
         Course course = crud.getEditor().getItem();
         try {
-            courseChange.after = course.clone();
+            courseChange.setAfter(  course.clone() );
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-        courseChange.dateTime = LocalDateTime.now();
+        LOG.debug( "onEditButtonSaveClicked(): change -> " +    courseChange.toString() );
+        courseChangeService.saveCourseChange(courseChange);
     }
 
 

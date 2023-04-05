@@ -54,11 +54,15 @@ public class Room extends AbstractEntity implements Cloneable {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
-
+    @Override
     public String toString() {
-        return String.valueOf(number);
+        //  return String.valueOf(number);
+        return "Room{" +
+                "number=" + number +
+                ", capacity=" + capacity +
+                ", roomType='" + roomType + '\'' +
+                '}';
     }
-
     public int getCapacity()
     {
         return capacity;
