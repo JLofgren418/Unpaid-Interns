@@ -199,12 +199,12 @@ public class EditView extends AppLayout {
         grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
         grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
         grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
-        grid.addColumn(Course::getExpectedEnrollment).setHeader("Maximum Enrollment");
+        grid.addColumn(Course::getExpectedAsInt).setHeader("Maximum Enrollment");
         grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity");
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
         Crud.addEditColumn(grid);
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
         crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
         crud.addSaveListener(click -> grid.setItems(service.getAllCourses()));
 

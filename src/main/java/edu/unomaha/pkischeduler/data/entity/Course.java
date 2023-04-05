@@ -231,4 +231,9 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
             this.room.equals(other.room) &&
             this.instructor.equals(other.instructor);
     }
+
+    public int getExpectedAsInt()
+    {
+        return ((int) expectedEnrollment);
+    }
 }
