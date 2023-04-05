@@ -1,6 +1,6 @@
 # PKI Scheduler
 
-PKI Scheduler is an application designed to simplify building schedules. It includes options to import data, edit data, edit rules for building schedules, and to export the final, optimized schedule.
+PKI Scheduler is an application designed to simplify building schedules. It includes options to import data, edit data, quickyly view data, edit rules for building schedules, and to export the final, optimized schedule.
 
 The application is accessible through the web interface.
 
@@ -9,10 +9,6 @@ The main screen of the application allows the user to import data and assign roo
 ## Release Notes
 
 Release 0.0
-
-This release is more developed than what was originally planned in the original project plan. Our original goal was to simply have a basic test function running, but have managed to gain ground on the database and UI sections of the application.
-
-UI
 
 * Preliminary UI design utilizing vaadin
 * Added ability to upload local files into the application
@@ -30,6 +26,14 @@ Release 0.2
 * Added room by room view
 * Added ability to parse CSV files
 * Updated user interface
+
+Release 0.5 (Latest)
+
+In this latest release of the PKI Scheduler our team has worked to improve the algorithm which assigns rooms to courses. We have also implemented features requested by the client, the most important of which is the audit log. This feature records changes that the user makes in the application and writes them to a exportable field. Additionally, the grids in the UI have been updated according to the clients specifications. 
+
+* Added ability to assign rooms to courses
+* Added ability to log changes in UI
+* Added client specified fields to UI
 
 ## Running the application
 
