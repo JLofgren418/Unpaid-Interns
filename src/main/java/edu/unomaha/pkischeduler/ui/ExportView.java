@@ -20,6 +20,11 @@ import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.service.CourseService;
 
+/**
+ * ExportView creates the UI for the Edit page.
+ * The UI is designed to allow the user to export the data
+ *  from the system after processing, editing and verifying.
+ */
 @Route(value = "export")
 @PageTitle("Export")
 public class ExportView extends AppLayout {
@@ -27,6 +32,11 @@ public class ExportView extends AppLayout {
     TextField filterText = new TextField();
     CourseService service;
 
+    /**
+     * ExportView calls the available methods to set up the UI.
+     * @param service The service class that allows access to the
+     *                room and course tables in the database.
+     */
     public ExportView(CourseService service) {
         this.service = service;
         addClassName("export-view");
@@ -36,6 +46,14 @@ public class ExportView extends AppLayout {
         updateList();
     }
 
+
+    /**
+     * This function compiles the toolbar and
+     * the grid into a vertical layout which is then
+     * added to the UI.
+     * @return The content containing the grid and the toolbar
+     *  in a vertical layout.
+     */
     private Component getExportContent() {
         VerticalLayout content = new VerticalLayout(getToolbar(),grid);
         content.setFlexGrow(2, grid);
@@ -44,6 +62,10 @@ public class ExportView extends AppLayout {
         return content;
     }
 
+    /**
+     * This function populates the grid with the necessary fields from
+     *  items in the database.
+     */
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
@@ -59,6 +81,11 @@ public class ExportView extends AppLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
+    /**
+     * This function provides the navigation tabs in a horizontal
+     *  layout that is added to the navigation bar.
+     * @return A horizontal layout containing the navigation tabs.
+     */
     private HorizontalLayout getTabs() {
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
@@ -82,6 +109,12 @@ public class ExportView extends AppLayout {
         return h1;
     }
 
+    /**
+     * This function compiles a horizontal toolbar that contains
+     *  both the grid filter and the export button.
+     * @return horizontal layout containing the grid filter and the
+     *  export button.
+     */
     private HorizontalLayout getToolbar()
     {
         filterText.setPlaceholder("Filter by course code");
@@ -103,6 +136,12 @@ public class ExportView extends AppLayout {
         return h3;
     }
 
+    /**
+     * This method updates the grid based on the text
+     *  that the user has input in the filter.
+     * The service class is accessed, and a custom query
+     *  in the repository is used to search the table based on user input.
+     */
     private void updateList() {
         grid.setItems(service.filterCourses(filterText.getValue()));
     }

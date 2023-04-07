@@ -40,6 +40,12 @@ import org.slf4j.Logger;
 
 import java.util.EventObject;
 
+/**
+ * EditView creates the UI for the Edit page
+ * This UI is designed to allow users to perform
+ *  CRUD operations on data that is imported
+ *  into the system.
+ */
 @Route(value = "edit")
 @PageTitle("Edit")
 public class EditView extends AppLayout {
@@ -54,9 +60,22 @@ public class EditView extends AppLayout {
     TextField filterText = new TextField();
     private Span status;
 
+    /**
+     * Used to track on-edit changes
+     */
+
+    CourseChange courseChange =null;
 
 
-
+    /**
+     * Edit View calls the available methods to
+     * set up the UI layout.
+     *
+     * @param service The service class used to access
+     *                the room and course tables in the database.
+     * @param courseChangeService The service class used to access the course
+     *                            change table in the database.
+     */
     public EditView(CourseService service, CourseChangeService courseChangeService) {
         this.service = service;
         this.courseChangeService = courseChangeService;
@@ -68,6 +87,13 @@ public class EditView extends AppLayout {
         setContent(getEditContent());
     }
 
+    /**
+     * This function compiles the toolbar and
+     * the grid into a vertical layout which is then
+     * added to the UI.
+     * @return The content containing the grid and the toolbar
+     *  in a vertical layout.
+     */
     private Component getEditContent() {
         VerticalLayout content = new VerticalLayout(getToolbar(),crud);
         content.setFlexGrow(2, crud);
@@ -75,6 +101,12 @@ public class EditView extends AppLayout {
         content.setSizeFull();
         return content;
     }
+
+    /**
+     * This function provides the navigation tabs in a horizontal
+     *  layout that is added to the navigation bar.
+     * @return A horizontal layout containing the navigation tabs.
+     */
     private HorizontalLayout getTabs() {
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
@@ -98,6 +130,15 @@ public class EditView extends AppLayout {
         return h1;
     }
 
+
+    /**
+     * This function provides a horizontal layout containing
+     * the grid filter and the delete button.
+     * This Layout is added below the navigation bar and
+     * above the grid.
+     * @return A horizontal layout containing both the
+     * delete button and the grid filter
+     */
     private HorizontalLayout getToolbar()
     {
         filterText.setPlaceholder("Filter by course code");
@@ -115,6 +156,15 @@ public class EditView extends AppLayout {
         return h3;
     }
 
+
+    /**
+     * This method provides a horizontal layout that contains
+     * the delete button.
+     * This button is set up to delete every item in both the room and
+     * course tables.
+     * Upon clicking, a dialogue box is displayed to confirm the (risky) action.
+     * @return A horizontal layout that contains the delete button.
+     */
     private HorizontalLayout getDeleteButton()
     {
         status = new Span();
@@ -133,6 +183,7 @@ public class EditView extends AppLayout {
         dialog.addConfirmListener(event -> onDeleteAll( ));
         dialog.addConfirmListener(click -> service.deleteAll());
         dialog.addConfirmListener(click -> updateList());
+
         Button deleteAll = new Button("Delete All", VaadinIcon.TRASH.create());
         deleteAll.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_PRIMARY);
         deleteAll.addClickListener(event -> {
@@ -148,7 +199,14 @@ public class EditView extends AppLayout {
     }
 
 
-
+    /**
+     * This function provides the functionality for performing CRUD
+     *  operations on course data in the system.
+     * A binder is used to link the form to the getters and
+     *  setters inside the course classs to the fields in the grid.
+     * @return A CrudEditor form that is used to perform
+     * CRUD operations on data in the system.
+     */
     private CrudEditor<Course> createEditorForm() {
 
         TextField courseTitle = new TextField("Course Title");
@@ -194,6 +252,12 @@ public class EditView extends AppLayout {
         return new BinderCrudEditor<>(binder, form);
     }
 
+    /**
+     * This function populates the grid with the necessary fields from
+     *  items in the database.
+     * Additionally, the method adds click listeners that allow the
+     *  buttons of the form to execute database CRUD operations.
+     */
     private void setupGrid() {
         grid.setColumns();
         grid.addColumn(Course::getCourseCode).setHeader("Course Code");
@@ -258,6 +322,7 @@ public class EditView extends AppLayout {
         }
     }
 
+
     /**
      * This method is called when the user clicks the save button in the editor.
      * After any data is edited
@@ -274,14 +339,23 @@ public class EditView extends AppLayout {
     }
 
 
-
-
+    /**
+     * This method allows the edit form to be hidden when not in use.
+     * @param value a value indicating whether
+     *              the edit form is displayed or not
+     */
     private void setStatus(String value) {
         status.setText("Status: " + value);
         status.setVisible(true);
     }
 
 
+    /**
+     * This method updates the grid based on the text
+     *  that the user has input in the filter.
+     * The service class is accessed, and a custom query
+     *  in the repository is used to search the table based on user input.
+     */
     private void updateList() {
 
         grid.setItems(service.filterCourses(filterText.getValue()));
