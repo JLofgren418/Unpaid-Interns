@@ -14,25 +14,23 @@ public class CourseChange extends AbstractEntity {
         @Transient
         protected LocalDateTime dateT;
 
-        protected String dateTime;
-
-
         @Transient
         protected  Course before;
         @Transient
         protected  Course after;
 
         @Transient
-        protected  transient boolean changeToBeforeOrAfter = true;
+        protected  transient boolean changeToBeforeOrAfter = false;
 
         /**
-         * Store the difference between the before and after course
-         * Example: Course{courseCode='BMI 8080', courseTitle='SEMINAR IN BIOMEDICAL INFO', sectionType='Seminar' [from=Seminar42],....
+         * Contains the timestamp of the change
          */
+        protected String dateTime;
+
+        /** Store the difference between the before and after course  Example: Course{courseCode='BMI 8080', courseTitle='SEMINAR IN BIOMEDICAL INFO', sectionType='Seminar' [from=Seminar42],....  */
         @NotEmpty
         @Column(length = 1024)  // Database is using VARCHAR so space is not wasted...
         protected String changeCourse ="";
-
 
         public void setBefore(Course before) {
                 dateT = LocalDateTime.now();
@@ -44,6 +42,13 @@ public class CourseChange extends AbstractEntity {
                 dateT = LocalDateTime.now();
                 this.after = after;
                 changeToBeforeOrAfter = true;
+        }
+
+
+        public void setDelete(Course deletedCourse) {
+                dateT = LocalDateTime.now();
+                changeCourse = "Deleted [ " + deletedCourse.toString() + " ]";
+                changeToBeforeOrAfter = false;
         }
 
 
@@ -60,7 +65,7 @@ public class CourseChange extends AbstractEntity {
         @PrePersist
         public void beforePersist() {
                 if (changeToBeforeOrAfter) {
-                        changeCourse = before.getChangesFrom(after);
+                        changeCourse = after.getChangesFrom(before);
                         changeToBeforeOrAfter = false;
                 }
                 dateTime = dateTimeFormatter.format(dateT);
