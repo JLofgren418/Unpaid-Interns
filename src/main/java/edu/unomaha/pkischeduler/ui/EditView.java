@@ -64,8 +64,6 @@ public class EditView extends AppLayout {
      * Used to track on-edit changes
      */
 
-    CourseChange courseChange =null;
-
 
     /**
      * Edit View calls the available methods to
