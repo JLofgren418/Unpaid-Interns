@@ -33,6 +33,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * ImportView creates the UI for the import page.
+ * This UI is designed to allow users to upload
+ *  data into the system and to assign courses to rooms.
+ */
 @Route(value = "")
 @PageTitle("Import")
 public class ImportView extends AppLayout {
@@ -45,6 +50,13 @@ public class ImportView extends AppLayout {
 
     ScheduleOptimizer optimizer;
 
+
+    /**
+     * Import view calls the avilable methods to create
+     *  the UI.
+     * @param service A service class that allows access to both
+     *                the room and course tables in the database.
+     */
     public ImportView(CourseService service) {
         this.service = service;
         optimizer = new ScheduleOptimizer(service);
@@ -61,6 +73,13 @@ public class ImportView extends AppLayout {
     }
 
 
+    /**
+     * This function compiles the toolbar and
+     * the grid into a vertical layout which is then
+     * added to the UI.
+     * @return The content containing the grid and the toolbar
+     *  in a vertical layout.
+     */
     private Component getImportContent() {
         VerticalLayout content = new VerticalLayout(getToolbar(),grid);
         content.setFlexGrow(2, grid);
@@ -69,6 +88,10 @@ public class ImportView extends AppLayout {
         return content;
     }
 
+    /**
+     * This function populates the grid with the necessary fields from
+     *  items in the database.
+     */
     private void configureGrid() {
         grid.addClassNames("schedule-grid");
         grid.setSizeFull();
@@ -85,6 +108,11 @@ public class ImportView extends AppLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
+    /**
+     * This function provides the navigation tabs in a horizontal
+     *  layout that is added to the navigation bar.
+     * @return A horizontal layout containing the navigation tabs.
+     */
     public HorizontalLayout getTabs() {
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
@@ -108,6 +136,12 @@ public class ImportView extends AppLayout {
         return h1;
     }
 
+    /**
+     * This function compiles a horizontal toolbar that contains the
+     * grid filter, the data processing button, and the file upload field.
+     * @return horizontal layout containing the grid filter, the import field,
+     *  and the data processing button.
+     */
     private HorizontalLayout getToolbar()
     {
         filterText.setPlaceholder("Filter by course code");
@@ -131,11 +165,23 @@ public class ImportView extends AppLayout {
         return h4;
     }
 
+    /**
+     * This method updates the grid based on the text
+     *  that the user has input in the filter.
+     * The service class is accessed, and a custom query
+     *  in the repository is used to search the table based on user input.
+     */
     private void updateList() {
 
        grid.setItems(service.filterCourses(filterText.getValue()));
     }
 
+
+    /**
+     * This function creates an event listener that allows a file upload to begin.
+     * Once a file is received successfully, an input stream is created to process the
+     *  contents.
+     */
     private void importCSV()
     {
         upload.setAcceptedFileTypes(".csv");
@@ -154,9 +200,13 @@ public class ImportView extends AppLayout {
         });
     }
 
-    //This method goes through each line of the csv,
-    // creates objects from csv data,
-    // and places objects in the database
+
+    /**
+     * This function uses a CSV parser to quickly and easily extract fields from the CSV files.
+     * The function goes through each line of the csv, creates objects from csv data,
+     *  and stores the created objects in the database.
+     * @param fileData An input stream containing the data of the imported file.
+     */
     private void processCSV(InputStream fileData)
     {
         var parser = new CSVParserBuilder().withSeparator(',').build();

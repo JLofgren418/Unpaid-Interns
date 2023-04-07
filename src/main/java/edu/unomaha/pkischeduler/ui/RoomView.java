@@ -24,6 +24,12 @@ import edu.unomaha.pkischeduler.data.service.CourseService;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * RoomView creates the UI for the Room x Room schedule view.
+ * This UI is designed to allow the user to view the courses
+ *  that are assigned to any given room.
+ * Uses an accordion to display information.
+ */
 @Route(value = "room")
 @PageTitle("Room")
 public class RoomView extends AppLayout {
@@ -32,6 +38,12 @@ public class RoomView extends AppLayout {
     List<Room> rooms;
     Accordion accordion = new Accordion();
     HorizontalLayout spacer = new HorizontalLayout();
+
+    /**
+     * This function calls the necessary methods to set up the UI.
+     * @param service A service class used to access both the course and room
+     *                tables in the database.
+     */
     public RoomView(CourseService service) {
         addClassName("room-view");
         this.service = service;
@@ -44,6 +56,12 @@ public class RoomView extends AppLayout {
     }
 
 
+    /**
+     * This function compiles a short description of the page
+     *  purpose and the accordion component into a vertical layout.
+     * @return A vertical layout component containing the accordion
+     *  and a label.
+     */
     private Component getRoomContent() {
         spacer.setWidth("100");
         spacer.setHeight("4%");
@@ -57,6 +75,13 @@ public class RoomView extends AppLayout {
         return content;
     }
 
+
+    /**
+     * This function iterates through each room and each course to
+     *  determine which courses are associated with a given room.
+     * The room object is assigned an updated list of courses that
+     *  are placed in a particular room.
+     */
     private void updateCourseList() {
 
         for (Room room : rooms) {
@@ -71,6 +96,11 @@ public class RoomView extends AppLayout {
         }
     }
 
+
+    /**
+     * This function creates the accordion component and populates
+     *  the component with the database objects.
+     */
     private void configureAccordion()
     {
         for (Room room : rooms) {
@@ -89,6 +119,11 @@ public class RoomView extends AppLayout {
         accordion.setSizeFull();
     }
 
+    /**
+     * This function provides the navigation tabs in a horizontal
+     *  layout that is added to the navigation bar.
+     * @return A horizontal layout containing the navigation tabs.
+     */
     private HorizontalLayout getTabs() {
 
         Tab redirect1 = new Tab(VaadinIcon.UPLOAD.create());
