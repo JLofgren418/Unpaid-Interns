@@ -79,8 +79,10 @@ public class RoomView extends AppLayout {
     /**
      * This function iterates through each room and each course to
      *  determine which courses are associated with a given room.
-     * The room object is assigned an updated list of courses that
-     *  are placed in a particular room.
+     * At each iteration the room object gets an updated list of
+     *  courses that are assigned to it.
+     * This function allows the accordion to display the courses
+     *  that are assigned to any given room.
      */
     private void updateCourseList() {
 
