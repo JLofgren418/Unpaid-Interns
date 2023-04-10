@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 /**
- * ImportView creates the UI for the import page.
+ * ImportView creates the UI for the Import page.
  * This UI is designed to allow users to upload
  *  data into the system and to assign courses to rooms.
  */

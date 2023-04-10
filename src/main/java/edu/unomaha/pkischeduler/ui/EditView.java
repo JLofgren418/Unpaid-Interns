@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 /**
- * EditView creates the UI for the Edit page
+ * EditView creates the UI for the Edit page.
  * This UI is designed to allow users to perform
  *  CRUD operations on data that is imported
  *  into the system.

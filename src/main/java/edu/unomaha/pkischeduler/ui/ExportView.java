@@ -21,7 +21,7 @@ import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.service.CRIService;
 
 /**
- * ExportView creates the UI for the Edit page.
+ * ExportView creates the UI for the Export page.
  * The UI is designed to allow the user to export the data
  *  from the system after processing, editing and verifying.
  */
