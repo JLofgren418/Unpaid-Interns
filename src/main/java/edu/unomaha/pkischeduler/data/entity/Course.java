@@ -154,6 +154,10 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     }
 
 
+    /**
+     * Provides a string representation of the course.
+     * @return A string representing difference between the two courses.
+     */
     public String getChangesFrom(Course other) {
         String difference = "";
             difference +=

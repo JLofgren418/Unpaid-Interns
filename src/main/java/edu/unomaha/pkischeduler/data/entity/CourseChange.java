@@ -5,6 +5,9 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This class is used to store the changes made to a course. (audit log)
+ */
 @Entity
 public class CourseChange extends AbstractEntity {
 
@@ -32,19 +35,31 @@ public class CourseChange extends AbstractEntity {
         @Column(length = 1024)  // Database is using VARCHAR so space is not wasted...
         protected String changeCourse ="";
 
+
+        /**
+         * This function should be called before any changes to @Course object are made
+         * @param before The course before the changes are made
+         */
         public void setBefore(Course before) {
                 dateT = LocalDateTime.now();
                 this.before = before;
                 changeToBeforeOrAfter = true;
         }
 
+        /**
+         * This function should be called after any changes to @Course object are made
+         * @param after The course after the changes are made
+         */
         public void setAfter(Course after) {
                 dateT = LocalDateTime.now();
                 this.after = after;
                 changeToBeforeOrAfter = true;
         }
 
-
+        /**
+         * This function should be called when a course is deleted
+         * @param deletedCourse The course that was deleted
+         */
         public void setDelete(Course deletedCourse) {
                 dateT = LocalDateTime.now();
                 changeCourse = "Deleted [ " + deletedCourse.toString() + " ]";
@@ -52,7 +67,10 @@ public class CourseChange extends AbstractEntity {
         }
 
 
-
+        /**
+         * Returns to string representation of the CourseChange object
+         * @return to string representation of the CourseChange object
+         */
         @Override
         public String toString(){
                 beforePersist();
