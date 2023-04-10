@@ -3,8 +3,7 @@ package edu.unomaha.pkischeduler.data.entity;
 import javax.persistence.*;
 
 /**
- * This abstract class is a mapped superclass for DB entities
- * Provides a base for all DB entities.
+ * Abstract mapped superclass which provides a base for all entities.
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
