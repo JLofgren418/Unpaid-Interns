@@ -2,7 +2,6 @@ package edu.unomaha.pkischeduler.ui;
 
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -11,7 +10,6 @@ import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.crud.BinderCrudEditor;
 import com.vaadin.flow.component.crud.Crud;
 import com.vaadin.flow.component.crud.CrudEditor;
-import com.vaadin.flow.component.crud.CrudI18nUpdatedEvent;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
@@ -23,7 +21,6 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -33,12 +30,10 @@ import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.data.service.CourseRoomService;
 import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-
-import java.util.EventObject;
 
 /**
  * EditView creates the UI for the Edit page
@@ -55,7 +50,7 @@ public class EditView extends AppLayout {
     CourseChange courseChange =null;
 
     Grid<Course> grid = new Grid<>(Course.class);
-    CourseService service;
+    CourseRoomService service;
     Crud<Course>  crud;
     TextField filterText = new TextField();
     private Span status;
@@ -74,7 +69,7 @@ public class EditView extends AppLayout {
      * @param courseChangeService The service class used to access the course
      *                            change table in the database.
      */
-    public EditView(CourseService service, CourseChangeService courseChangeService) {
+    public EditView(CourseRoomService service, CourseChangeService courseChangeService) {
         this.service = service;
         this.courseChangeService = courseChangeService;
         grid.setItems(service.getAllCourses());

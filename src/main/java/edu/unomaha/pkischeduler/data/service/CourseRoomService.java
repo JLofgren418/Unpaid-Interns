@@ -12,16 +12,17 @@ import org.vaadin.crudui.crud.CrudListener;
 import java.util.Collection;
 import java.util.List;
 
+
 @Service
-public class CourseService implements CrudListener<Course> {
+public class CourseRoomService implements CrudListener<Course> {
 
     private final CourseRepository courseRepository;
     private final RoomRepository roomRepository;
     private final InstructorRepository instructorRepository;
 
-    public CourseService(CourseRepository courseRepository,
-                           RoomRepository roomRepository,
-                           InstructorRepository instructorRepository) {
+    public CourseRoomService(CourseRepository courseRepository,
+                             RoomRepository roomRepository,
+                             InstructorRepository instructorRepository) {
         this.courseRepository = courseRepository;
         this.roomRepository = roomRepository;
         this.instructorRepository = instructorRepository;
@@ -89,17 +90,34 @@ public class CourseService implements CrudListener<Course> {
         return roomRepository.save(room);
     }
 
+    /**
+     * Allows an instructor to be added to the databse.
+     * @param instructor
+     * @return
+     */
     public Instructor addInstructor(Instructor instructor)
     {
         return instructorRepository.save(instructor);
     }
 
+    /**
+     * Provides the default room from the database.
+     * All courses are initially set to this room.
+     * @return The default room.
+     */
     public Room getDefaultRoom()
     {
         Long id = 0L;
         return roomRepository.getReferenceById(id);
     }
 
+
+    /**
+     * Checks to see if an instructor exists by name in the database.
+     * @param name The name of the instructor.
+     * @return If the instructor exists, it is returned.
+     * Otherwise, returns null.
+     */
     public Instructor exstingInstructor(String name)
     {
             if (instructorRepository.existsByName(name))
@@ -110,7 +128,10 @@ public class CourseService implements CrudListener<Course> {
        return null;
     }
 
-    //deletes all courses and instructors
+
+    /**
+     * Deletes all courses and instructors in the database.
+     */
     public void deleteAll()
     {
         courseRepository.deleteAll();

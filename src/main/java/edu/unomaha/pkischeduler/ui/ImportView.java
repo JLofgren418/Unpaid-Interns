@@ -25,7 +25,7 @@ import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.data.service.CourseRoomService;
 import edu.unomaha.pkischeduler.processing.ScheduleOptimizer;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ import java.util.List;
 public class ImportView extends AppLayout {
     Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
-    CourseService service;
+    CourseRoomService service;
     MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
     Upload upload = new Upload(buffer);
     Button process = new Button("Process Schedule", VaadinIcon.FILE_PROCESS.create());
@@ -57,7 +57,7 @@ public class ImportView extends AppLayout {
      * @param service A service class that allows access to both
      *                the room and course tables in the database.
      */
-    public ImportView(CourseService service) {
+    public ImportView(CourseRoomService service) {
         this.service = service;
         optimizer = new ScheduleOptimizer(service);
         addClassName("import-view");

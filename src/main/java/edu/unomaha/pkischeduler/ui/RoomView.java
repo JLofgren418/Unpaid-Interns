@@ -19,7 +19,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.service.CourseService;
+import edu.unomaha.pkischeduler.data.service.CourseRoomService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
 @Route(value = "room")
 @PageTitle("Room")
 public class RoomView extends AppLayout {
-    CourseService service;
+    CourseRoomService service;
     List<Course> courses;
     List<Room> rooms;
     Accordion accordion = new Accordion();
@@ -44,7 +44,7 @@ public class RoomView extends AppLayout {
      * @param service A service class used to access both the course and room
      *                tables in the database.
      */
-    public RoomView(CourseService service) {
+    public RoomView(CourseRoomService service) {
         addClassName("room-view");
         this.service = service;
         rooms = service.getAllRooms();
