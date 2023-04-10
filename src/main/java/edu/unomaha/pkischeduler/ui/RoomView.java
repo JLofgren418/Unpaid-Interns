@@ -33,16 +33,37 @@ import java.util.List;
 @Route(value = "room")
 @PageTitle("Room")
 public class RoomView extends AppLayout {
+    /**
+     * Service provider which allows the application to access
+     * the repositories for Courses, Rooms, and Instructors (CRI)
+     */
     CRIService service;
+
+    /**
+     * A list of all courses.
+     */
     List<Course> courses;
+
+    /**
+     * A list of rooms.
+     */
     List<Room> rooms;
+
+    /**
+     * An accordion component for the UI.
+     */
     Accordion accordion = new Accordion();
+
+    /**
+     * A special HorizontalLayout component used for IU formatting
+     * and to hold the label containing the page description.
+     */
     HorizontalLayout spacer = new HorizontalLayout();
 
     /**
-     * This function calls the necessary methods to set up the UI.
-     * @param service A service class used to access both the course and room
-     *                tables in the database.
+     * This function calls the necessary methods to create the UI.
+     * @param service A service class used to access the course, room,
+     *                 and instructor tables in the database.
      */
     public RoomView(CRIService service) {
         addClassName("room-view");

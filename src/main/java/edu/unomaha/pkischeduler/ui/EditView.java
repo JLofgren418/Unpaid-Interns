@@ -45,27 +45,48 @@ import org.slf4j.Logger;
 @PageTitle("Edit")
 public class EditView extends AppLayout {
     private static final Logger LOG = LoggerFactory.getLogger(EditView.class);
+
+    /**
+     * Service provider which allows the application to access
+     * the courseChangeRepository.
+     */
     private CourseChangeService courseChangeService;
+
     /**  Used to track on-edit changes   */
     CourseChange courseChange =null;
 
+    /**
+     * A grid component that contains courses.
+     */
     Grid<Course> grid = new Grid<>(Course.class);
+
+    /**
+     * Service provider which allows the application to access
+     * the repositories for Courses, Rooms, and Instructors (CRI)
+     */
     CRIService service;
+
+    /**
+     * A component for performing CRUD operations courses
+     */
     Crud<Course>  crud;
+
+    /**
+     * A text field component that allows the user to filter the grid.
+     */
     TextField filterText = new TextField();
+
+    /**
+     * Allows the edit form to be hidden when not in use.
+     */
     private Span status;
 
-    /**
-     * Used to track on-edit changes
-     */
-
 
     /**
-     * Edit View calls the available methods to
-     * set up the UI layout.
+     * Edit View calls the necessary methods to create the UI.
      *
-     * @param service The service class used to access
-     *                the room and course tables in the database.
+     * @param service A service class used to access the course, room,
+     *                 and instructor tables in the database.
      * @param courseChangeService The service class used to access the course
      *                            change table in the database.
      */

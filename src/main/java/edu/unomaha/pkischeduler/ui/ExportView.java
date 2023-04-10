@@ -28,14 +28,26 @@ import edu.unomaha.pkischeduler.data.service.CRIService;
 @Route(value = "export")
 @PageTitle("Export")
 public class ExportView extends AppLayout {
+    /**
+     * A grid component containing courses.
+     */
     Grid<Course> grid = new Grid<>(Course.class);
+
+    /**
+     * A text field component that allows the user to filter the grid.
+     */
     TextField filterText = new TextField();
+
+    /**
+     * Service provider which allows the application to access
+     * the repositories for Courses, Rooms, and Instructors (CRI)
+     */
     CRIService service;
 
     /**
-     * ExportView calls the available methods to set up the UI.
-     * @param service The service class that allows access to the
-     *                room and course tables in the database.
+     * ExportView calls the necessary methods to create the UI.
+     * @param service A service class used to access the course, room,
+     *                 and instructor tables in the database.
      */
     public ExportView(CRIService service) {
         this.service = service;

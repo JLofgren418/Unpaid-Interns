@@ -41,21 +41,51 @@ import java.util.List;
 @Route(value = "")
 @PageTitle("Import")
 public class ImportView extends AppLayout {
+
+    /**
+     * A grid component containing courses for UI.
+     */
     Grid<Course> grid = new Grid<>(Course.class);
+
+    /**
+     * A text field component that allows the user to filter the grid.
+     */
     TextField filterText = new TextField();
+
+    /**
+     * Service provider which allows the application to access
+     * the repositories for Courses, Rooms, and Instructors (CRI)
+     */
     CRIService service;
+
+
+    /**
+     * MemoryBuffer for file uploading.
+     */
     MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
+
+    /**
+     * Upload component which allows the user to import
+     * files into the application.
+     */
     Upload upload = new Upload(buffer);
+
+    /**
+     * A button component which assigns courses to rooms and
+     * then refreshes the grid.
+     */
     Button process = new Button("Process Schedule", VaadinIcon.FILE_PROCESS.create());
 
+    /**
+     * The schedule optimizer which assigns courses to rooms.
+     */
     ScheduleOptimizer optimizer;
 
 
     /**
-     * Import view calls the avilable methods to create
-     *  the UI.
-     * @param service A service class that allows access to both
-     *                the room and course tables in the database.
+     * Import view calls the necessary methods to create the UI.
+     * @param service A service class used to access the course, room,
+     *                 and instructor tables in the database.
      */
     public ImportView(CRIService service) {
         this.service = service;
