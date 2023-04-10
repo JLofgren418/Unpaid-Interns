@@ -13,16 +13,17 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 @Service
-public class CourseRoomService implements CrudListener<Course> {
+public class CRIService implements CrudListener<Course> {
 
     private final CourseRepository courseRepository;
     private final RoomRepository roomRepository;
     private final InstructorRepository instructorRepository;
 
-    public CourseRoomService(CourseRepository courseRepository,
-                             RoomRepository roomRepository,
-                             InstructorRepository instructorRepository) {
+    public CRIService(CourseRepository courseRepository,
+                      RoomRepository roomRepository,
+                      InstructorRepository instructorRepository) {
         this.courseRepository = courseRepository;
         this.roomRepository = roomRepository;
         this.instructorRepository = instructorRepository;

@@ -2,15 +2,15 @@ package edu.unomaha.pkischeduler.processing;
 
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.service.CourseRoomService;
+import edu.unomaha.pkischeduler.data.service.CRIService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ScheduleOptimizer {
-    CourseRoomService service;
-    public ScheduleOptimizer(CourseRoomService service)
+    CRIService service;
+    public ScheduleOptimizer(CRIService service)
     {
         this.service = service;
     }

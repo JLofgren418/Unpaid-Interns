@@ -18,7 +18,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import edu.unomaha.pkischeduler.data.entity.Course;
-import edu.unomaha.pkischeduler.data.service.CourseRoomService;
+import edu.unomaha.pkischeduler.data.service.CRIService;
 
 /**
  * ExportView creates the UI for the Edit page.
@@ -30,14 +30,14 @@ import edu.unomaha.pkischeduler.data.service.CourseRoomService;
 public class ExportView extends AppLayout {
     Grid<Course> grid = new Grid<>(Course.class);
     TextField filterText = new TextField();
-    CourseRoomService service;
+    CRIService service;
 
     /**
      * ExportView calls the available methods to set up the UI.
      * @param service The service class that allows access to the
      *                room and course tables in the database.
      */
-    public ExportView(CourseRoomService service) {
+    public ExportView(CRIService service) {
         this.service = service;
         addClassName("export-view");
         configureGrid();

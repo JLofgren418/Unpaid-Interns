@@ -30,7 +30,7 @@ import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
-import edu.unomaha.pkischeduler.data.service.CourseRoomService;
+import edu.unomaha.pkischeduler.data.service.CRIService;
 import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class EditView extends AppLayout {
     CourseChange courseChange =null;
 
     Grid<Course> grid = new Grid<>(Course.class);
-    CourseRoomService service;
+    CRIService service;
     Crud<Course>  crud;
     TextField filterText = new TextField();
     private Span status;
@@ -69,7 +69,7 @@ public class EditView extends AppLayout {
      * @param courseChangeService The service class used to access the course
      *                            change table in the database.
      */
-    public EditView(CourseRoomService service, CourseChangeService courseChangeService) {
+    public EditView(CRIService service, CourseChangeService courseChangeService) {
         this.service = service;
         this.courseChangeService = courseChangeService;
         grid.setItems(service.getAllCourses());
