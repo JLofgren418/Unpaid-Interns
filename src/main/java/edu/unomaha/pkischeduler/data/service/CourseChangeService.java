@@ -16,6 +16,9 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Service to log Changes
+ */
 @Service
 public class CourseChangeService  implements CrudListener<CourseChange> {
     private static final Logger LOG = LoggerFactory.getLogger(EditView.class);
@@ -23,34 +26,60 @@ public class CourseChangeService  implements CrudListener<CourseChange> {
     private  CourseChangeRepository courseChangeRepository;
 
 
-
+    /**
+     *
+     * @param courseChangeRepository
+     */
     public CourseChangeService(CourseChangeRepository courseChangeRepository) {
         this.courseChangeRepository = courseChangeRepository;
     }
 
-
+    /**
+     *
+     * @param courseChange
+     * @return
+     */
     public CourseChange saveCourseChange (CourseChange courseChange) {
        LOG.info("saveCourseChange(): " + courseChange.toString());
        return  courseChangeRepository.save(courseChange);
     }
 
-
+    /**
+     * Find all changes
+     * @return
+     */
     @Override
     public Collection<CourseChange> findAll() {
         return courseChangeRepository.findAll();
     }
 
+    /**
+     * Add a change to the course to the log
+     * @param course
+     * @return
+     */
     @Override
     public CourseChange add(CourseChange course) {
         return courseChangeRepository.save(course);
     }
 
+    /**
+     * Function has to be implemented because of the @CrudListener interface
+     * Audit log should not be modified
+     * @param course
+     * @return
+     */
     @Override
     public CourseChange update(CourseChange course) {
         LOG.error("Items can't be updated.");
         throw new UnsupportedOperationException("Items can't be updated");
     }
 
+    /**
+     * Function has to be implemented because of the @CrudListener interface
+     * audit log should not be modified
+     * @param course
+     */
     @Override
     public void delete(CourseChange course) {
         LOG.error("Items can't be deleted from change log.");
