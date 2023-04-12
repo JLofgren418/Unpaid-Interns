@@ -17,10 +17,11 @@ public class ScheduleOptimizer {
 
     /**
      * Assigns rooms naively without regard for optimal placement.
-     * Only considers the smallest possible room
+     * Only considers the smallest possible room.
+     * Does not assign classes from largest to smallest.
+     * Does not assign classes in chronological order.
      * Does not consider multi-listing.
      * Does not regard Labs vs lectures.
-     * Does not assign classes from largest to smallest.
      * Does not concern itself with standard 1:15 classes.
      * Does not refactor.
      */
@@ -33,22 +34,25 @@ public class ScheduleOptimizer {
         {
             if (course.getRoom().getNumber() == 0) //if unassigned
             {
-                ArrayList<Room> viableRooms = new ArrayList<Room>();
+                ArrayList<Room> viableRooms = new ArrayList<>();
                 for (Room room : rooms)
                 {
-                    boolean flag = true; //flag to test if there is a conflict]
-                    List<Course> roomCourses = room.getCourses();
-                    for (Course assigned : roomCourses)
+                    if (room.getCapacity() >= course.getExpectedEnrollment())
                     {
-                        if (!this.checkForConflict(course, assigned))
+                        boolean flag = true; //flag to test if there is a conflict
+                        List<Course> roomCourses = room.getCourses();
+                        for (Course assigned : roomCourses)
                         {
-                            flag = false;
-                            break;
+                            if (!this.checkForConflict(course, assigned))
+                            {
+                                flag = false;
+                                break;
+                            }
                         }
-                    }
-                    if (flag && room.getCapacity() >= course.getExpectedEnrollment())
-                    {
-                        viableRooms.add(room);
+                        if (flag)
+                        {
+                            viableRooms.add(room);
+                        }
                     }
                 }
                 //find smallest viable room
@@ -64,9 +68,12 @@ public class ScheduleOptimizer {
                     }
                     else placement = room;
                 }
-                course.setRoom(placement);
-                placement.addCourse(course);
-                service.update(course);
+                if (placement != null)
+                {
+                    course.setRoom(placement);
+                    placement.addCourse(course);
+                    service.update(course);
+                }
             }
         }
     }
@@ -89,23 +96,25 @@ public class ScheduleOptimizer {
         //check for same days
         for (String day : daysA)
         {
-            if (daysB.contains(day))
-            {
-                dayFlag = true;
-                break;
-            }
+            if (!day.equals(" "))
+                if (daysB.contains(day))
+                {
+                    dayFlag = true;
+                    break;
+                }
         }
+
 
         if (dayFlag)
         {
             //convert both to military time
             // if time is pm add 12 to hours
-            if (timesA[2] == 1) timesA[0]+=12;
-            if (timesA[5] == 1) timesA[3]+=12;
+            if (timesA[2] == 1 && timesA[0] != 12) timesA[0]+=12;
+            if (timesA[5] == 1 && timesA[3] != 12) timesA[3]+=12;
 
             //do the same for b
-            if (timesB[2] == 1) timesB[0]+=12;
-            if (timesB[5] == 1) timesB[3]+=12;
+            if (timesB[2] == 1 && timesB[0] != 12) timesB[0]+=12;
+            if (timesB[5] == 1 && timesB[3] != 12) timesB[3]+=12;
 
             //test hours for conflict, if so test minutes with 15 min grace
             if (timesA[0] >= timesB[0] && timesA[0] <= timesB[3]) //if b.start <= a.start <= b.end
@@ -115,7 +124,7 @@ public class ScheduleOptimizer {
             }
             else if (timesA[3] >= timesB[0] && timesA[3] <= timesB[3]) //if b.start <= a.end <= b.end
             {
-                if (!(timesA[3] == timesB[0] && timesA[1] <= timesB[4]-15)) //if a does not end 15 min before b starts
+                if (!(timesA[3] == timesB[0] && timesA[4] <= timesB[1]-15)) //if a does not end 15 min before b starts
                     ret = false;
             }
             else if (timesA[0] <= timesB[0] && timesA[3] >= timesB[3]) //if a.start <= b <= a.end
@@ -127,7 +136,11 @@ public class ScheduleOptimizer {
         {
             return true;
         }
-
+        if (!ret)
+        {
+            System.out.print(a.getCourseCode() + " " + a.getMeetingDays() + " " + a.getMeetingTime() + "\t");
+            System.out.print(b.getCourseCode() + " " + b.getMeetingDays() + " " + b.getMeetingTime() + "\n");
+        }
         return ret;
     }
 
@@ -138,7 +151,7 @@ public class ScheduleOptimizer {
      */
     private ArrayList<String> parseDays(String in)
     {
-        ArrayList<String> ret = new ArrayList<String>();
+        ArrayList<String> ret = new ArrayList<>();
         char[] work = in.toCharArray();
         for (int i = 0; i < work.length; i++)
         {
@@ -206,12 +219,11 @@ public class ScheduleOptimizer {
             ret[2] = 0;
         else
             ret[2] = 1;
-        i+=3;
 
         //find ending hour
         flag = false;
         hold = "";
-        for (i = i; work[i] != ':'; i++)
+        for (i = i+3; work[i] != ':'; i++)
         {
             if (work[i] == 'a' || work[i] == 'p')
             {

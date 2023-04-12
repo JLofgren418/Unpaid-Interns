@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 public class Room extends AbstractEntity implements Cloneable {
 
+    //TODO add building field
     /**
      * The room number
      */
