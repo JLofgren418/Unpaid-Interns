@@ -19,6 +19,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.InputStreamFactory;
 import com.vaadin.flow.server.StreamResource;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.CourseChange;
@@ -164,13 +165,14 @@ public class ExportView extends AppLayout {
 
 
       // ADD download log button
-        StreamResource streamResource = new StreamResource(
-                "CourseChange-" + DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(  LocalDateTime.now() ).toString() + ".log", () -> {
+        StreamResource streamResource = new StreamResource(  "CourseChange.log", () ->
+        {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             courseChangeService.exportLog(outputStream);
             InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
             return inputStream;
         }   );
+
         Anchor downloadLinkAnchor = new Anchor(streamResource, "download log file");
         downloadLinkAnchor.getElement().setAttribute("download", true);
         downloadLinkAnchor.getStyle().set("display", "none");

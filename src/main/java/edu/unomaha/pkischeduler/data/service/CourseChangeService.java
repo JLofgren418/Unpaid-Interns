@@ -1,7 +1,6 @@
 package edu.unomaha.pkischeduler.data.service;
 
 
-import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.ui.EditView;
 import org.slf4j.Logger;
@@ -10,9 +9,8 @@ import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 import edu.unomaha.pkischeduler.data.repository.CourseChangeRepository;
 
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -86,20 +84,20 @@ public class CourseChangeService  implements CrudListener<CourseChange> {
         throw new UnsupportedOperationException("Items can't be deleted from change log.");
     }
 
-
-
-//    public void exportTableToTextFile(String filePath) {
-//        List<CourseChange> entities = courseChangeRepository.findAll();
-//
-//        try (BufferedWriter  writer = Files.newBufferedWriter(Paths.get(filePath))) {
-//            for (MyEntity entity : entities) {
-//                writer.write(entity.getId() + ", " + entity.getName());
-//                writer.newLine();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    /**
+     * returns the log as ByteArrayOutputStream
+     */
+    public void exportLog(ByteArrayOutputStream baos) {
+        List<CourseChange> entities = courseChangeRepository.findAll();
+        for (CourseChange entity : entities) {
+            try {
+                baos.write(  entity.getAsLogLine().getBytes() );
+            } catch (IOException e) {
+                LOG.error(e.toString());
+            }
+        }
+        LOG.trace("exportLog(): bytes written :" + baos.size());
+    }
 
 
 }
