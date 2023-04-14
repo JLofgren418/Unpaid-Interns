@@ -2,10 +2,12 @@ package edu.unomaha.pkischeduler.ui;
 
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -17,8 +19,18 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.StreamResource;
 import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.service.CRIService;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import edu.unomaha.pkischeduler.data.service.CourseChangeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ExportView creates the UI for the Export page.
@@ -28,6 +40,7 @@ import edu.unomaha.pkischeduler.data.service.CRIService;
 @Route(value = "export")
 @PageTitle("Export")
 public class ExportView extends AppLayout {
+    private static final Logger LOG = LoggerFactory.getLogger(ExportView.class);
     /**
      * A grid component containing courses.
      */
@@ -44,13 +57,23 @@ public class ExportView extends AppLayout {
      */
     CRIService service;
 
+
+    /** A button that allows the user to download the log file. */
+    Button downloadLogBtn;
+
+
+    /**  Used to generate downloadable log    */
+    CourseChangeService courseChangeService;
+
+
     /**
      * ExportView calls the necessary methods to create the UI.
      * @param service A service class used to access the course, room,
      *                 and instructor tables in the database.
      */
-    public ExportView(CRIService service) {
+    public ExportView(CRIService service, CourseChangeService courseChangeService) {
         this.service = service;
+        this.courseChangeService = courseChangeService;
         addClassName("export-view");
         configureGrid();
         setContent(getExportContent());
@@ -139,11 +162,29 @@ public class ExportView extends AppLayout {
         Button exportCSV = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
         exportCSV.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        Button downloadLog = new Button("Download Log",VaadinIcon.DOWNLOAD.create());
-        downloadLog.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        downloadLog.getElement().setProperty("title", "Download log file");
 
-        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadLog, exportCSV);
+      // ADD download log button
+        StreamResource streamResource = new StreamResource(
+                "CourseChange-" + DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(  LocalDateTime.now() ).toString() + ".log", () -> {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            courseChangeService.exportLog(outputStream);
+            InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            return inputStream;
+        }   );
+        Anchor downloadLinkAnchor = new Anchor(streamResource, "download log file");
+        downloadLinkAnchor.getElement().setAttribute("download", true);
+        downloadLinkAnchor.getStyle().set("display", "none");
+
+        downloadLogBtn = new Button("Download Log",VaadinIcon.DOWNLOAD.create());
+        downloadLogBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        downloadLogBtn.getElement().setProperty("title", "Download log file");
+        downloadLogBtn.addClickListener(e -> {
+                    LOG.trace("Download log button clicked");
+                    downloadLinkAnchor.getElement().executeJs("this.click()");
+        });
+
+
+        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadLinkAnchor , downloadLogBtn, exportCSV);
         buttonsLayout.setWidth("65%");
         buttonsLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
