@@ -87,12 +87,19 @@ public class Instructor extends AbstractEntity implements Serializable, Cloneabl
         this.availability = availability;
     }
 
+    /** return string representation of instructor
+     * @return string representation of instructor
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
+
     /**
      * Provides a string representation of the instructor.
      * @return A string representation of the instructor.
      */
-    @Override
-    public String toString() {
+    public String toStringForLog() {
        //  return name;
         return "Instructor{" +
                 "name='" + name + '\'' +

@@ -133,11 +133,19 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     }
 
     /**
-     * Provides a string representation of the course.
-     * @return A string representation of the course.
+     * string representation of the course.
      */
     @Override
     public String toString() {
+        return courseTitle + " " + meetingDays;
+    }
+
+
+    /**
+     * Provides a string representation of the course for logging purposes.
+     * @return A string representation of the course.
+     */
+    public String toStringForLog() {
         //  return courseCode + " " + courseTitle;
         return "Course{" +
                 "courseCode='" + courseCode + '\'' +
@@ -152,7 +160,6 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
                 ", room=" + room.toString() +
                 '}';
     }
-
 
     /**
      * Provides a string representation of the course.
