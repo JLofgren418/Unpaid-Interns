@@ -133,19 +133,25 @@ public class ExportView extends AppLayout {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
-        HorizontalLayout h1 = new HorizontalLayout(filterText);
-        h1.setAlignItems(FlexComponent.Alignment.CENTER);
-        h1.setWidth("35%");
+        HorizontalLayout filterLayout = new HorizontalLayout(filterText);
+        filterLayout.setWidth("35%");
+
         Button exportCSV = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
         exportCSV.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        HorizontalLayout h2 = new HorizontalLayout(exportCSV);
-        h2.setAlignItems(FlexComponent.Alignment.CENTER);
-        h2.setWidth("65%");
-        h2.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
-        HorizontalLayout h3 = new HorizontalLayout(h1, h2);
-        h3.setWidth("100%");
-        h3.setHeight("4%");
-        return h3;
+
+        Button downloadLog = new Button("Download Log",VaadinIcon.DOWNLOAD.create());
+        downloadLog.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        downloadLog.getElement().setProperty("title", "Download log file");
+
+        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadLog, exportCSV);
+        buttonsLayout.setWidth("65%");
+        buttonsLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+
+        HorizontalLayout mainHorizontalLayout = new HorizontalLayout(filterLayout, buttonsLayout );
+        mainHorizontalLayout.setWidth("100%");
+        mainHorizontalLayout.setHeight("4%");
+
+        return mainHorizontalLayout;
     }
 
     /**
