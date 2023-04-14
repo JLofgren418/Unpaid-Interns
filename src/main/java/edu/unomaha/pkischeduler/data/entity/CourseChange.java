@@ -62,7 +62,7 @@ public class CourseChange extends AbstractEntity {
          */
         public void setDelete(Course deletedCourse) {
                 dateT = LocalDateTime.now();
-                changeCourse = "Deleted [ " + deletedCourse.toString() + " ]";
+                changeCourse = "Deleted [ " + deletedCourse.toStringForLog() + " ]";
                 changeToBeforeOrAfter = false;
         }
 
