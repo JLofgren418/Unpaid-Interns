@@ -385,6 +385,125 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     }
 
     /**
+     * Auto generated getter methods.
+     */
+    public String getConsent() {
+        return consent;
+    }
+
+    public String getCredits() {
+        return credits;
+    }
+
+    public String getMinCredits() {
+        return minCredits;
+    }
+
+    public String getGraded() {
+        return graded;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public String getRoomAttributes() {
+        return roomAttributes;
+    }
+
+    public String getEnrollment() {
+        return enrollment;
+    }
+
+    public String getMaxEnrollment() {
+        return maxEnrollment;
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public String getSisID() {
+        return sisID;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public String getTerm_code() {
+        return term_code;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public String getCatalogNumber() {
+        return catalogNumber;
+    }
+
+    public String getPriorEnrollment() {
+        return priorEnrollment;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public String getProjectedEnrollment() {
+        return projectedEnrollment;
+    }
+
+    public String getWaitCap() {
+        return waitCap;
+    }
+
+    public String getRoomCap() {
+        return roomCap;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public String getSession() {
+        return session;
+    }
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public String getPrintable() {
+        return printable;
+    }
+
+    /**
      * Provides the title of the course.
      * @return The course title
      */
