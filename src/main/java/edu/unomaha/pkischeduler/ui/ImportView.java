@@ -252,16 +252,42 @@ public class ImportView extends AppLayout {
                 if (row[0].equals(""))//Find rows to process
                 {
                     //translate to csv column name
-                    String meetingPattern = row[13];
-                    String status = row[16];
-                    String instructionMethod = row[19];
+                    String classID = row[1];
+                    String sisID = row[2];
+                    String term = row[3];
+                    String term_code = row[4];
+                    String deptCode = row[5];
+                    String subjectCode = row[6];
+                    String catalogNumber = row[7];
                     String courseCode = row[8];
                     String sectionNumber = row[9];
                     String courseTitle = row[10];
                     String sectionType = row[11];
+                    String title = row[12];
+                    String meetingPattern = row[13];
                     String instructorName = row[14];
+                    String room = row[15];
+                    String status = row[16];
+                    String session = row[17];
+                    String campus = row[18];
+                    String instructionMethod = row[19];
+                    String partner = row[20];
+                    String printable = row[21];
+                    String consent = row[22];
+                    String minCredits = row[23];
+                    String credits = row[24];
+                    String graded = row[25];
+                    String attributes = row[26];
+                    String roomAttributes = row[27];
+                    String enrollment = row[28];
                     String maxEnrollment = row[29];
+                    String priorEnrollment = row[30];
+                    String waitCap = row[32];
+                    String roomCap = row[33];
                     String crossListings = row[34];
+                    String link = row[35];
+                    String comments = row[36];
+                    String notes = row[37];
 
                     if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
                             && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
@@ -300,9 +326,11 @@ public class ImportView extends AppLayout {
                             service.addInstructor(instructor);
                         }
 
-                        Course course = new Course(courseCode, courseTitle, sectionType,
-                                meetingDays, meetingTime, crossListings, expectedEnrollment,
-                                sectionNumber, instructor, defaultRoom);
+                        Course course = new Course(consent, credits, minCredits, graded, attributes,  roomAttributes,  enrollment,  maxEnrollment,  classID,
+                                sisID,  term,  term_code,  deptCode,  subjectCode,  catalogNumber,  courseCode,  courseTitle,  sectionType,
+                                meetingDays,  meetingTime,  priorEnrollment,  title,  partner,  waitCap,  roomCap,  link,
+                                comments,  notes,  crossListings, expectedEnrollment,  session,  campus,  sectionNumber,  status,  instructionMethod,
+                        printable,  defaultRoom, instructor);
 
                         service.add(course);
 

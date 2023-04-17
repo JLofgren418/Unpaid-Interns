@@ -18,6 +18,98 @@ import java.text.DecimalFormat;
 public class Course extends AbstractEntity implements Serializable, Cloneable {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+    /**
+     * Whether special consent is need to join the course
+     */
+    @NotEmpty
+    private String consent = "";
+
+    /**
+     * The number of credit hours the class is worth
+     */
+    @NotEmpty
+    private String credits = "";
+
+    /**
+     * The MINIMUM number of credit hours the class is worth
+     */
+    @NotEmpty
+    private String minCredits = "";
+
+    /**
+     *  The grading mode for the course
+     *  ie. is it graded or is it for completion
+     */
+    @NotEmpty
+    private String graded = "";
+
+    /**
+     * Special attributes assigned to the course
+     */
+    @NotNull
+    private String attributes = "";
+
+    /**
+     * Attributes needed by the assigned room for the course
+     */
+    @NotEmpty
+    private String roomAttributes = "";
+
+    /**
+     * Current Enrollment in the class
+     */
+    @NotEmpty
+    private String enrollment = "";
+
+    /**
+     * The Maximum total enrollment for the class
+     */
+    @NotEmpty
+    private String maxEnrollment = "";
+
+    /**
+     * The class ID of the course
+     */
+    @NotEmpty
+    private String classID = "";
+
+    /**
+     * The SIS ID of the Course
+     */
+    @NotEmpty
+    private String sisID = "";
+
+    /**
+     * The term of the course
+     */
+    @NotEmpty
+    private String term = "";
+
+    /**
+     * The term code of the Course
+     */
+    @NotEmpty
+    private String term_code = "";
+
+    /**
+     * The Department Code of the Course
+     */
+    @NotEmpty
+    private String deptCode = "";
+
+    /**
+     * The subject Code of the Course
+     */
+    @NotEmpty
+    private String subjectCode = "";
+
+    /**
+     * The catalog number of the Course
+     */
+    @NotEmpty
+    private String catalogNumber = "";
+
     /**
      * The course ID
      * I.e. - CSCI 4970
@@ -53,6 +145,60 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     @NotEmpty
     private String meetingTime = "";
 
+    /**
+     * The past enrollment the course has historically had
+     */
+    @NotNull
+    private String priorEnrollment = "";
+
+    /**
+     * The title or topic assoicated with the course.
+     */
+    @NotNull
+    private String title = "";
+
+    /**
+     * The integrated partner for the course
+     */
+    @NotNull
+
+    private String partner = "";
+    /**
+     * The estimated enrollment the class will have
+     */
+    @NotNull
+    private String projectedEnrollment = "";
+
+    /**
+     * The maximum number of students that can waitlist for the class
+     */
+    @NotEmpty
+    private String waitCap = "";
+
+    /**
+     * The number of students the course's room needs to be able to hold
+     */
+    @NotEmpty
+    private String roomCap = "";
+
+
+    /**
+     * Link associated with the course
+     */
+    @NotNull
+    private String link = "";
+
+    /**
+     * Comments associated with the course
+     */
+    @NotNull
+    private String comments = "";
+
+    /**
+     * Notes Related to the course
+     */
+    @NotNull
+    private String notes = "";
 
     /**
      * This field contains course(s) that are cross listed
@@ -70,11 +216,42 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     private double expectedEnrollment = 0;
 
     /**
+     * This is the Course's session
+     */
+    @NotEmpty
+    private String session = "";
+
+    /**
+     * This is which campus the course is being taught on
+     */
+    @NotEmpty
+    private String campus = "";
+
+    /**
      * The section number of the course.
      * I.e. - 001, 002...etc.
      */
     @NotEmpty
     private String sectionNumber = "";
+
+    /**
+     * This is the course status.
+     */
+    @NotEmpty
+    private String status = "";
+
+    /**
+     * This is the method by which the course will be instructed
+     * ie. in person or online
+     */
+    @NotEmpty
+    private String method = "";
+
+    /**
+     * This is the whether the schedule can be printed
+     */
+    @NotEmpty
+    private String printable = "";
 
     /**
      * The room that the course is assigned to.
@@ -115,21 +292,50 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
      * @param instructor The instructor assigned to teach the course.
      * @param room The room to which the course is assigned.
      */
-    public Course(String courseCode, String courseTitle, String sectionType, String meetingDays,
-                  String meetingTime, String crossListings, double expectedEnrollment,
-                  String sectionNumber, Instructor instructor, Room room)
-    {
+
+    public Course(String consent, String credits, String minCredits, String graded, String attributes, String roomAttributes, String enrollment, String maxEnrollment, String classID,
+                  String sisID, String term, String term_code, String deptCode, String subjectCode, String catalogNumber, String courseCode, String courseTitle, String sectionType,
+                  String meetingDays, String meetingTime, String priorEnrollment, String title, String partner, String waitCap, String roomCap, String link,
+                  String comments, String notes, String crossListings, double expectedEnrollment, String session, String campus, String sectionNumber, String status, String method,
+                  String printable, Room room, Instructor instructor) {
+        this.consent = consent;
+        this.credits = credits;
+        this.minCredits = minCredits;
+        this.graded = graded;
+        this.attributes = attributes;
+        this.roomAttributes = roomAttributes;
+        this.enrollment = enrollment;
+        this.maxEnrollment = maxEnrollment;
+        this.classID = classID;
+        this.sisID = sisID;
+        this.term = term;
+        this.term_code = term_code;
+        this.deptCode = deptCode;
+        this.subjectCode = subjectCode;
+        this.catalogNumber = catalogNumber;
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
         this.sectionType = sectionType;
         this.meetingDays = meetingDays;
         this.meetingTime = meetingTime;
+        this.priorEnrollment = priorEnrollment;
+        this.title = title;
+        this.partner = partner;
+        this.waitCap = waitCap;
+        this.roomCap = roomCap;
+        this.link = link;
+        this.comments = comments;
+        this.notes = notes;
         this.crossListings = crossListings;
         this.expectedEnrollment = expectedEnrollment;
+        this.session = session;
+        this.campus = campus;
         this.sectionNumber = sectionNumber;
-        this.instructor = instructor;
+        this.status = status;
+        this.method = method;
+        this.printable = printable;
         this.room = room;
-
+        this.instructor = instructor;
     }
 
     /**
