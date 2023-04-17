@@ -34,6 +34,14 @@ public class ScheduleOptimizer {
         {
             if (course.getRoom().getNumber() == 0) //if unassigned
             {
+                if (!course.getCrossListings().equals("None"))
+                {
+                    List<Course> crossListings = this.parseCrossListings(course.getCrossListings(), courses);
+                    for (Course listing : crossListings)
+                    {
+                        System.out.println("    " + listing.getCourseCode());
+                    }
+                }
                 ArrayList<Room> viableRooms = new ArrayList<>();
                 for (Room room : rooms)
                 {
@@ -136,11 +144,11 @@ public class ScheduleOptimizer {
         {
             return true;
         }
-        if (!ret)
-        {
-            System.out.print(a.getCourseCode() + " " + a.getMeetingDays() + " " + a.getMeetingTime() + "\t");
-            System.out.print(b.getCourseCode() + " " + b.getMeetingDays() + " " + b.getMeetingTime() + "\n");
-        }
+//        if (!ret)
+//        {
+//            System.out.print(a.getCourseCode() + " " + a.getMeetingDays() + " " + a.getMeetingTime() + "\t");
+//            System.out.print(b.getCourseCode() + " " + b.getMeetingDays() + " " + b.getMeetingTime() + "\n");
+//        }
         return ret;
     }
 
@@ -253,6 +261,64 @@ public class ScheduleOptimizer {
     }
 
     /**
+     * Parses the cross listing string into its component courses.
+     * @param in The String containing all cross listings.
+     * @param Courses List of all courses to search through.
+     * @return A list of the courses that match the cross listing string.
+     */
+    private ArrayList<Course> parseCrossListings(String in, List<Course> courses)
+    {
+        List<String> courseTitles= new ArrayList<>();
+        List<String> sectionNums= new ArrayList<>();
+        char[] parse = in.toCharArray();
+        int i;
+        for (i = 0; parse[i] != ' '; i++) {}//skip "See" or "Also"
+
+        boolean multiple = false;
+        do //parse out the course titles and section ids
+        {
+            multiple = false;
+            String work = "";
+            for (i = i + 1; parse[i] != '-'; i++)
+            {
+                work += parse[i];
+            }
+            courseTitles.add(work);
+
+            work = "";
+            for (i = i + 1; i < parse.length; i++)
+            {
+                if (parse[i] == ',') {
+                    multiple = true;
+                    break;
+                }
+                work += parse[i];
+            }
+            sectionNums.add(work);
+            i++;
+        } while(multiple);
+
+
+        //now to do course lookup
+        ArrayList<Course> ret = new ArrayList<>();
+        for (int j = 0; j < courseTitles.size(); j++)
+        {
+            String code = courseTitles.get(j);
+            String section = sectionNums.get(j);
+            for (Course course : courses)
+            {
+                if (course.getCourseCode().equals(code) && course.getSectionNumber().equals(section))
+                {
+                    ret.add(course);
+                    break;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
      * Random room assignments.
      */
     public void random_assignment()
@@ -266,5 +332,4 @@ public class ScheduleOptimizer {
             service.update(course);
         }
     }
-
 }
