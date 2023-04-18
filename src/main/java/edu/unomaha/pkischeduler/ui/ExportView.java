@@ -6,7 +6,6 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -18,15 +17,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.StreamResource;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.service.CRIService;
-import org.apache.maven.surefire.extensions.StatelessReportMojoConfiguration;
-
-import java.io.ByteArrayInputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * ExportView creates the UI for the Export page.
@@ -146,13 +138,7 @@ public class ExportView extends AppLayout {
         h1.setWidth("35%");
         Button exportCSV = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
         exportCSV.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        var streamReasource = new StreamResource("schedule.csv",
-                () -> {
-            return new ByteArrayInputStream(prepareCSV().getBytes());
-                });
-        var download = new Anchor(streamReasource, "Download");
-        HorizontalLayout h2 = new HorizontalLayout(download);
+        HorizontalLayout h2 = new HorizontalLayout(exportCSV);
         h2.setAlignItems(FlexComponent.Alignment.CENTER);
         h2.setWidth("65%");
         h2.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
@@ -161,21 +147,6 @@ public class ExportView extends AppLayout {
         h3.setHeight("4%");
         return h3;
     }
-
-    private String prepareCSV()
-    {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss a");
-        LocalDateTime now = LocalDateTime.now();
-        String csv = "\nDownloaded " + dtf.format(now);
-        csv = csv + "\n,CLSS ID,SIS ID,Term,Term Code,Department Code,Subject Code,Catalog Number,Course,Section #,Course Title,Section Type,Title/Topic,Meeting Pattern,Instructor,Room,Status,Session,Campus,Inst. Method,Integ. Partner,Schedule Print,Consent,Credit Hrs Min,Credit Hrs,Grade Mode,Attributes,Room Attributes,Enrollment,Maximum Enrollment,Prior Enrollment,Projected Enrollment,Wait Cap,Rm Cap Request,Cross-listings,Link To,Comments,Notes\n";
-        List<Course> courses = service.getAllCourses();
-        for (Course course : courses){
-            csv = csv + course.toRow();
-        }
-        return csv;
-    }
-
-
 
     /**
      * This method updates the grid based on the text

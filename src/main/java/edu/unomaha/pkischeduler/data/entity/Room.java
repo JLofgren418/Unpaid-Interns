@@ -102,12 +102,16 @@ public class Room extends AbstractEntity implements Cloneable {
         this.courses.add(course);
     }
 
+@Override
+    public String toString() {
+        return String.valueOf(number);
+    }
+
     /**
-     * Provides a string representation of the room.
+     * Provides a string representation of the room for logging purposes.
      * @return A string representation of the room.
      */
-    @Override
-    public String toString() {
+    public String toStringForLog() {
         //  return String.valueOf(number);
         return "Room{" +
                 "number=" + number +

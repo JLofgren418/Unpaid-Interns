@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class CourseChange extends AbstractEntity {
 
         @Transient
-        protected static final  DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        protected static final  DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         @Transient
         protected LocalDateTime dateT;
@@ -62,7 +62,7 @@ public class CourseChange extends AbstractEntity {
          */
         public void setDelete(Course deletedCourse) {
                 dateT = LocalDateTime.now();
-                changeCourse = "Deleted [ " + deletedCourse.toString() + " ]";
+                changeCourse = "Deleted [ " + deletedCourse.toStringForLog() + " ]";
                 changeToBeforeOrAfter = false;
         }
 
@@ -74,7 +74,7 @@ public class CourseChange extends AbstractEntity {
         @Override
         public String toString(){
                 beforePersist();
-                return dateTimeFormatter.format(dateT)  + " " + changeCourse;
+                return  dateTime==null?DATE_TIME_FORMATTER.format(dateT):dateTime  + " " + changeCourse==null?"":changeCourse;
         }
 
         /**
@@ -86,9 +86,15 @@ public class CourseChange extends AbstractEntity {
                         changeCourse = after.getChangesFrom(before);
                         changeToBeforeOrAfter = false;
                 }
-                dateTime = dateTimeFormatter.format(dateT);
+                dateTime = DATE_TIME_FORMATTER.format(dateT);
         }
 
+        /**
+         * @return the line as it will apear in the log file
+         */
+        public String getAsLogLine() {
+                return this.dateTime + " " + this.changeCourse + "\n";
+        }
 
 }
 
