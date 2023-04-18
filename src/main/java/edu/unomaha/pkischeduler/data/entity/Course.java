@@ -342,23 +342,47 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
      * Provides a string representation of the course.
      * @return A string representation of the course.
      */
-    @Override
-    public String toString() {
-        //  return courseCode + " " + courseTitle;
-        return "Course{" +
-                "courseCode='" + courseCode + '\'' +
-                ", courseTitle='" + courseTitle + '\'' +
-                ", sectionType='" + sectionType + '\'' +
-                ", meetingDays='" + meetingDays + '\'' +
-                ", meetingTime='" + meetingTime + '\'' +
-                ", crossListings='" + crossListings + '\'' +
-                ", expectedEnrollment=" + expectedEnrollment +
-                ", sectionNumber='" + sectionNumber + '\'' +
-                ", instructor=" + instructor.toString() +
-                ", room=" + room.toString() +
-                '}';
+    public String toRow() {
+        return courseCode + " - " + courseTitle + "\n ,"
+                + classID + ","
+                + sisID + ","
+                + term + ","
+                + term_code + ","
+                + deptCode + ","
+                + subjectCode + ","
+                + catalogNumber + ","
+                + courseCode + ","
+                + sectionNumber + ","
+                + "\"" + courseTitle + "\"" + ","
+                + sectionType + ","
+                + title + ","
+                + meetingDays + " " + meetingTime + ","
+                + "\"" + instructor.getName() + "\"" + ","
+                + room.toEntry() + ","
+                + status + ","
+                + session + ","
+                + campus + ","
+                + method + ","
+                + partner + ","
+                + printable + ","
+                + consent + ","
+                + minCredits + ","
+                + credits + ","
+                + graded + ","
+                + attributes + ","
+                + roomAttributes + ","
+                + enrollment + ","
+                + maxEnrollment + ","
+                + priorEnrollment + ","
+                + projectedEnrollment + ","
+                + waitCap + ","
+                + roomCap + ","
+                + crossListings + ","
+                + link + ","
+                + "\"" + comments + "\"" + ","
+                + "\"" + notes + "\"" + "\n"
+                ;
     }
-
 
     /**
      * Provides a string representation of the course.
