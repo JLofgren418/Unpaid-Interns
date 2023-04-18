@@ -164,7 +164,7 @@ public class ExportView extends AppLayout {
 
     private String prepareCSV()
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss a");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("\"MM/dd/yyyy, HH:mm:ss a\"");
         LocalDateTime now = LocalDateTime.now();
         String csv = "\nDownloaded " + dtf.format(now);
         csv = csv + "\n,CLSS ID,SIS ID,Term,Term Code,Department Code,Subject Code,Catalog Number,Course,Section #,Course Title,Section Type,Title/Topic,Meeting Pattern,Instructor,Room,Status,Session,Campus,Inst. Method,Integ. Partner,Schedule Print,Consent,Credit Hrs Min,Credit Hrs,Grade Mode,Attributes,Room Attributes,Enrollment,Maximum Enrollment,Prior Enrollment,Projected Enrollment,Wait Cap,Rm Cap Request,Cross-listings,Link To,Comments,Notes\n";
