@@ -53,7 +53,7 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     /**
      * Attributes needed by the assigned room for the course
      */
-    @NotEmpty
+    @NotNull
     private String roomAttributes = "";
 
     /**
