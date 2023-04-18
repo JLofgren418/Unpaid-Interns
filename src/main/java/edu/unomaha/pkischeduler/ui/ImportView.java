@@ -284,10 +284,10 @@ public class ImportView extends AppLayout {
                     String priorEnrollment = row[30];
                     String waitCap = row[32];
                     String roomCap = row[33];
-                    String crossListings = row[34];
-                    String link = row[35];
-                    String comments = row[36];
-                    String notes = row[37];
+                    String crossListings = row.length>34?row[34]:"";
+                    String link = row.length>35?row[35]:"";
+                    String comments =row.length>36?row[36]:"";
+                    String notes = row.length>37?row[37]:"";
 
                     if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
                             && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
