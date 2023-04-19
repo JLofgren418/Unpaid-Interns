@@ -302,19 +302,12 @@ public class ImportView extends AppLayout {
                         instructorName = instructorName.trim();
                         String meetingDays;
                         String meetingTime;//set meeting time and days from meeting pattern
-                        if (meetingPattern.charAt(2) != 'h') {
-                            meetingDays = meetingPattern.substring(0, 2);
-                            meetingTime = meetingPattern.substring(2);
-                            if (meetingTime.charAt(0) == ' ') {
-                                meetingTime = meetingTime.substring(1);
-                            }
-                        } else {
-                            meetingDays = meetingPattern.substring(0, 3);
-                            meetingTime = meetingPattern.substring(3);
-                            if (meetingTime.charAt(0) == ' ') {
-                                meetingTime = meetingTime.substring(1);
-                            }
-                        }
+                        int ndex;
+                        for (ndex = 0; meetingPattern.charAt(ndex) != ' '; ndex++)
+                        {/*get index of the space*/}
+                        meetingDays = meetingPattern.substring(0, ndex);
+                        meetingTime = meetingPattern.substring(ndex+1);
+
 
                         //Make new objects from csv line
                         Room defaultRoom = service.getDefaultRoom();
