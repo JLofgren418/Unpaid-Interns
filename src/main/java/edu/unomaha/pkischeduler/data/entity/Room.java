@@ -109,7 +109,7 @@ public class Room extends AbstractEntity implements Cloneable {
 
 @Override
     public String toString() {
-        return String.valueOf(number);
+        return building + " " + number;
     }
 
     /**
@@ -205,7 +205,7 @@ public class Room extends AbstractEntity implements Cloneable {
      */
     public String numberToString()
     {
-        return building + " " + number;
+        return String.valueOf(number);
     }
 
 
