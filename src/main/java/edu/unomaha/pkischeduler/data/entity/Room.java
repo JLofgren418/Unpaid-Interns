@@ -120,6 +120,14 @@ public class Room extends AbstractEntity implements Cloneable {
                 '}';
     }
 
+    public String toEntry(){
+
+        return number + "";
+
+
+    }
+
+
     /**
      * Provides the number of students that the room can accommodate.
      * @return The number of students that the room can accommodate.

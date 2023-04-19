@@ -21,6 +21,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InputStreamFactory;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.StreamResource;
 import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.service.CRIService;
@@ -32,6 +33,12 @@ import java.time.format.DateTimeFormatter;
 import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.maven.surefire.extensions.StatelessReportMojoConfiguration;
+
+import java.io.ByteArrayInputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * ExportView creates the UI for the Export page.
@@ -194,8 +201,43 @@ public class ExportView extends AppLayout {
         mainHorizontalLayout.setWidth("100%");
         mainHorizontalLayout.setHeight("4%");
 
+
+
+/*
+        var streamReasource = new StreamResource("schedule.csv",
+                () -> {
+            return new ByteArrayInputStream(prepareCSV().getBytes());
+                });
+        var download = new Anchor(streamReasource, "Download");
+        HorizontalLayout h2 = new HorizontalLayout(download);
+        h2.setAlignItems(FlexComponent.Alignment.CENTER);
+        h2.setWidth("65%");
+        h2.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        HorizontalLayout h3 = new HorizontalLayout(h1, h2);
+        h3.setWidth("100%");
+        h3.setHeight("4%");
+        return h3;
+         */
+
+
+
         return mainHorizontalLayout;
     }
+
+    private String prepareCSV()
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss a");
+        LocalDateTime now = LocalDateTime.now();
+        String csv = "\nDownloaded " + dtf.format(now);
+        csv = csv + "\n,CLSS ID,SIS ID,Term,Term Code,Department Code,Subject Code,Catalog Number,Course,Section #,Course Title,Section Type,Title/Topic,Meeting Pattern,Instructor,Room,Status,Session,Campus,Inst. Method,Integ. Partner,Schedule Print,Consent,Credit Hrs Min,Credit Hrs,Grade Mode,Attributes,Room Attributes,Enrollment,Maximum Enrollment,Prior Enrollment,Projected Enrollment,Wait Cap,Rm Cap Request,Cross-listings,Link To,Comments,Notes\n";
+        List<Course> courses = service.getAllCourses();
+        for (Course course : courses){
+            csv = csv + course.toRow();
+        }
+        return csv;
+    }
+
+
 
     /**
      * This method updates the grid based on the text
