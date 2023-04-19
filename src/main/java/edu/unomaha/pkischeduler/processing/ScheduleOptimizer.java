@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ScheduleOptimizer {
+public class ScheduleOptimizer
+{
     CRIService service;
     public ScheduleOptimizer(CRIService service)
     {
@@ -20,32 +21,34 @@ public class ScheduleOptimizer {
      * Only considers the smallest possible room.
      * Does not assign classes from largest to smallest.
      * Does not assign classes in chronological order.
-     * Does not consider multi-listing.
+     * Does not consider multi-listings outside of dataset.
      * Does not regard Labs vs lectures.
      * Does not concern itself with standard 1:15 classes.
      * Does not refactor.
      */
     public void naive_assignment()
     {
-
         List<Room> rooms = service.getAllRooms();
         List<Course> courses = service.getAllCourses();
         for (Course course : courses)
         {
+            List<Course> crossListings = new ArrayList<>();
             if (course.getRoom().getNumber() == 0) //if unassigned
             {
-                if (!course.getCrossListings().equals("None"))
+                int workingEnrollment = course.getExpectedAsInt();
+                if (!course.getCrossListings().equals("None"))//handle cross listings
                 {
-                    List<Course> crossListings = this.parseCrossListings(course.getCrossListings(), courses);
+                    if (course.getCrossListings().charAt(0) == 'S') continue; //ignore "See" listings
+                    crossListings = this.parseCrossListings(course.getCrossListings(), courses);
                     for (Course listing : crossListings)
                     {
-                        System.out.println("    " + listing.getCourseCode());
+                        workingEnrollment += listing.getExpectedAsInt();
                     }
                 }
                 ArrayList<Room> viableRooms = new ArrayList<>();
                 for (Room room : rooms)
                 {
-                    if (room.getCapacity() >= course.getExpectedEnrollment())
+                    if (room.getCapacity() >= workingEnrollment)
                     {
                         boolean flag = true; //flag to test if there is a conflict
                         List<Course> roomCourses = room.getCourses();
@@ -81,6 +84,12 @@ public class ScheduleOptimizer {
                     course.setRoom(placement);
                     placement.addCourse(course);
                     service.update(course);
+                    for (Course listing : crossListings)
+                    {
+                        listing.setRoom(placement);
+                        placement.addCourse(listing);
+                        service.update(listing);
+                    }
                 }
             }
         }
@@ -144,11 +153,6 @@ public class ScheduleOptimizer {
         {
             return true;
         }
-//        if (!ret)
-//        {
-//            System.out.print(a.getCourseCode() + " " + a.getMeetingDays() + " " + a.getMeetingTime() + "\t");
-//            System.out.print(b.getCourseCode() + " " + b.getMeetingDays() + " " + b.getMeetingTime() + "\n");
-//        }
         return ret;
     }
 
@@ -263,32 +267,34 @@ public class ScheduleOptimizer {
     /**
      * Parses the cross listing string into its component courses.
      * @param in The String containing all cross listings.
-     * @param Courses List of all courses to search through.
+     * @param courses List of all courses to search through.
      * @return A list of the courses that match the cross listing string.
      */
-    private ArrayList<Course> parseCrossListings(String in, List<Course> courses)
-    {
-        List<String> courseTitles= new ArrayList<>();
-        List<String> sectionNums= new ArrayList<>();
+    private ArrayList<Course> parseCrossListings(String in, List<Course> courses) {
+        List<String> courseTitles = new ArrayList<>();
+        List<String> sectionNums = new ArrayList<>();
+        ArrayList<Course> ret = new ArrayList<>();
         char[] parse = in.toCharArray();
-        int i;
-        for (i = 0; parse[i] != ' '; i++) {}//skip "See" or "Also"
+        int i = 4;
+
+        //for (i = 0; parse[i] != ' '; i++) {}//skip "See" or "Also"
 
         boolean multiple = false;
         do //parse out the course titles and section ids
         {
             multiple = false;
             String work = "";
-            for (i = i + 1; parse[i] != '-'; i++)
+            for (i = i + 1; parse[i] != '-'; i++)//get title
             {
                 work += parse[i];
             }
             courseTitles.add(work);
 
             work = "";
-            for (i = i + 1; i < parse.length; i++)
+            for (i = i + 1; i < parse.length; i++)//get id
             {
-                if (parse[i] == ',') {
+                if (parse[i] == ',')
+                {
                     multiple = true;
                     break;
                 }
@@ -300,7 +306,6 @@ public class ScheduleOptimizer {
 
 
         //now to do course lookup
-        ArrayList<Course> ret = new ArrayList<>();
         for (int j = 0; j < courseTitles.size(); j++)
         {
             String code = courseTitles.get(j);
@@ -316,20 +321,5 @@ public class ScheduleOptimizer {
         }
 
         return ret;
-    }
-
-    /**
-     * Random room assignments.
-     */
-    public void random_assignment()
-    {
-        List<Room> rooms = service.getAllRooms();
-        List<Course> courses = service.getAllCourses();
-        Random randy = new Random();
-        for (Course course : courses)
-        {
-            course.setRoom(rooms.get(randy.nextInt(23-1)+1));
-            service.update(course);
-        }
     }
 }

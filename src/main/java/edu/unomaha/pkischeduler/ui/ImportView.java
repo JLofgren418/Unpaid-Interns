@@ -293,6 +293,7 @@ public class ImportView extends AppLayout {
                             && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
                     {
                         //Process variables before adding them to a new object;
+                        //TODO patch to handle 3 days
                         if (crossListings.equals("")) {
                             crossListings = "None";
                         }
