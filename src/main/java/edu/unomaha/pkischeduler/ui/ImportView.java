@@ -289,11 +289,10 @@ public class ImportView extends AppLayout {
                     String comments =row.length>36?row[36]:"";
                     String notes = row.length>37?row[37]:"";
 
-                    if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
+                    if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")//TODO patch to handle no meets
                             && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
                     {
                         //Process variables before adding them to a new object;
-                        //TODO patch to handle 3 days
                         if (crossListings.equals("")) {
                             crossListings = "None";
                         }

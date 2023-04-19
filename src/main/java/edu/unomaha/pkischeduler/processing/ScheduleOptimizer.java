@@ -48,7 +48,7 @@ public class ScheduleOptimizer
                 ArrayList<Room> viableRooms = new ArrayList<>();
                 for (Room room : rooms)
                 {
-                    if (room.getCapacity() >= workingEnrollment)
+                    if (room.getNumber() != -1 && room.getCapacity() >= workingEnrollment)
                     {
                         boolean flag = true; //flag to test if there is a conflict
                         List<Course> roomCourses = room.getCourses();

@@ -14,7 +14,12 @@ import java.util.List;
 @Entity
 public class Room extends AbstractEntity implements Cloneable {
 
-    //TODO add building field
+    /**
+     * the building of the room
+     */
+    @NotNull
+    private String building;
+
     /**
      * The room number
      */
@@ -198,8 +203,9 @@ public class Room extends AbstractEntity implements Cloneable {
      * Used for display in room x room view accordion.
      * @return The room number as a string.
      */
-    public String numberToString() {
-        return String.valueOf(number);
+    public String numberToString()
+    {
+        return building + " " + number;
     }
 
 
