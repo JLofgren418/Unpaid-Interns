@@ -167,9 +167,6 @@ public class ExportView extends AppLayout {
         HorizontalLayout filterLayout = new HorizontalLayout(filterText);
         filterLayout.setWidth("35%");
 
-        Button exportCSV = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
-        exportCSV.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
 
       // ADD download log button
         StreamResource streamResource = new StreamResource(  "CourseChange.log", () ->
@@ -180,41 +177,42 @@ public class ExportView extends AppLayout {
             return inputStream;
         }   );
 
-        Anchor downloadLinkAnchor = new Anchor(streamResource, "download log file");
-        downloadLinkAnchor.getElement().setAttribute("download", true);
-        downloadLinkAnchor.getStyle().set("display", "none");
+        // download Log button
+        Anchor downloadLogAnchor = new Anchor(streamResource, "download log file");
+        downloadLogAnchor.getElement().setAttribute("download", true);
+        downloadLogAnchor.getStyle().set("display", "none");
 
         downloadLogBtn = new Button("Download Log",VaadinIcon.DOWNLOAD.create());
         downloadLogBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         downloadLogBtn.getElement().setProperty("title", "Download log file");
         downloadLogBtn.addClickListener(e -> {
                     LOG.trace("Download log button clicked");
-                    downloadLinkAnchor.getElement().executeJs("this.click()");
+                    downloadLogAnchor.getElement().executeJs("this.click()");
         });
 
         // CSV
-        var downloadCSVBtn = new Button("Download CSV",VaadinIcon.DOWNLOAD.create());
-        downloadCSVBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        var exportCSVbttn = new Button("Export CSV",VaadinIcon.DOWNLOAD.create());
+        exportCSVbttn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         var streamReasource = new StreamResource("schedule.csv",
                 () -> {
             return new ByteArrayInputStream(prepareCSV().getBytes());
                 });
-        var downloadCSVAnchor = new Anchor(streamReasource, "Download CSV");
+        var exportCSV_Anchor = new Anchor(streamReasource, "Export CSV");
+        exportCSV_Anchor.getStyle().set("display", "none");
 
-        downloadCSVBtn.addClickListener(e -> {
-            LOG.trace("Download CSV button clicked");
-            downloadCSVAnchor.getElement().executeJs("this.click()");
+        exportCSVbttn.addClickListener(e -> {
+            LOG.trace("Export CSV button clicked");
+            exportCSV_Anchor.getElement().executeJs("this.click()");
         });
 
-
-        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadCSVBtn, downloadLinkAnchor , downloadLogBtn, exportCSV);
+        HorizontalLayout buttonsLayout = new HorizontalLayout( downloadLogBtn, downloadLogAnchor, // anchor has to be added if the button clicks on the Anchor
+                exportCSVbttn, exportCSV_Anchor  );
         buttonsLayout.setWidth("65%");
         buttonsLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-        HorizontalLayout mainHorizontalLayout = new HorizontalLayout(filterLayout, buttonsLayout );
+        HorizontalLayout mainHorizontalLayout = new HorizontalLayout(filterLayout , buttonsLayout );
         mainHorizontalLayout.setWidth("100%");
         mainHorizontalLayout.setHeight("4%");
-
 
         return mainHorizontalLayout;
     }
