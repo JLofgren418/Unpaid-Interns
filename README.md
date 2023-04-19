@@ -33,7 +33,7 @@ Release 0.3
 * Added ability to log changes in UI
 * Added client specified fields to UI
 
-Release 0.4
+Release 0.4 (Latest)
 	
 In this latest release of the PKI Scheduler, we have improved the way that rooms are allocated for courses. The updated scheduling algorithm is capable of using the data provided to avoid conflicts, and it also is able to handle cross listed courses. Additionally, it is able to allocate a room for (almost) every course provided in the data set. 
   
@@ -77,4 +77,10 @@ Once the WAR file is built, you can run it using
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
 ## Additional Branches 
-The alternative branch for this project is called Preliminary Which for now is only slightly behind main but is for testing as well as other odds and ends.
+
+1. Preliminary Branch
+	Preliminary Branch used for initial skeleton code. This branch is not up to date and should not be used. 
+2. CourseTest Branch
+	Branch used for testing improved import feature. 
+3 Export Branch
+	Branch used for testing CSV export feature.
