@@ -82,5 +82,5 @@ Once the WAR file is built, you can run it using
 	Preliminary Branch used for initial skeleton code. This branch is not up to date and should not be used. 
 2. CourseTest Branch
 	Branch used for testing improved import feature. 
-3 Export Branch
+3. Export Branch
 	Branch used for testing CSV export feature.
