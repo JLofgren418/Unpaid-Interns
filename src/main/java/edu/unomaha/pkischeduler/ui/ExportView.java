@@ -192,33 +192,28 @@ public class ExportView extends AppLayout {
                     downloadLinkAnchor.getElement().executeJs("this.click()");
         });
 
+        // CSV
+        var downloadCSVBtn = new Button("Download CSV",VaadinIcon.DOWNLOAD.create());
+        downloadCSVBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        var streamReasource = new StreamResource("schedule.csv",
+                () -> {
+            return new ByteArrayInputStream(prepareCSV().getBytes());
+                });
+        var downloadCSVAnchor = new Anchor(streamReasource, "Download CSV");
 
-        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadLinkAnchor , downloadLogBtn, exportCSV);
+        downloadCSVBtn.addClickListener(e -> {
+            LOG.trace("Download CSV button clicked");
+            downloadCSVAnchor.getElement().executeJs("this.click()");
+        });
+
+
+        HorizontalLayout buttonsLayout = new HorizontalLayout(downloadCSVBtn, downloadLinkAnchor , downloadLogBtn, exportCSV);
         buttonsLayout.setWidth("65%");
         buttonsLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
         HorizontalLayout mainHorizontalLayout = new HorizontalLayout(filterLayout, buttonsLayout );
         mainHorizontalLayout.setWidth("100%");
         mainHorizontalLayout.setHeight("4%");
-
-
-
-/*
-        var streamReasource = new StreamResource("schedule.csv",
-                () -> {
-            return new ByteArrayInputStream(prepareCSV().getBytes());
-                });
-        var download = new Anchor(streamReasource, "Download");
-        HorizontalLayout h2 = new HorizontalLayout(download);
-        h2.setAlignItems(FlexComponent.Alignment.CENTER);
-        h2.setWidth("65%");
-        h2.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
-        HorizontalLayout h3 = new HorizontalLayout(h1, h2);
-        h3.setWidth("100%");
-        h3.setHeight("4%");
-        return h3;
-         */
-
 
 
         return mainHorizontalLayout;
