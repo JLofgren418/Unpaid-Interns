@@ -18,9 +18,9 @@ public class CourseChange extends AbstractEntity {
         protected LocalDateTime dateT;
 
         @Transient
-        protected  Course before;
+        protected  Course before=null;
         @Transient
-        protected  Course after;
+        protected  Course after=null;
 
         @Transient
         protected  transient boolean changeToBeforeOrAfter = false;
@@ -40,7 +40,7 @@ public class CourseChange extends AbstractEntity {
          * This function should be called before any changes to @Course object are made
          * @param before The course before the changes are made
          */
-        public void setBefore(Course before) {
+        public void setBeforeCourseChange(Course before) {
                 dateT = LocalDateTime.now();
                 this.before = before;
                 changeToBeforeOrAfter = true;
@@ -50,7 +50,7 @@ public class CourseChange extends AbstractEntity {
          * This function should be called after any changes to @Course object are made
          * @param after The course after the changes are made
          */
-        public void setAfter(Course after) {
+        public void setAfterCourseChange(Course after) {
                 dateT = LocalDateTime.now();
                 this.after = after;
                 changeToBeforeOrAfter = true;
@@ -83,7 +83,13 @@ public class CourseChange extends AbstractEntity {
         @PrePersist
         public void beforePersist() {
                 if (changeToBeforeOrAfter) {
-                        changeCourse = after.getChangesFrom(before);
+                        if (before != null && after != null){
+                                // update was made
+                                changeCourse = after.getChangesFrom(before);
+                        } else{
+                                // new course was added
+                                changeCourse = "Added [ " + after.toStringForLog() + " ]";
+                        }
                         changeToBeforeOrAfter = false;
                 }
                 dateTime = DATE_TIME_FORMATTER.format(dateT);

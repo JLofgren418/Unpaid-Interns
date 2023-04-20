@@ -53,7 +53,7 @@ public class EditView extends AppLayout {
     private CourseChangeService courseChangeService;
 
     /**  Used to track on-edit changes   */
-    CourseChange courseChange =null;
+    CourseChange courseChange = new CourseChange();
 
     /**
      * A grid component that contains courses.
@@ -330,7 +330,7 @@ public class EditView extends AppLayout {
         courseChange = new CourseChange();
         Course courseBeforeEdit = event.getItem();
         try {
-            courseChange.setBefore(  courseBeforeEdit.clone()  );
+            courseChange.setBeforeCourseChange(  courseBeforeEdit.clone()  );
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -342,13 +342,17 @@ public class EditView extends AppLayout {
      * After any data is edited
      */
     private void onEditButtonSaveClicked(){
+        LOG.debug( "onEditButtonSaveClicked():");
         Course course = crud.getEditor().getItem();
         try {
-            courseChange.setAfter(  course.clone() );
+            if (courseChange == null){
+                courseChange = new CourseChange();
+            }
+            courseChange.setAfterCourseChange(  course.clone() );
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-        LOG.debug( "onEditButtonSaveClicked(): change -> " +    courseChange.toString() );
+        LOG.debug( "\tchange -> " +    courseChange.toString() );
         courseChangeService.saveCourseChange(courseChange);
     }
 

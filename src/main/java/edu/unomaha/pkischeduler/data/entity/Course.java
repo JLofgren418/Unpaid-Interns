@@ -22,26 +22,26 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     /**
      * Whether special consent is need to join the course
      */
-    @NotEmpty
+    @NotNull
     private String consent = "";
 
     /**
      * The number of credit hours the class is worth
      */
-    @NotEmpty
+    @NotNull
     private String credits = "";
 
     /**
      * The MINIMUM number of credit hours the class is worth
      */
-    @NotEmpty
+    @NotNull
     private String minCredits = "";
 
     /**
      *  The grading mode for the course
      *  ie. is it graded or is it for completion
      */
-    @NotEmpty
+    @NotNull
     private String graded = "";
 
     /**
@@ -59,90 +59,90 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     /**
      * Current Enrollment in the class
      */
-    @NotEmpty
+    @NotNull
     private String enrollment = "";
 
     /**
      * The Maximum total enrollment for the class
      */
-    @NotEmpty
+    @NotNull
     private String maxEnrollment = "";
 
     /**
      * The class ID of the course
      */
-    @NotEmpty
+    @NotNull
     private String classID = "";
 
     /**
      * The SIS ID of the Course
      */
-    @NotEmpty
+    @NotNull
     private String sisID = "";
 
     /**
      * The term of the course
      */
-    @NotEmpty
+    @NotNull
     private String term = "";
 
     /**
      * The term code of the Course
      */
-    @NotEmpty
+    @NotNull
     private String term_code = "";
 
     /**
      * The Department Code of the Course
      */
-    @NotEmpty
+    @NotNull
     private String deptCode = "";
 
     /**
      * The subject Code of the Course
      */
-    @NotEmpty
+    @NotNull
     private String subjectCode = "";
 
     /**
      * The catalog number of the Course
      */
-    @NotEmpty
+    @NotNull
     private String catalogNumber = "";
 
     /**
      * The course ID
      * I.e. - CSCI 4970
      */
-    @NotEmpty
+    @NotNull
     private String courseCode = "";
 
     /**
      * The title of the course
      * I.e. - Capstone Project
      */
-    @NotEmpty
+    @NotNull
     private String courseTitle = "";
 
     /**
      * The section type of the course.
      * Can be either a Laboratory or a Lecture.
      */
-    @NotEmpty
+    @NotNull
     private String sectionType = "";
 
     /**
      * The days of the week which the course meets.
      * I.e. MW, TTh...etc.
      */
-    @NotEmpty
+    @NotNull
     private String meetingDays = "";
 
     /**
      * The time of day which the course meets.
      * I.e. - 1:30pm - 2:45pm
      */
-    @NotEmpty
+    @NotNull
     private String meetingTime = "";
 
     /**
@@ -172,13 +172,13 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     /**
      * The maximum number of students that can waitlist for the class
      */
-    @NotEmpty
+    @NotNull
     private String waitCap = "";
 
     /**
      * The number of students the course's room needs to be able to hold
      */
-    @NotEmpty
+    @NotNull
     private String roomCap = "";
 
 
@@ -205,7 +205,7 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
      *  with this particular course.
      * I.e. - See CSCI 8366-001
      */
-    @NotEmpty
+    @NotNull
     private String crossListings = "";
 
     /**
@@ -218,39 +218,39 @@ public class Course extends AbstractEntity implements Serializable, Cloneable {
     /**
      * This is the Course's session
      */
-    @NotEmpty
+    @NotNull
     private String session = "";
 
     /**
      * This is which campus the course is being taught on
      */
-    @NotEmpty
+    @NotNull
     private String campus = "";
 
     /**
      * The section number of the course.
      * I.e. - 001, 002...etc.
      */
-    @NotEmpty
+    @NotNull
     private String sectionNumber = "";
 
     /**
      * This is the course status.
      */
-    @NotEmpty
+    @NotNull
     private String status = "";
 
     /**
      * This is the method by which the course will be instructed
      * ie. in person or online
      */
-    @NotEmpty
+    @NotNull
     private String method = "";
 
     /**
      * This is the whether the schedule can be printed
      */
-    @NotEmpty
+    @NotNull
     private String printable = "";
 
     /**
