@@ -2,7 +2,6 @@ package edu.unomaha.pkischeduler.ui;
 
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -19,23 +18,16 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.InputStreamFactory;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.StreamResource;
 import edu.unomaha.pkischeduler.data.entity.Course;
-import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.service.CRIService;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.maven.surefire.extensions.StatelessReportMojoConfiguration;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -212,7 +204,6 @@ public class ExportView extends AppLayout {
 
         HorizontalLayout mainHorizontalLayout = new HorizontalLayout(filterLayout , buttonsLayout );
         mainHorizontalLayout.setWidth("100%");
-        mainHorizontalLayout.setHeight("4%");
 
         return mainHorizontalLayout;
     }
