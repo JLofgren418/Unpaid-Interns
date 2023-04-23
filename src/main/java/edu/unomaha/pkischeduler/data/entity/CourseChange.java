@@ -66,6 +66,16 @@ public class CourseChange extends AbstractEntity {
                 changeToBeforeOrAfter = false;
         }
 
+        /**
+         * Used to add a message to audit log
+         * @param message
+         */
+        public void setLogMessage( String message) {
+                dateT = LocalDateTime.now();
+                changeCourse = message;
+                changeToBeforeOrAfter = false;
+        }
+
 
         /**
          * Returns to string representation of the CourseChange object
@@ -86,7 +96,7 @@ public class CourseChange extends AbstractEntity {
                         if (before != null && after != null){
                                 // update was made
                                 changeCourse = after.getChangesFrom(before);
-                        } else{
+                        } else if (after!=null){
                                 // new course was added
                                 changeCourse = "Added [ " + after.toStringForLog() + " ]";
                         }

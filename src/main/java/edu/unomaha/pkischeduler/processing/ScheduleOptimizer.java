@@ -1,8 +1,13 @@
 package edu.unomaha.pkischeduler.processing;
 
 import edu.unomaha.pkischeduler.data.entity.Course;
+import edu.unomaha.pkischeduler.data.entity.CourseChange;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CRIService;
+import edu.unomaha.pkischeduler.data.service.CourseChangeService;
+import edu.unomaha.pkischeduler.ui.EditView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +15,12 @@ import java.util.Random;
 
 public class ScheduleOptimizer
 {
+    private static final Logger LOG = LoggerFactory.getLogger(ScheduleOptimizer.class);
     CRIService service;
-    public ScheduleOptimizer(CRIService service)
+    CourseChangeService courseChangeService;
+    public ScheduleOptimizer(CRIService service, CourseChangeService courseChangeService )
     {
+        this.courseChangeService = courseChangeService;
         this.service = service;
     }
 
@@ -90,7 +98,14 @@ public class ScheduleOptimizer
                         placement.addCourse(listing);
                         service.update(listing);
                     }
+                }else{
+                    LOG.error("No viable room found for course: " + course.toStringForLog() ) ;
+                    CourseChange courseChange = new CourseChange();
+                    courseChange.setLogMessage( "No viable room found for course: " + course.toStringForLog()       );
+                    courseChangeService.add(courseChange);
                 }
+
+
             }
         }
     }

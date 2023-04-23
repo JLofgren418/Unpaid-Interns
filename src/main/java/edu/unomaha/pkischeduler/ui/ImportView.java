@@ -26,6 +26,7 @@ import edu.unomaha.pkischeduler.data.entity.Course;
 import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CRIService;
+import edu.unomaha.pkischeduler.data.service.CourseChangeService;
 import edu.unomaha.pkischeduler.processing.ScheduleOptimizer;
 
 import java.io.IOException;
@@ -80,6 +81,7 @@ public class ImportView extends AppLayout {
      * The schedule optimizer which assigns courses to rooms.
      */
     ScheduleOptimizer optimizer;
+    CourseChangeService courseChangeService;
 
 
     /**
@@ -87,9 +89,10 @@ public class ImportView extends AppLayout {
      * @param service A service class used to access the course, room,
      *                 and instructor tables in the database.
      */
-    public ImportView(CRIService service) {
+    public ImportView(CRIService service, CourseChangeService courseChangeService){
         this.service = service;
-        optimizer = new ScheduleOptimizer(service);
+        this.courseChangeService = courseChangeService;
+        optimizer = new ScheduleOptimizer(service , courseChangeService);
         addClassName("import-view");
         configureGrid();
         importCSV();
