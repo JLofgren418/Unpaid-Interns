@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ScheduleOptimizer
 {
@@ -27,18 +26,31 @@ public class ScheduleOptimizer
     /**
      * Assigns rooms naively without regard for optimal placement.
      * Only considers the smallest possible room.
-     * Does not assign classes from largest to smallest.
-     * Does not assign classes in chronological order.
-     * Does not consider multi-listings outside of dataset.
-     * Does not regard Labs vs lectures.
-     * Does not concern itself with standard 1:15 classes.
+     * Cross listings are decided upon the "Also collegexxxx-xxx"
+     *  and uses the "see" terminology to map into the "also"
+     *  so it does not handle any other formats for cross-listings.
+     * Does not consider cross-listings outside of dataset.
      * Does not refactor.
      */
     public void naive_assignment()
     {
         List<Room> rooms = service.getAllRooms();
         List<Course> courses = service.getAllCourses();
+
+        //reorder to allow lab classes to be placed first
+        List<Course> factoredCourses = new ArrayList<>();
         for (Course course : courses)
+        {
+            if (course.getSectionType().equals("Laboratory"))
+                factoredCourses.add(course);
+        }
+        for (Course course : courses)
+        {
+            if (!course.getSectionType().equals("Laboratory"))
+                factoredCourses.add(course);
+        }
+
+        for (Course course : factoredCourses)
         {
             List<Course> crossListings = new ArrayList<>();
             if (course.getRoom().getNumber() == 0) //if unassigned
@@ -46,7 +58,7 @@ public class ScheduleOptimizer
                 int workingEnrollment = course.getExpectedAsInt();
                 if (!course.getCrossListings().equals("None"))//handle cross listings
                 {
-                    if (course.getCrossListings().charAt(0) == 'S') continue; //ignore "See" listings
+                    if (course.getCrossListings().charAt(0) == 'S') continue; //ignore "See" listings 😎 you can force a failure by making workingEnrollment > 80 here
                     crossListings = this.parseCrossListings(course.getCrossListings(), courses);
                     for (Course listing : crossListings)
                     {
@@ -68,10 +80,11 @@ public class ScheduleOptimizer
                                 break;
                             }
                         }
-                        if (flag)
-                        {
+                        //check if room is viable and handle if it needs to be a lab
+                        if (flag && course.getSectionType().equals("Laboratory") && room.getRoomType().equals("Laboratory"))
                             viableRooms.add(room);
-                        }
+                        else if (flag && !course.getSectionType().equals("Laboratory"))
+                            viableRooms.add(room);
                     }
                 }
                 //find smallest viable room
@@ -98,7 +111,9 @@ public class ScheduleOptimizer
                         placement.addCourse(listing);
                         service.update(listing);
                     }
-                }else{
+                }
+                else
+                {
                     LOG.error("No viable room found for course: " + course.toStringForLog() ) ;
                     CourseChange courseChange = new CourseChange();
                     courseChange.setLogMessage( "No viable room found for course: " + course.toStringForLog()       );
