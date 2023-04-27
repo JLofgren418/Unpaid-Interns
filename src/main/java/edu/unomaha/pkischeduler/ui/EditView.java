@@ -1,6 +1,7 @@
 package edu.unomaha.pkischeduler.ui;
 
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
@@ -80,7 +81,6 @@ public class EditView extends AppLayout {
      * Allows the edit form to be hidden when not in use.
      */
     private Span status;
-
 
     /**
      * Edit View calls the necessary methods to create the UI.
@@ -291,7 +291,7 @@ public class EditView extends AppLayout {
         crud.addDeleteListener(click -> service.delete(crud.getEditor().getItem()));
         crud.addDeleteListener(click -> grid.setItems(service.getAllCourses()));
 
-        {   // Listeners on edir or delete - for audit log purposes
+        {   // Listeners on edit or delete - for audit log purposes
             crud.addDeleteListener(event -> onDeleteEvent(event));  // on delete
             crud.addEditListener(event -> onEditButtonClick(event)); // before edit
             crud.addSaveListener(click -> onEditButtonSaveClicked()); // after edit
