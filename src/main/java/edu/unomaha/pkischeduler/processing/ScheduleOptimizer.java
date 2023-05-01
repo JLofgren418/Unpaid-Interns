@@ -166,12 +166,12 @@ public class ScheduleOptimizer
             //test hours for conflict, if so test minutes with 15 min grace
             if (timesA[0] >= timesB[0] && timesA[0] <= timesB[3]) //if b.start <= a.start <= b.end
             {
-                if (!(timesA[0] == timesB[3] && timesA[1] >= timesB[4]+15)) //if a does not start 15 min after b ends
+                if (!(timesA[0] == timesB[3] && timesA[1] >= timesB[4]+10)) //if a does not start 15 min after b ends
                     ret = false;
             }
             else if (timesA[3] >= timesB[0] && timesA[3] <= timesB[3]) //if b.start <= a.end <= b.end
             {
-                if (!(timesA[3] == timesB[0] && timesA[4] <= timesB[1]-15)) //if a does not end 15 min before b starts
+                if (!(timesA[3] == timesB[0] && timesA[4] <= timesB[1]-10)) //if a does not end 15 min before b starts
                     ret = false;
             }
             else if (timesA[0] <= timesB[0] && timesA[3] >= timesB[3]) //if a.start <= b <= a.end
