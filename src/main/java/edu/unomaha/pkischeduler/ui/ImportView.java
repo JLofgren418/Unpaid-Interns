@@ -292,7 +292,7 @@ public class ImportView extends AppLayout {
                     String comments =row.length>36?row[36]:"";
                     String notes = row.length>37?row[37]:"";
 
-                    if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")//TODO patch to handle no meets
+                    if (!meetingPattern.equals("Does Not Meet") && !status.equals("Cancelled")
                             && !instructionMethod.equals("Totally Online"))//Filter out online and cancelled courses
                     {
                         //Process variables before adding them to a new object;
@@ -327,6 +327,47 @@ public class ImportView extends AppLayout {
                                 meetingDays,  meetingTime,  priorEnrollment,  title,  partner,  waitCap,  roomCap,  link,
                                 comments,  notes,  crossListings, expectedEnrollment,  session,  campus,  sectionNumber,  status,  instructionMethod,
                         printable,  defaultRoom, instructor);
+
+                        service.add(course);
+
+                    }
+                    else //process classes that don't need rooms
+                    {
+                        //Process variables before adding them to a new object;
+                        if (crossListings.equals("")) {
+                            crossListings = "None";
+                        }
+                        double expectedEnrollment = Double.parseDouble(maxEnrollment);
+                        instructorName = instructorName.replaceAll("[^.,a-zA-Z]", " ");
+                        instructorName = instructorName.trim();
+                        String meetingDays = "None";
+                        String meetingTime = "Does Not Meet";
+
+                        //acquire room -1 and save into defaultRoom
+                        List<Room> rooms = service.getAllRooms();
+                        Room defaultRoom = null; //initialize to null
+                        for (Room rm : rooms)
+                        {
+                            if (rm.getNumber() == -1)
+                            {
+                                defaultRoom = rm;
+                                break;
+                            }
+                        }
+
+                        Instructor instructor = service.exstingInstructor(instructorName);
+
+                        if (instructor == null) {
+                            instructor = new Instructor(instructorName, "Any");
+                            //instructors.add(instructor);
+                            service.addInstructor(instructor);
+                        }
+
+                        Course course = new Course(consent, credits, minCredits, graded, attributes,  roomAttributes,  enrollment,  maxEnrollment,  classID,
+                                sisID,  term,  term_code,  deptCode,  subjectCode,  catalogNumber,  courseCode,  courseTitle,  sectionType,
+                                meetingDays,  meetingTime,  priorEnrollment,  title,  partner,  waitCap,  roomCap,  link,
+                                comments,  notes,  crossListings, expectedEnrollment,  session,  campus,  sectionNumber,  status,  instructionMethod,
+                                printable,  defaultRoom, instructor);
 
                         service.add(course);
 
