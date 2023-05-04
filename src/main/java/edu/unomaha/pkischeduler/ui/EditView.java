@@ -1,7 +1,6 @@
 package edu.unomaha.pkischeduler.ui;
 
 
-import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
@@ -33,8 +32,8 @@ import edu.unomaha.pkischeduler.data.entity.Instructor;
 import edu.unomaha.pkischeduler.data.entity.Room;
 import edu.unomaha.pkischeduler.data.service.CRIService;
 import edu.unomaha.pkischeduler.data.service.CourseChangeService;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * EditView creates the UI for the Edit page.
@@ -274,14 +273,14 @@ public class EditView extends AppLayout {
      */
     private void setupGrid() {
         grid.setColumns();
-        grid.addColumn(Course::getCourseCode).setHeader("Course Code");
-        grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
-        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
-        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
-        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
-        grid.addColumn(Course::getExpectedAsInt).setHeader("Maximum Enrollment");
-        grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity");
-        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.addColumn(Course::getCourseCode).setHeader("Course Code").setSortable(true);
+        grid.addColumn(Course::getCourseTitle).setHeader("Course Title").setSortable(true);
+        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days").setSortable(true);
+        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time").setSortable(true);
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor").setSortable(true);
+        grid.addColumn(Course::getExpectedAsInt).setHeader("Maximum Enrollment").setSortable(true);
+        grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity").setSortable(true);
+        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room").setSortable(true);
         Crud.addEditColumn(grid);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -378,6 +377,5 @@ public class EditView extends AppLayout {
 
         grid.setItems(service.filterCourses(filterText.getValue()));
     }
-
 
 }

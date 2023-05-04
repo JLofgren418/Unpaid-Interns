@@ -89,6 +89,7 @@ public class RoomView extends AppLayout {
         Label pageTitle = new Label("Schedules by Room");
         spacer.add(pageTitle);
         spacer.setAlignItems(FlexComponent.Alignment.BASELINE);
+        accordion.close();
         VerticalLayout content = new VerticalLayout(spacer,accordion);
         content.setFlexGrow(2, accordion);
         content.addClassNames("content");
@@ -169,5 +170,4 @@ public class RoomView extends AppLayout {
 
         return h1;
     }
-
 }

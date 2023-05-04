@@ -129,15 +129,15 @@ public class ImportView extends AppLayout {
         grid.addClassNames("schedule-grid");
         grid.setSizeFull();
         grid.setColumns();
-        grid.addColumn(Course::getCourseCode).setHeader("Course Code");
-        grid.addColumn(Course::getSectionNumber).setHeader("Section");
-        grid.addColumn(Course::getCourseTitle).setHeader("Course Title");
-        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days");
-        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time");
-        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor");
-        grid.addColumn(Course::getExpectedAsInt).setHeader("Maximum Enrollment");
-        grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity");
-        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room");
+        grid.addColumn(Course::getCourseCode).setHeader("Course Code").setSortable(true);
+        grid.addColumn(Course::getSectionNumber).setHeader("Section").setSortable(true);
+        grid.addColumn(Course::getCourseTitle).setHeader("Course Title").setSortable(true);
+        grid.addColumn(Course::getMeetingDays).setHeader("Meeting Days").setSortable(true);
+        grid.addColumn(Course::getMeetingTime).setHeader("Meeting Time").setSortable(true);
+        grid.addColumn(course -> course.getInstructor().getName()).setHeader("Instructor").setSortable(true);
+        grid.addColumn(Course::getExpectedAsInt).setHeader("Maximum Enrollment").setSortable(true);
+        grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity").setSortable(true);
+        grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room").setSortable(true);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -382,5 +382,4 @@ public class ImportView extends AppLayout {
         }
         grid.setItems(service.getAllCourses());
     }
-
 }
