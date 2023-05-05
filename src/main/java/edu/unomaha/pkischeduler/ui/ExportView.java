@@ -114,6 +114,7 @@ public class ExportView extends AppLayout {
         grid.addColumn(course -> course.getRoom().getCapacity()).setHeader("Room Capacity").setSortable(true);
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room").setSortable(true);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.setMultiSort(true);
     }
 
     /**

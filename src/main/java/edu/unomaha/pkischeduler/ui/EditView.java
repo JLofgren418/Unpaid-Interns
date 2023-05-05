@@ -283,6 +283,7 @@ public class EditView extends AppLayout {
         grid.addColumn(course -> course.getRoom().getNumber()).setHeader("Room").setSortable(true);
         Crud.addEditColumn(grid);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.setMultiSort(true);
 
         crud.addSaveListener(click -> service.add(crud.getEditor().getItem()));
         crud.addSaveListener(click -> grid.setItems(service.getAllCourses()));
