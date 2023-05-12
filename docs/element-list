@@ -1,7 +1,7 @@
-unnamed package
 edu.unomaha.pkischeduler
 edu.unomaha.pkischeduler.data.entity
 edu.unomaha.pkischeduler.data.repository
 edu.unomaha.pkischeduler.data.service
 edu.unomaha.pkischeduler.processing
+edu.unomaha.pkischeduler.tests
 edu.unomaha.pkischeduler.ui

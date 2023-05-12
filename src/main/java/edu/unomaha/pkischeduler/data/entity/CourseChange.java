@@ -11,17 +11,33 @@ import java.time.format.DateTimeFormatter;
 @Entity
 public class CourseChange extends AbstractEntity {
 
+        /**
+         * Default date formatter
+         */
         @Transient
         protected static final  DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+        /**
+         * Contains the timestamp of the change
+         */
         @Transient
         protected LocalDateTime dateT;
 
+        /**
+         * Contains the course before the change
+         */
         @Transient
         protected  Course before=null;
+
+        /**
+         * Contains the course after the change
+         */
         @Transient
         protected  Course after=null;
 
+        /**
+         * Used keep track of how the data was changed
+         */
         @Transient
         protected  transient boolean changeToBeforeOrAfter = false;
 
@@ -106,7 +122,7 @@ public class CourseChange extends AbstractEntity {
         }
 
         /**
-         * @return the line as it will apear in the log file
+         * Returns the line as it will apear in the log file
          */
         public String getAsLogLine() {
                 return this.dateTime + " " + this.changeCourse + "\n";

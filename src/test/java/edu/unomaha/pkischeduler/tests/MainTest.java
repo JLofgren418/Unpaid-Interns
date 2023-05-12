@@ -16,12 +16,12 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * NOTE:
- *  Test does not start the Tomcat server.
+ * Testing webinterface CRUD operations
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainTest {
     String rootUrl= "http://localhost:8080";
+//    String rootUrl="http://team-8.duckdns.org:8080/pkischeduler/";
 
     WebDriver driver;
     static ChromeOptions chromeOptions = new ChromeOptions();
