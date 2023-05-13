@@ -68,8 +68,7 @@ or `./mvnw clean package -Pproduction` (Mac & Linux).
 This will build a WAR file with all the dependencies and front-end resources,
 ready to be deployed. The file can be found in the `target` folder after the build completes.
 
-Once the WAR file is built, you can run it using
-`java -jar target/flowcrmtutorial-1.0-SNAPSHOT.jar`
+Once the WAR file is built, it can be deployed to the target environment. 
 
 ## Project structure
 
