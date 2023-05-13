@@ -10,6 +10,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -84,6 +86,7 @@ public class ImportView extends AppLayout {
     CourseChangeService courseChangeService;
 
 
+
     /**
      * Import view calls the necessary methods to create the UI.
      * @param service A service class used to access the course, room,
@@ -100,8 +103,13 @@ public class ImportView extends AppLayout {
         addToNavbar(getTabs());
         updateList();
         process.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        process.addClickListener(click ->
-                optimizer.naive_assignment()); //Assign classrooms
+        process.addClickListener(click -> {
+                    optimizer.naive_assignment();
+                    Notification notification = Notification
+                    .show("Schedule Generated!");
+                    notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                    notification.setPosition(Notification.Position.MIDDLE);
+                });
         process.addClickListener(click -> grid.setItems(service.getAllCourses()));
     }
 
